@@ -1,0 +1,18 @@
+package hmysjiang.potioncapsule.init;
+
+import hmysjiang.potioncapsule.Reference;
+import hmysjiang.potioncapsule.recipe.RecipeCapsuleAttachment;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+
+@EventBusSubscriber(modid = Reference.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+public class ModRecipes {
+	
+	@SubscribeEvent
+	public static void onRecipeRegister(RegistryEvent.Register<IRecipeSerializer<?>> event) {
+		event.getRegistry().register(RecipeCapsuleAttachment.SERIALIZER);
+	}
+	
+}

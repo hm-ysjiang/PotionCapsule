@@ -1,0 +1,11 @@
+{
+	"_Creative Tab": "",
+	"itemGroup.potioncapsule": "Potion Capsule"
+	,
+	"_Items": "",
+	"item.potioncapsule.item_capsule": "Potion Capsule",
+	"item.potioncapsule.item_capsule.with": "Potion Capsule (%s)"
+	,
+	"_Tooltips": "",
+	"potioncapsule.tooltip.capsule.empty": "Empty"
+}
