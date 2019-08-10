@@ -8,4 +8,7 @@
 	,
 	"_Tooltips": "",
 	"potioncapsule.tooltip.capsule.empty": "Empty"
+	,
+	"_Miscellaneous": "",
+	"potioncapsule.misc.left_potion_display_name": "Partially Used Potion"
 }

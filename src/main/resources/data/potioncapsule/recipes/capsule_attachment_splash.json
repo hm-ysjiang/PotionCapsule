@@ -1,6 +1,6 @@
 {
 	"type":"potioncapsule:capsule_attachment",
-	"potionitem": "minecraft:potion",
+	"potionitem": "minecraft:splash_potion",
 	"retriveitem": "minecraft:glass_bottle",
 	"rerender_color": true
 }

@@ -2,6 +2,7 @@ package hmysjiang.potioncapsule.init;
 
 import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.recipe.RecipeCapsuleAttachment;
+import hmysjiang.potioncapsule.recipe.RecipeCapsuleCombinationOrClear;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -12,7 +13,8 @@ public class ModRecipes {
 	
 	@SubscribeEvent
 	public static void onRecipeRegister(RegistryEvent.Register<IRecipeSerializer<?>> event) {
-		event.getRegistry().register(RecipeCapsuleAttachment.SERIALIZER);
+		event.getRegistry().registerAll(RecipeCapsuleAttachment.SERIALIZER,
+										RecipeCapsuleCombinationOrClear.SERIALIZER);
 	}
 	
 }
