@@ -7,8 +7,9 @@ public class Reference {
 	public static final String CAPSULE_CRAFTING_GROUP = "potioncapsule_crafting_group";
 	
 	public static final class ItemRegs {
-		
+
 		public static final String CAPSULE = "item_capsule";
+		public static final String PENDANT = "item_capsule_pendant";
 		
 	}
 	

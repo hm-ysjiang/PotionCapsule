@@ -4,11 +4,24 @@
 	,
 	"_Items": "",
 	"item.potioncapsule.item_capsule": "Potion Capsule",
-	"item.potioncapsule.item_capsule.with": "Potion Capsule (%s)"
+	"item.potioncapsule.item_capsule.with": "Potion Capsule (%s)",
+	"item.potioncapsule.item_capsule_pendant": "Capsule Pendant"
 	,
 	"_Tooltips": "",
-	"potioncapsule.tooltip.capsule.empty": "Empty"
+	"potioncapsule.tooltip.hint.shiftdown": "<Hold shift for more info>",
+	"potioncapsule.tooltip.capsule.empty": "Empty",
+	"potioncapsule.tooltip.pendant.slotcont": "Slot %1$s: %2$s",
+	"potioncapsule.tooltip.pendant.gui.slotdescr_ATTACK": "Triggered when attacking",
+	"potioncapsule.tooltip.pendant.gui.slotdescr_DAMAGED": "Triggered when being damaged",
+	"potioncapsule.tooltip.pendant.gui.slotdescr_FIRE": "Triggered when is on fire",
+	"potioncapsule.tooltip.pendant.gui.slotdescr_WATER": "Triggered when is in water",
+	"potioncapsule.tooltip.pendant.gui.slotdescr_SPRINT": "Triggered when sprinting",
+	"potioncapsule.tooltip.pendant.gui.slotdescr_FALLING": "Triggered when falling",
+	"potioncapsule.tooltip.pendant.gui.slotdescr_NIGHT": "Trigger when is night time",
+	"potioncapsule.tooltip.pendant.gui.slotdescr_KEYBIND": "Triggered when keybind being pressed"
 	,
 	"_Miscellaneous": "",
-	"potioncapsule.misc.left_potion_display_name": "Partially Used Potion"
+	"potioncapsule.misc.left_potion_display_name": "Partially Used Potion",
+	"potioncapsule.keybind.category": "Potion Capsule",
+	"potioncapsule.keybind.pendant_keybind.descr": "Use Capsule In Pendant"
 }

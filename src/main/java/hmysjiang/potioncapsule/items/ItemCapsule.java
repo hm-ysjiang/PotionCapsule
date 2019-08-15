@@ -60,18 +60,49 @@ public class ItemCapsule extends Item {
 
 		if (!worldIn.isRemote) {
 			for (EffectInstance effect: PotionUtils.getEffectsFromStack(stack)) {
-//				if (effect.getPotion().isInstant()) {
-//					effect.getPotion().affectEntity(player, player, entityLiving, effect.getAmplifier(), 1.0D);
-//				} 
-//				else {
-//					entityLiving.addPotionEffect(new EffectInstance(effect));
-//				}
 				entityLiving.addPotionEffect(new EffectInstance(effect));
 			}
 		}
 
 		if (player != null) {
 			player.addStat(Stats.ITEM_USED.get(this));
+		}
+		return stack;
+	}
+	
+	public ItemStack onItemUseFinishRegardsActiveEffects(ItemStack stack, World world, LivingEntity entityLiving) {
+		if (stack.isEmpty())
+			return stack;
+		
+		boolean shouldApply = false;
+		for (EffectInstance effect: PotionUtils.getEffectsFromStack(stack)) {
+			if (shouldApply)
+				break;
+			if (entityLiving.getActivePotionEffect(effect.getPotion()) == null) {
+				shouldApply = true;
+			}
+		}
+		
+		if (shouldApply) {
+			PlayerEntity player = entityLiving instanceof PlayerEntity ? (PlayerEntity) entityLiving : null;
+			if (player == null || !player.abilities.isCreativeMode) {
+				stack.shrink(1);
+			}
+
+			if (player instanceof ServerPlayerEntity) {
+				CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, stack);
+			}
+
+			if (!world.isRemote) {
+				for (EffectInstance effect: PotionUtils.getEffectsFromStack(stack)) {
+					entityLiving.addPotionEffect(new EffectInstance(effect));
+				}
+			}
+
+			if (player != null) {
+				player.addStat(Stats.ITEM_USED.get(this));
+			}
+			return stack;
 		}
 		return stack;
 	}
@@ -94,21 +125,27 @@ public class ItemCapsule extends Item {
 	@Override
 	public ITextComponent getDisplayName(ItemStack stack) {
 		if (stack.getOrCreateTag().contains(TAG_CUSTOM_POTION)) {
-			List<ITextComponent> components = addPotionTooltipWithoutDuration(stack, new ArrayList<ITextComponent>());
-			if (components.size() < 1)
-				return super.getDisplayName(stack);
-			
-			String jointComponents = components.get(0).getFormattedText();
-			for (int i = 1; i < components.size(); i++) {
-				if (i == 3) {
-					jointComponents += ", ...";
-					break;
-				}
-				jointComponents += ", " + components.get(i).getFormattedText();
-			}
-			return new TranslationTextComponent(getTranslationKey() + ".with", jointComponents);
+			return new TranslationTextComponent(getTranslationKey() + ".with", getDescriptionString(stack));
 		}
 		return super.getDisplayName(stack);
+	}
+	
+	public String getDescriptionString(ItemStack stack) {
+		if (stack.isEmpty())
+			return new TranslationTextComponent("potioncapsule.tooltip.capsule.empty").getFormattedText();
+		List<ITextComponent> components = addPotionTooltipWithoutDuration(stack, new ArrayList<ITextComponent>());
+		if (components.size() < 1)
+			return new TranslationTextComponent("potioncapsule.tooltip.capsule.empty").getFormattedText();
+		
+		String jointComponents = components.get(0).getFormattedText();
+		for (int i = 1; i < components.size(); i++) {
+			if (i == 3) {
+				jointComponents += ", ...";
+				break;
+			}
+			jointComponents += ", " + components.get(i).getFormattedText();
+		}
+		return jointComponents;
 	}
 
 	@Override
@@ -162,6 +199,7 @@ public class ItemCapsule extends Item {
 			}
 			
 			for (EffectInstance effect: effects) {
+				effect.duration = 100;
 				items.add(PotionUtils.appendEffects(getDefaultInstance(), Arrays.asList(effect)));
 			}
 		}
