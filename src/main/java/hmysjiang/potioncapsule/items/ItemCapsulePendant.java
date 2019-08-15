@@ -4,14 +4,13 @@ import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.container.ContainerPendant;
 import hmysjiang.potioncapsule.init.ModItems;
+import hmysjiang.potioncapsule.utils.ContainerProvider;
 import hmysjiang.potioncapsule.utils.Defaults;
 import hmysjiang.potioncapsule.utils.helper.InventoryHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -19,7 +18,6 @@ import net.minecraft.nbt.INBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -36,7 +34,9 @@ import net.minecraftforge.items.ItemStackHandler;
 
 @EventBusSubscriber(modid = Reference.MOD_ID)
 public class ItemCapsulePendant extends Item {
-	private static INamedContainerProvider containerProv = null;
+	private static ContainerProvider<ContainerPendant> provider = new ContainerProvider<>(
+			() -> ModItems.PENDANT.getDisplayName(ModItems.PENDANT.getDefaultInstance()), 
+			(int winId, PlayerInventory inv, PlayerEntity player) -> new ContainerPendant(winId, inv, player.getActiveHand()) );
 
 	public ItemCapsulePendant() {
 		super(Defaults.itemProp.get());
@@ -46,9 +46,7 @@ public class ItemCapsulePendant extends Item {
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		if (!worldIn.isRemote) {
 			playerIn.getHeldItem(handIn).getOrCreateTag().putBoolean("opened", true);
-			if (containerProv == null)
-				containerProv = new Provider();
-			NetworkHooks.openGui((ServerPlayerEntity) playerIn, containerProv, buf->{
+			NetworkHooks.openGui((ServerPlayerEntity) playerIn, provider, buf->{
 				buf.writeBoolean(handIn == Hand.MAIN_HAND);
 			});
 		}
@@ -214,21 +212,6 @@ public class ItemCapsulePendant extends Item {
 				((ItemStackHandler) handler).setStackInSlot(7, ((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(handler.getStackInSlot(CapsuleSlots.KEYBIND.index), player.world, player));
 			});
 		}
-	}
-	
-	private static class Provider implements INamedContainerProvider {
-		public static final ITextComponent displayName = ModItems.PENDANT.getDisplayName(ModItems.PENDANT.getDefaultInstance());
-
-		@Override
-		public Container createMenu(int winId, PlayerInventory inv, PlayerEntity player) {
-			return new ContainerPendant(winId, inv, player.getActiveHand());
-		}
-		
-		@Override
-		public ITextComponent getDisplayName() {
-			return displayName;
-		}
-		
 	}
 
 }
