@@ -18,7 +18,8 @@
 	"potioncapsule.tooltip.pendant.gui.slotdescr_SPRINT": "Triggered when sprinting",
 	"potioncapsule.tooltip.pendant.gui.slotdescr_FALLING": "Triggered when falling",
 	"potioncapsule.tooltip.pendant.gui.slotdescr_NIGHT": "Trigger when is night time",
-	"potioncapsule.tooltip.pendant.gui.slotdescr_KEYBIND": "Triggered when keybind being pressed"
+	"potioncapsule.tooltip.pendant.gui.slotdescr_KEYBIND": "Triggered when keybind being pressed",
+	"potioncapsule.tooltip.pendant.gui.keyhint": "Keybind: "
 	,
 	"_Miscellaneous": "",
 	"potioncapsule.misc.left_potion_display_name": "Partially Used Potion",

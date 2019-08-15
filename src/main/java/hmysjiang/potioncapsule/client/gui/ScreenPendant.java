@@ -1,10 +1,11 @@
 package hmysjiang.potioncapsule.client.gui;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 
+import hmysjiang.potioncapsule.client.KeyBindHandler;
 import hmysjiang.potioncapsule.container.ContainerPendant;
 import hmysjiang.potioncapsule.items.ItemCapsulePendant;
 import hmysjiang.potioncapsule.utils.Defaults;
@@ -13,6 +14,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
@@ -55,16 +57,22 @@ public class ScreenPendant extends ContainerScreen<ContainerPendant> {
 	
 	@Override
 	public List<String> getTooltipFromItem(ItemStack stack) {
-		List<String> tooltip = super.getTooltipFromItem(stack);
+		List<String> tooltip = new ArrayList<>();
 		if (container.getHandler() != null) {
 			for (ItemCapsulePendant.CapsuleSlots slotType: ItemCapsulePendant.CapsuleSlots.values()) {
 				if (container.getHandler().getStackInSlot(slotType.getIndex()) == stack) {
-					if (stack.isEmpty()) {
-						return Arrays.asList(new TranslationTextComponent("potioncapsule.tooltip.pendant.gui.slotdescr_" + slotType.name())
-										.applyTextStyle(TextFormatting.GOLD).getFormattedText());
+					if (!stack.isEmpty()) {
+						for (String str: super.getTooltipFromItem(stack))
+							tooltip.add(str);
 					}
-					tooltip.add(0, new TranslationTextComponent("potioncapsule.tooltip.pendant.gui.slotdescr_" + slotType.name())
+					tooltip.add(new TranslationTextComponent("potioncapsule.tooltip.pendant.gui.slotdescr_" + slotType.name())
 							.applyTextStyle(TextFormatting.GOLD).getFormattedText()); 
+					if (stack == container.getHandler().getStackInSlot(7)) {
+						String key = KeyBindHandler.keybindings.get(0).getLocalizedName();
+						key = key.substring(0, 1).toUpperCase() + key.substring(1);
+						tooltip.add((new TranslationTextComponent("potioncapsule.tooltip.pendant.gui.keyhint")
+								.appendSibling(new StringTextComponent(key).applyTextStyle(TextFormatting.AQUA))).getFormattedText());
+					}
 					break;
 				}
 			}

@@ -45,6 +45,7 @@ public class ItemCapsulePendant extends Item {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		if (!worldIn.isRemote) {
+			playerIn.getHeldItem(handIn).getOrCreateTag().putBoolean("opened", true);
 			if (containerProv == null)
 				containerProv = new Provider();
 			NetworkHooks.openGui((ServerPlayerEntity) playerIn, containerProv, buf->{
@@ -133,6 +134,8 @@ public class ItemCapsulePendant extends Item {
 	public static void onPlayerAbout2Attacc(AttackEntityEvent event) {
 		PlayerEntity player = event.getEntityPlayer();
 		ItemStack pendant = InventoryHelper.findStackFromInventory(player.inventory, ModItems.PENDANT.getDefaultInstance());
+		if (pendant.getOrCreateTag().contains("opened") && pendant.getTag().getBoolean("opened"))
+			return;
 		if (!pendant.isEmpty()) {
 			pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
 				((ItemStackHandler) handler).setStackInSlot(0, ((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(handler.getStackInSlot(CapsuleSlots.ATTACK.index), player.world, player));
@@ -146,6 +149,8 @@ public class ItemCapsulePendant extends Item {
 		if (player == null || event.getSource().isFireDamage())
 			return;
 		ItemStack pendant = InventoryHelper.findStackFromInventory(player.inventory, ModItems.PENDANT.getDefaultInstance());
+		if (pendant.getOrCreateTag().contains("opened") && pendant.getTag().getBoolean("opened"))
+			return;
 		if (!pendant.isEmpty()) {
 			pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
 				((ItemStackHandler) handler).setStackInSlot(1, ((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(handler.getStackInSlot(CapsuleSlots.DAMAGED.index), player.world, player));
@@ -154,6 +159,8 @@ public class ItemCapsulePendant extends Item {
 	}
 
 	private void onTick(ItemStack pendant, PlayerEntity player, World world) {
+		if (pendant.getOrCreateTag().contains("opened") && pendant.getTag().getBoolean("opened"))
+			return;
 		// FIRE
 		if (player.isBurning() || player.isInLava())
 			pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
@@ -200,6 +207,8 @@ public class ItemCapsulePendant extends Item {
 		if (player.world.isRemote)
 			return;
 		ItemStack pendant = InventoryHelper.findStackFromInventory(player.inventory, ModItems.PENDANT.getDefaultInstance());
+		if (pendant.getOrCreateTag().contains("opened") && pendant.getTag().getBoolean("opened"))
+			return;
 		if (!pendant.isEmpty()) {
 			pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
 				((ItemStackHandler) handler).setStackInSlot(7, ((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(handler.getStackInSlot(CapsuleSlots.KEYBIND.index), player.world, player));
