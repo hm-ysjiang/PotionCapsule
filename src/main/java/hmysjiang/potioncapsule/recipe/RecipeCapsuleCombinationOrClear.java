@@ -72,5 +72,10 @@ public class RecipeCapsuleCombinationOrClear extends SpecialRecipe {
 	public IRecipeSerializer<?> getSerializer() {
 		return SERIALIZER;
 	}
+
+	@Override
+	public boolean canFit(int width, int height) {
+		return width * height >= 1;
+	}
 	
 }

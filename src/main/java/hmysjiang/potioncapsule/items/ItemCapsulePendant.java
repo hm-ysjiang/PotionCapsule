@@ -139,7 +139,7 @@ public class ItemCapsulePendant extends Item {
 	
 	@SubscribeEvent
 	public static void onPlayerAbout2Attacc(AttackEntityEvent event) {
-		PlayerEntity player = event.getEntityPlayer();
+		PlayerEntity player = event.getPlayer();
 		ItemStack pendant = InventoryHelper.findStackFromInventory(player.inventory, ModItems.PENDANT.getDefaultInstance());
 		if (pendant.getOrCreateTag().contains("opened") && pendant.getTag().getBoolean("opened"))
 			return;

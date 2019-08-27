@@ -215,5 +215,10 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 		}
 		
 	}
+
+	@Override
+	public boolean canFit(int width, int height) {
+		return width * height >= 2;
+	}
 	
 }
