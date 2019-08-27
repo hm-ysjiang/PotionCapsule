@@ -1,5 +1,6 @@
 package hmysjiang.potioncapsule.init;
 
+import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.recipe.RecipeCapsuleAttachment;
 import hmysjiang.potioncapsule.recipe.RecipeCapsuleCombinationOrClear;
@@ -13,6 +14,7 @@ public class ModRecipes {
 	
 	@SubscribeEvent
 	public static void onRecipeRegister(RegistryEvent.Register<IRecipeSerializer<?>> event) {
+		PotionCapsule.Logger.info("Recipes Registering");
 		event.getRegistry().registerAll(RecipeCapsuleAttachment.SERIALIZER,
 										RecipeCapsuleCombinationOrClear.SERIALIZER);
 	}

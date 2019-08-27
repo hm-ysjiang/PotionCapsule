@@ -2,10 +2,12 @@ package hmysjiang.potioncapsule.init;
 
 import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.Reference;
+import hmysjiang.potioncapsule.Reference.BlockRegs;
 import hmysjiang.potioncapsule.Reference.ItemRegs;
 import hmysjiang.potioncapsule.items.ItemCapsule;
 import hmysjiang.potioncapsule.items.ItemCapsulePendant;
 import hmysjiang.potioncapsule.utils.Defaults;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -18,12 +20,16 @@ public class ModItems {
 	public static final Item CAPSULE = new ItemCapsule().setRegistryName(Defaults.modPrefix.apply(ItemRegs.CAPSULE));
 	public static final Item PENDANT = new ItemCapsulePendant().setRegistryName(Defaults.modPrefix.apply(ItemRegs.PENDANT));
 	
+	public static final Item BLOCK_GELATIN_EXTRACTOR = new BlockItem(ModBlocks.GELATIN_EXTRACTOR, Defaults.itemProp.get()).setRegistryName(BlockRegs.GELATIN_EXTRACTOR);
+	
 	@SubscribeEvent
-	public static void registerItem(RegistryEvent.Register<Item> event) {
+	public static void onItemRegister(RegistryEvent.Register<Item> event) {
 		PotionCapsule.Logger.info("Items Registering");
 		IForgeRegistry<Item> reg = event.getRegistry();
 		reg.registerAll(CAPSULE,
-						PENDANT);
+						PENDANT
+						,
+						BLOCK_GELATIN_EXTRACTOR);
 	}
 	
 }

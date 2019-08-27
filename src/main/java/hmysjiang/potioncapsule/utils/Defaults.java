@@ -5,12 +5,12 @@ import java.util.function.Supplier;
 
 import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.Reference;
-import net.minecraft.item.Item.Properties;
+import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
 public class Defaults {
 	
-	public static Supplier<Properties> itemProp = () -> { return new Properties().group(PotionCapsule.GROUP); };
-	public static Function<String, ResourceLocation> modPrefix = path -> { return new ResourceLocation(Reference.MOD_ID, path); };
+	public static Supplier<Item.Properties> itemProp = () -> new Item.Properties().group(PotionCapsule.GROUP);
+	public static Function<String, ResourceLocation> modPrefix = path -> new ResourceLocation(Reference.MOD_ID, path);
 	
 }

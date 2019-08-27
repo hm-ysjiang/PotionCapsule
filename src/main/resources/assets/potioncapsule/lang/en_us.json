@@ -7,6 +7,9 @@
 	"item.potioncapsule.item_capsule.with": "Potion Capsule (%s)",
 	"item.potioncapsule.item_capsule_pendant": "Capsule Pendant"
 	,
+	"_Blocks": "",
+	"block.potioncapsule.block_gelatin_extractor": "Gelatin Extractor"
+	,
 	"_Tooltips": "",
 	"potioncapsule.tooltip.hint.shiftdown": "<Hold shift for more info>",
 	"potioncapsule.tooltip.capsule.empty": "Empty",

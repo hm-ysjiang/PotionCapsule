@@ -1,20 +1,16 @@
 package hmysjiang.potioncapsule.client.gui;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 
-import hmysjiang.potioncapsule.client.KeyBindHandler;
 import hmysjiang.potioncapsule.container.ContainerPendant;
 import hmysjiang.potioncapsule.items.ItemCapsulePendant;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
@@ -48,36 +44,17 @@ public class ScreenPendant extends ContainerScreen<ContainerPendant> {
 	}
 	
 	@Override
-	protected void renderHoveredToolTip(int p_191948_1_, int p_191948_2_) {
-		if (this.minecraft.player.inventory.getItemStack().isEmpty() && this.hoveredSlot != null
-				&& (this.hoveredSlot.getHasStack() || this.hoveredSlot.slotNumber < 8)) {
-			this.renderTooltip(this.hoveredSlot.getStack(), p_191948_1_, p_191948_2_);
+	protected void renderHoveredToolTip(int mouseX, int mouseY) {
+		if (this.hoveredSlot != null) {
+			net.minecraftforge.fml.client.config.GuiUtils.preItemToolTip(this.hoveredSlot.getStack());
+			List<String> tooltips = this.getTooltipFromItem(this.hoveredSlot.getStack());
+			if (this.hoveredSlot.slotNumber < 8)
+				tooltips.add(new TranslationTextComponent("potioncapsule.tooltip.pendant.gui.slotdescr_"
+						+ ItemCapsulePendant.CapsuleSlots.fromIndex(this.hoveredSlot.slotNumber))
+								.applyTextStyle(TextFormatting.GOLD).getFormattedText());
+			this.renderTooltip(tooltips, mouseX, mouseY, font);
+			net.minecraftforge.fml.client.config.GuiUtils.postItemToolTip();
 		}
-	}
-	
-	@Override
-	public List<String> getTooltipFromItem(ItemStack stack) {
-		List<String> tooltip = new ArrayList<>();
-		if (container.getHandler() != null) {
-			for (ItemCapsulePendant.CapsuleSlots slotType: ItemCapsulePendant.CapsuleSlots.values()) {
-				if (container.getHandler().getStackInSlot(slotType.getIndex()) == stack) {
-					if (!stack.isEmpty()) {
-						for (String str: super.getTooltipFromItem(stack))
-							tooltip.add(str);
-					}
-					tooltip.add(new TranslationTextComponent("potioncapsule.tooltip.pendant.gui.slotdescr_" + slotType.name())
-							.applyTextStyle(TextFormatting.GOLD).getFormattedText()); 
-					if (stack == container.getHandler().getStackInSlot(7)) {
-						String key = KeyBindHandler.keybindings.get(0).getLocalizedName();
-						key = key.substring(0, 1).toUpperCase() + key.substring(1);
-						tooltip.add((new TranslationTextComponent("potioncapsule.tooltip.pendant.gui.keyhint")
-								.appendSibling(new StringTextComponent(key).applyTextStyle(TextFormatting.AQUA))).getFormattedText());
-					}
-					break;
-				}
-			}
-		}
-		return tooltip;
 	}
 	
 }

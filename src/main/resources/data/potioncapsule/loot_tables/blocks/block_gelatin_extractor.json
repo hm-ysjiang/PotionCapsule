@@ -1,0 +1,24 @@
+{
+	"type": "minecraft:block",
+	"pools": 
+	[
+		{
+			"name": "pool",
+			"rolls": 1,
+			"entries": 
+			[
+				{
+					"type": "minecraft:item",
+					"name": "potioncapsule:block_gelatin_extractor"
+				}
+			],
+
+			"conditions": 
+			[
+				{
+					"condition": "minecraft:survives_explosion"
+				}
+			]
+		}
+	]
+}

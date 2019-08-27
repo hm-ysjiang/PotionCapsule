@@ -6,6 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import hmysjiang.potioncapsule.configs.ClientConfigs;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.util.ITooltipFlag;
@@ -131,6 +132,8 @@ public class ItemCapsule extends Item {
 	}
 	
 	public String getDescriptionString(ItemStack stack) {
+		if (ClientConfigs.capsule_effectRenderCount.get() == 0)
+			return "";
 		if (stack.isEmpty())
 			return new TranslationTextComponent("potioncapsule.tooltip.capsule.empty").getFormattedText();
 		List<ITextComponent> components = addPotionTooltipWithoutDuration(stack, new ArrayList<ITextComponent>());
@@ -139,7 +142,7 @@ public class ItemCapsule extends Item {
 		
 		String jointComponents = components.get(0).getFormattedText();
 		for (int i = 1; i < components.size(); i++) {
-			if (i == 3) {
+			if (i == ClientConfigs.capsule_effectRenderCount.get()) {
 				jointComponents += ", ...";
 				break;
 			}
@@ -158,7 +161,7 @@ public class ItemCapsule extends Item {
 	}
 
 	/***
-	 * This is a copy from {@link PotionUtils.addPotionTooltip}, I just removed the duration and the "when used" part
+	 * This is a copy from {@link PotionUtils.addPotionTooltip}, with the duration and the "when used" part removed
 	 * 
 	 * @param stack
 	 * @param txtComponents

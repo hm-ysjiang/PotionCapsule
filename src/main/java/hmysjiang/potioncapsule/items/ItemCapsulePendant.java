@@ -2,6 +2,7 @@ package hmysjiang.potioncapsule.items;
 
 import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.Reference;
+import hmysjiang.potioncapsule.configs.ServerConfigs;
 import hmysjiang.potioncapsule.container.ContainerPendant;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.utils.ContainerProvider;
@@ -67,8 +68,8 @@ public class ItemCapsulePendant extends Item {
 		return new ICapabilitySerializable<INBT>() {
 			private final IItemHandler handler = new ItemStackHandler(8) {
 				@Override public boolean isItemValid(int slot, ItemStack stack) { return stack.getItem() instanceof ItemCapsule; };
-				@Override public int getSlotLimit(int slot) { return 128; }
-				@Override protected int getStackLimit(int slot, ItemStack stack) { return 128; }
+				@Override public int getSlotLimit(int slot) { return ServerConfigs.pendant_slotSize.get(); }
+				@Override protected int getStackLimit(int slot, ItemStack stack) { return ServerConfigs.pendant_slotSize.get(); }
 			};
 			
 			@Override
@@ -116,11 +117,19 @@ public class ItemCapsulePendant extends Item {
 		NIGHT(6),
 		KEYBIND(7);
 		final int index;
+		public static final CapsuleSlots[] MAPPING = new CapsuleSlots[8];
 		private CapsuleSlots(int idx) {
 			index = idx;
 		}
 		public int getIndex() {
 			return index;
+		}
+		public static CapsuleSlots fromIndex(int idx) {
+			return MAPPING[idx];
+		}
+		static {
+			for (CapsuleSlots slot: values())
+				MAPPING[slot.index] = slot;
 		}
 	}
 	

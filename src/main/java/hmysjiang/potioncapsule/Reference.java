@@ -13,4 +13,10 @@ public class Reference {
 		
 	}
 	
+	public static final class BlockRegs {
+		
+		public static final String GELATIN_EXTRACTOR = "block_gelatin_extractor";
+		
+	}
+	
 }

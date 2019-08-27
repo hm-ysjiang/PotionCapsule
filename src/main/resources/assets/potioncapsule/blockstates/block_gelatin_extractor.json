@@ -1,0 +1,8 @@
+{
+    "variants": {
+		"facing=north": { "model": "potioncapsule:block/gelatin_extractor" },
+		"facing=south": { "model": "potioncapsule:block/gelatin_extractor", "y": 180 },
+		"facing=west": { "model": "potioncapsule:block/gelatin_extractor", "y": 270 },
+		"facing=east": { "model": "potioncapsule:block/gelatin_extractor", "y": 90 }
+    }
+}
