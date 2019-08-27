@@ -11,8 +11,8 @@
 	"block.potioncapsule.block_gelatin_extractor": "Gelatin Extractor"
 	,
 	"_Tooltips": "",
-	"potioncapsule.tooltip.hint.shiftdown": "<Hold shift for more info>",
 	"potioncapsule.tooltip.capsule.empty": "Empty",
+	"potioncapsule.tooltip.capsule.shiftdown": "<Hold shift for more info>",
 	"potioncapsule.tooltip.pendant.slotcont": "Slot %1$s: %2$s",
 	"potioncapsule.tooltip.pendant.gui.slotdescr_ATTACK": "Triggered when attacking",
 	"potioncapsule.tooltip.pendant.gui.slotdescr_DAMAGED": "Triggered when being damaged",

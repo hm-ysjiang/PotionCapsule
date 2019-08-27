@@ -4,13 +4,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import hmysjiang.potioncapsule.configs.ClientConfigs;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
@@ -19,6 +24,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.EffectUtils;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.stats.Stats;
@@ -26,8 +32,10 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.Tuple;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -125,6 +133,8 @@ public class ItemCapsule extends Item {
 
 	@Override
 	public ITextComponent getDisplayName(ItemStack stack) {
+		if (ClientConfigs.capsule_effectRenderCount.get() == 0)
+			return super.getDisplayName(stack);
 		if (stack.getOrCreateTag().contains(TAG_CUSTOM_POTION)) {
 			return new TranslationTextComponent(getTranslationKey() + ".with", getDescriptionString(stack));
 		}
@@ -136,7 +146,7 @@ public class ItemCapsule extends Item {
 			return "";
 		if (stack.isEmpty())
 			return new TranslationTextComponent("potioncapsule.tooltip.capsule.empty").getFormattedText();
-		List<ITextComponent> components = addPotionTooltipWithoutDuration(stack, new ArrayList<ITextComponent>());
+		List<ITextComponent> components = addPotionTooltipWithoutDuration(stack, new ArrayList<>());
 		if (components.size() < 1)
 			return new TranslationTextComponent("potioncapsule.tooltip.capsule.empty").getFormattedText();
 		
@@ -154,10 +164,91 @@ public class ItemCapsule extends Item {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		if (stack.getOrCreateTag().contains(TAG_CUSTOM_POTION))
-			PotionUtils.addPotionTooltip(stack, tooltip, 1.0F);
+		if (stack.getOrCreateTag().contains(TAG_CUSTOM_POTION)) {
+			if (Screen.hasShiftDown()) {
+				PotionUtils.addPotionTooltip(stack, tooltip, 1.0F);
+			}
+			else {
+				addPotionTooltipWithLimitedEffectsRendered(stack, tooltip, 1.0F);
+			}
+		}
 		else
 			tooltip.add((new TranslationTextComponent("potioncapsule.tooltip.capsule.empty")).applyTextStyle(TextFormatting.GRAY));
+	}
+
+	/***
+	 * This is a copy from {@link PotionUtils.addPotionTooltip}, with a config condition to hide effect names to prevent the exploding tooltips
+	 * 
+	 * @param stack
+	 * @param txtComponents
+	 * @param durationFactor
+	 */
+	@OnlyIn(Dist.CLIENT)
+	private List<ITextComponent> addPotionTooltipWithLimitedEffectsRendered(ItemStack stack, List<ITextComponent> txtComponents, float durationFactor) {
+		boolean limitReached = false;
+		List<EffectInstance> list = PotionUtils.getEffectsFromStack(stack);
+		List<Tuple<String, AttributeModifier>> list1 = new ArrayList<>();
+		if (list.isEmpty()) {
+			txtComponents.add((new TranslationTextComponent("effect.none")).applyTextStyle(TextFormatting.GRAY));
+		} 
+		else {
+			for (int i = 0 ; i<list.size() ; i++) {
+				ITextComponent itextcomponent = new TranslationTextComponent(list.get(i).getEffectName());
+				Effect effect = list.get(i).getPotion();
+				Map<IAttribute, AttributeModifier> map = effect.getAttributeModifierMap();
+				if (!map.isEmpty()) {
+					for (Entry<IAttribute, AttributeModifier> entry : map.entrySet()) {
+						AttributeModifier attributemodifier = entry.getValue();
+						AttributeModifier attributemodifier1 = new AttributeModifier(attributemodifier.getName(), effect.getAttributeModifierAmount(list.get(i).getAmplifier(), attributemodifier), attributemodifier.getOperation());
+						list1.add(new Tuple<>(entry.getKey().getName(), attributemodifier1));
+					}
+				}
+
+				if (list.get(i).getAmplifier() > 0) {
+					itextcomponent.appendText(" ").appendSibling(new TranslationTextComponent("potion.potency." + list.get(i).getAmplifier()));
+				}
+
+				if (list.get(i).getDuration() > 20) {
+					itextcomponent.appendText(" (").appendText(EffectUtils.getPotionDurationString(list.get(i), durationFactor)).appendText(")");
+				}
+				
+				if (i < ClientConfigs.capsule_effectRenderCount.get()) {
+					txtComponents.add(itextcomponent.applyTextStyle(effect.getEffectType().getColor()));
+				}
+				else {
+					limitReached = true;
+				}
+			}
+		}
+		
+		if (limitReached)
+			txtComponents.add(new TranslationTextComponent("potioncapsule.tooltip.capsule.shiftdown").applyTextStyle(TextFormatting.GRAY).applyTextStyle(TextFormatting.ITALIC));
+
+		if (!list1.isEmpty()) {
+			txtComponents.add(new StringTextComponent(""));
+			txtComponents.add((new TranslationTextComponent("potion.whenDrank")).applyTextStyle(TextFormatting.DARK_PURPLE));
+
+			for (Tuple<String, AttributeModifier> tuple : list1) {
+				AttributeModifier attributemodifier2 = tuple.getB();
+				double d0 = attributemodifier2.getAmount();
+				double d1;
+				if (attributemodifier2.getOperation() != AttributeModifier.Operation.MULTIPLY_BASE && attributemodifier2.getOperation() != AttributeModifier.Operation.MULTIPLY_TOTAL) {
+					d1 = attributemodifier2.getAmount();
+				} 
+				else {
+					d1 = attributemodifier2.getAmount() * 100.0D;
+				}
+
+				if (d0 > 0.0D) {
+					txtComponents.add((new TranslationTextComponent("attribute.modifier.plus." + attributemodifier2.getOperation().getId(), ItemStack.DECIMALFORMAT.format(d1), new TranslationTextComponent("attribute.name." + (String) tuple.getA()))).applyTextStyle(TextFormatting.BLUE));
+				} 
+				else if (d0 < 0.0D) {
+					d1 = d1 * -1.0D;
+					txtComponents.add((new TranslationTextComponent("attribute.modifier.take." + attributemodifier2.getOperation().getId(), ItemStack.DECIMALFORMAT.format(d1), new TranslationTextComponent("attribute.name." + (String) tuple.getA()))).applyTextStyle(TextFormatting.RED));
+				}
+			}
+		}
+		return txtComponents;
 	}
 
 	/***
@@ -165,7 +256,6 @@ public class ItemCapsule extends Item {
 	 * 
 	 * @param stack
 	 * @param txtComponents
-	 * @param durationFactor
 	 */
 	@OnlyIn(Dist.CLIENT)
 	private List<ITextComponent> addPotionTooltipWithoutDuration(ItemStack stack, List<ITextComponent> txtComponents) {

@@ -1,5 +1,6 @@
 package hmysjiang.potioncapsule.client.gui;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.mojang.blaze3d.platform.GlStateManager;
@@ -46,14 +47,18 @@ public class ScreenPendant extends ContainerScreen<ContainerPendant> {
 	@Override
 	protected void renderHoveredToolTip(int mouseX, int mouseY) {
 		if (this.hoveredSlot != null) {
-			net.minecraftforge.fml.client.config.GuiUtils.preItemToolTip(this.hoveredSlot.getStack());
-			List<String> tooltips = this.getTooltipFromItem(this.hoveredSlot.getStack());
-			if (this.hoveredSlot.slotNumber < 8)
-				tooltips.add(new TranslationTextComponent("potioncapsule.tooltip.pendant.gui.slotdescr_"
-						+ ItemCapsulePendant.CapsuleSlots.fromIndex(this.hoveredSlot.slotNumber))
-								.applyTextStyle(TextFormatting.GOLD).getFormattedText());
-			this.renderTooltip(tooltips, mouseX, mouseY, font);
-			net.minecraftforge.fml.client.config.GuiUtils.postItemToolTip();
+			if (this.hoveredSlot.slotNumber < 8) {
+				net.minecraftforge.fml.client.config.GuiUtils.preItemToolTip(this.hoveredSlot.getStack());
+				List<String> tooltips = this.hoveredSlot.getHasStack() ? this.getTooltipFromItem(this.hoveredSlot.getStack()) : new ArrayList<>();
+				if (this.hoveredSlot.slotNumber < 8)
+					tooltips.add(new TranslationTextComponent("potioncapsule.tooltip.pendant.gui.slotdescr_"
+							+ ItemCapsulePendant.CapsuleSlots.fromIndex(this.hoveredSlot.slotNumber))
+									.applyTextStyle(TextFormatting.GOLD).getFormattedText());
+				this.renderTooltip(tooltips, mouseX, mouseY, font);
+				net.minecraftforge.fml.client.config.GuiUtils.postItemToolTip();
+			}
+			else
+				super.renderHoveredToolTip(mouseX, mouseY);
 		}
 	}
 	
