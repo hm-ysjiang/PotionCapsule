@@ -3,12 +3,12 @@ package hmysjiang.potioncapsule;
 import org.apache.logging.log4j.LogManager;
 
 import hmysjiang.potioncapsule.configs.ConfigManager;
+import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.proxy.ClientProxy;
 import hmysjiang.potioncapsule.proxy.ISidedProxy;
 import hmysjiang.potioncapsule.proxy.ServerProxy;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -44,7 +44,7 @@ public class PotionCapsule {
 	public static final ItemGroup GROUP = new ItemGroup(Reference.MOD_ID) {
 		@Override
 		public ItemStack createIcon() {
-			return new ItemStack(Items.POTION);
+			return new ItemStack(ModItems.CAPSULE);
 		}
 	};
 	

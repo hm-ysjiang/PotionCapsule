@@ -19,6 +19,7 @@ public class ModItems {
 
 	public static final Item CAPSULE = new ItemCapsule().setRegistryName(Defaults.modPrefix.apply(ItemRegs.CAPSULE));
 	public static final Item PENDANT = new ItemCapsulePendant().setRegistryName(Defaults.modPrefix.apply(ItemRegs.PENDANT));
+	public static final Item GELATIN_POWDER = new Item(Defaults.itemProp.get()).setRegistryName(Defaults.modPrefix.apply(ItemRegs.GELATIN_POWDER));
 	
 	public static final Item BLOCK_GELATIN_EXTRACTOR = new BlockItem(ModBlocks.GELATIN_EXTRACTOR, Defaults.itemProp.get()).setRegistryName(BlockRegs.GELATIN_EXTRACTOR);
 	
@@ -27,7 +28,8 @@ public class ModItems {
 		PotionCapsule.Logger.info("Items Registering");
 		IForgeRegistry<Item> reg = event.getRegistry();
 		reg.registerAll(CAPSULE,
-						PENDANT
+						PENDANT,
+						GELATIN_POWDER
 						,
 						BLOCK_GELATIN_EXTRACTOR);
 	}

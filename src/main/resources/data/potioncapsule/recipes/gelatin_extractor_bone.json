@@ -1,0 +1,7 @@
+{
+	"type":"potioncapsule:gelatin_ex",
+	"item": "minecraft:bone",
+	"input_count": 1,
+	"output_count": 8,
+	"ticks": 200
+}

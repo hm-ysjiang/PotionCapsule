@@ -37,7 +37,8 @@ import net.minecraftforge.items.ItemStackHandler;
 public class ItemCapsulePendant extends Item {
 	private static ContainerProvider<ContainerPendant> provider = new ContainerProvider<>(
 			() -> ModItems.PENDANT.getDisplayName(ModItems.PENDANT.getDefaultInstance()), 
-			(int winId, PlayerInventory inv, PlayerEntity player) -> new ContainerPendant(winId, inv, player.getActiveHand()) );
+			(int winId, PlayerInventory inv, PlayerEntity player) -> new ContainerPendant(winId, inv, player.getActiveHand())
+	);
 
 	public ItemCapsulePendant() {
 		super(Defaults.itemProp.get());

@@ -2,6 +2,7 @@
 	"recipes": 
 	{
 		"potioncapsule:capsule_attachment": "hmysjiang.potioncapsule.recipe.RecipeCapsuleAttachment",
-		"potioncapsule:capsule_combination": "hmysjiang.potioncapsule.recipe.RecipeCapsuleCombinationOrClear"
+		"potioncapsule:capsule_combination": "hmysjiang.potioncapsule.recipe.RecipeCapsuleCombinationOrClear",
+		"potioncapsule:gelatin_ex": "hmysjiang.potioncapsule.recipe.RecipeGelatinExtractor"
 	}
 }

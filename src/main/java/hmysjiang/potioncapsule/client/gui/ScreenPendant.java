@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 
+import hmysjiang.potioncapsule.client.KeyBindHandler;
 import hmysjiang.potioncapsule.container.ContainerPendant;
 import hmysjiang.potioncapsule.items.ItemCapsulePendant;
 import hmysjiang.potioncapsule.utils.Defaults;
@@ -50,10 +51,16 @@ public class ScreenPendant extends ContainerScreen<ContainerPendant> {
 			if (this.hoveredSlot.slotNumber < 8) {
 				net.minecraftforge.fml.client.config.GuiUtils.preItemToolTip(this.hoveredSlot.getStack());
 				List<String> tooltips = this.hoveredSlot.getHasStack() ? this.getTooltipFromItem(this.hoveredSlot.getStack()) : new ArrayList<>();
-				if (this.hoveredSlot.slotNumber < 8)
-					tooltips.add(new TranslationTextComponent("potioncapsule.tooltip.pendant.gui.slotdescr_"
+				if (this.hoveredSlot.slotNumber < 8) {
+					tooltips.add(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.slotdescr_"
 							+ ItemCapsulePendant.CapsuleSlots.fromIndex(this.hoveredSlot.slotNumber))
 									.applyTextStyle(TextFormatting.GOLD).getFormattedText());
+					if (this.hoveredSlot.slotNumber == 7) {
+						String key = KeyBindHandler.keybindings.get(0).getLocalizedName();
+						key = key.substring(0, 1).toUpperCase() + key.substring(1);
+						tooltips.add(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.keyhint", key).applyTextStyle(TextFormatting.AQUA).getFormattedText());
+					}
+				}
 				this.renderTooltip(tooltips, mouseX, mouseY, font);
 				net.minecraftforge.fml.client.config.GuiUtils.postItemToolTip();
 			}
