@@ -19,19 +19,25 @@ public class ModItems {
 
 	public static final Item CAPSULE = new ItemCapsule().setRegistryName(Defaults.modPrefix.apply(ItemRegs.CAPSULE));
 	public static final Item PENDANT = new ItemCapsulePendant().setRegistryName(Defaults.modPrefix.apply(ItemRegs.PENDANT));
-	public static final Item GELATIN_POWDER = new Item(Defaults.itemProp.get()).setRegistryName(Defaults.modPrefix.apply(ItemRegs.GELATIN_POWDER));
-	
+
 	public static final Item BLOCK_GELATIN_EXTRACTOR = new BlockItem(ModBlocks.GELATIN_EXTRACTOR, Defaults.itemProp.get()).setRegistryName(BlockRegs.GELATIN_EXTRACTOR);
+	public static final Item BLOCK_GELATIN_FORMER = new BlockItem(ModBlocks.GELATIN_FORMER, Defaults.itemProp.get()).setRegistryName(BlockRegs.GELATIN_FORMER);
+
+	public static final Item GELATIN_POWDER = new Item(Defaults.itemProp.get()).setRegistryName(Defaults.modPrefix.apply(ItemRegs.GELATIN_POWDER));
+	public static final Item WART_DUST = new Item(Defaults.itemProp.get()).setRegistryName(Defaults.modPrefix.apply(ItemRegs.WART_DUST));
 	
 	@SubscribeEvent
 	public static void onItemRegister(RegistryEvent.Register<Item> event) {
 		PotionCapsule.Logger.info("Items Registering");
 		IForgeRegistry<Item> reg = event.getRegistry();
 		reg.registerAll(CAPSULE,
-						PENDANT,
-						GELATIN_POWDER
+						PENDANT
 						,
-						BLOCK_GELATIN_EXTRACTOR);
+						BLOCK_GELATIN_EXTRACTOR,
+						BLOCK_GELATIN_FORMER
+						,
+						GELATIN_POWDER,
+						WART_DUST);
 	}
 	
 }

@@ -1,0 +1,13 @@
+{
+	"type":"potioncapsule:gelatin_form",
+	"gelatin_count": 2,
+	"tick_cost": 100,
+	"catalyst": {
+		"item": "potioncapsule:item_wart_dust",
+		"count": 1
+	},
+	"result": {
+		"item": "potioncapsule:item_capsule",
+		"count": 8
+	}
+}

@@ -4,7 +4,6 @@ import hmysjiang.potioncapsule.items.ItemCapsule;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
@@ -15,7 +14,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class ContainerPendant extends Container {
+public class ContainerPendant extends BaseContainer {
 	
 	@SuppressWarnings("unchecked")
 	public static final ContainerType<ContainerPendant> TYPE = (ContainerType<ContainerPendant>) IForgeContainerType
@@ -26,7 +25,7 @@ public class ContainerPendant extends Container {
 	private PlayerInventory inv;
 	
 	public ContainerPendant(int id, PlayerInventory invIn, Hand hand) {
-		super(TYPE, id);
+		super(TYPE, id, 8);
 		stack = invIn.player.getHeldItem(hand);
 		inv = invIn;
 		
@@ -60,36 +59,6 @@ public class ContainerPendant extends Container {
 			else
 				this.addSlot(new Slot(inv, x, xPos + x * 18, yPos + 58));
 		}
-	}
-	
-	@Override
-	public boolean canInteractWith(PlayerEntity playerIn) {
-		return true;
-	}
-	
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
-		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = this.inventorySlots.get(index);
-		if (slot != null && slot.getHasStack()) {
-			ItemStack itemstack1 = slot.getStack();
-			itemstack = itemstack1.copy();
-			if (index < 8) {
-				if (!this.mergeItemStack(itemstack1, 8, this.inventorySlots.size(), true)) {
-					return ItemStack.EMPTY;
-				}
-			} 
-			else if (!this.mergeItemStack(itemstack1, 0, 8, false)) {
-				return ItemStack.EMPTY;
-			}
-
-			if (itemstack1.isEmpty()) {
-				slot.putStack(ItemStack.EMPTY);
-			} 
-			else {
-				slot.onSlotChanged();
-			}
-		}
-		return itemstack;
 	}
 	
 	public ItemStackHandler getHandler() {

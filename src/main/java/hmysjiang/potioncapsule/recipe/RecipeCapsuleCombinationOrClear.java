@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import hmysjiang.potioncapsule.Reference;
+import hmysjiang.potioncapsule.configs.ServerConfigs;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.inventory.CraftingInventory;
@@ -26,17 +27,20 @@ public class RecipeCapsuleCombinationOrClear extends SpecialRecipe {
 	@Override
 	public boolean matches(CraftingInventory inv, World worldIn) {
 		boolean match = false;
+		int capsules = 0;
 		for (int i = 0 ; i<inv.getSizeInventory() ; i++) {
 			if (!inv.getStackInSlot(i).isEmpty()) {
 				if (inv.getStackInSlot(i).getItem() == ModItems.CAPSULE) {
-					if (!PotionUtils.getEffectsFromStack(inv.getStackInSlot(i)).isEmpty())
+					if (!PotionUtils.getEffectsFromStack(inv.getStackInSlot(i)).isEmpty()) {
 						match = true;
+						capsules ++;
+					}
 				}
 				else
 					return false;
 			}
 		}
-		return match;
+		return match && (ServerConfigs.recipe_allowCapsuleCombine.get() || capsules == 1);
 	}
 
 	@Override

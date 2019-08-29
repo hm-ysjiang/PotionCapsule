@@ -5,6 +5,7 @@ import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.recipe.RecipeCapsuleAttachment;
 import hmysjiang.potioncapsule.recipe.RecipeCapsuleCombinationOrClear;
 import hmysjiang.potioncapsule.recipe.RecipeGelatinExtractor;
+import hmysjiang.potioncapsule.recipe.RecipeGelatinFormer;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -19,7 +20,8 @@ public class ModRecipes {
 		event.getRegistry().registerAll(RecipeCapsuleAttachment.SERIALIZER,
 										RecipeCapsuleCombinationOrClear.SERIALIZER
 										,
-										RecipeGelatinExtractor.SERIALIZER);
+										RecipeGelatinExtractor.SERIALIZER,
+										RecipeGelatinFormer.SERIALIZER);
 	}
 	
 }

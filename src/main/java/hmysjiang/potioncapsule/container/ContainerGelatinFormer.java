@@ -1,6 +1,6 @@
 package hmysjiang.potioncapsule.container;
 
-import hmysjiang.potioncapsule.blocks.gelatin_extractor.TileEntityGelatinExtractor;
+import hmysjiang.potioncapsule.blocks.gelatin_former.TileEntityGelatinFormer;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ContainerType;
@@ -10,23 +10,24 @@ import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class ContainerGelatinExtractor extends BaseContainer {
+public class ContainerGelatinFormer extends BaseContainer {
 	
 	@SuppressWarnings("unchecked")
-	public static final ContainerType<ContainerGelatinExtractor> TYPE = (ContainerType<ContainerGelatinExtractor>) IForgeContainerType
-			.create((winId, inv, data) -> (new ContainerGelatinExtractor(winId, inv, data.readBlockPos())))
-			.setRegistryName(Defaults.modPrefix.apply("container_gelatin_ex"));
-	private TileEntityGelatinExtractor tile = null;
+	public static final ContainerType<ContainerGelatinFormer> TYPE = (ContainerType<ContainerGelatinFormer>) IForgeContainerType
+			.create((winId, inv, data) -> (new ContainerGelatinFormer(winId, inv, data.readBlockPos())))
+			.setRegistryName(Defaults.modPrefix.apply("container_gelatin_form"));
+	private TileEntityGelatinFormer tile = null;
 	private PlayerInventory inv;
 	
-	public ContainerGelatinExtractor(int id, PlayerInventory invIn, BlockPos pos) {
-		super(TYPE, id, 2);
+	public ContainerGelatinFormer(int id, PlayerInventory invIn, BlockPos pos) {
+		super(TYPE, id, 3);
 		
-		tile = (TileEntityGelatinExtractor) invIn.player.world.getTileEntity(pos);
+		tile = (TileEntityGelatinFormer) invIn.player.world.getTileEntity(pos);
 		
 		tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-			addSlot(new SlotItemHandler(handler, 0, 57, 35));
-			addSlot(new SlotItemHandler(handler, 1, 103, 35));
+			addSlot(new SlotItemHandler(handler, 0, 24, 35));
+			addSlot(new SlotItemHandler(handler, 1, 46, 35));
+			addSlot(new SlotItemHandler(handler, 2, 125, 35));
 		});
 		
 		inv = invIn;
@@ -45,7 +46,7 @@ public class ContainerGelatinExtractor extends BaseContainer {
 		}
 	}
 	
-	public TileEntityGelatinExtractor getTile() {
+	public TileEntityGelatinFormer getTile() {
 		return tile;
 	}
 

@@ -3,7 +3,7 @@ package hmysjiang.potioncapsule.recipe;
 import com.google.gson.JsonObject;
 
 import hmysjiang.potioncapsule.PotionCapsule;
-import hmysjiang.potioncapsule.blocks.gelatin.InventoryGelatinExtractor;
+import hmysjiang.potioncapsule.blocks.gelatin_extractor.InventoryGelatinExtractor;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.item.Item;
@@ -122,7 +122,7 @@ public class RecipeGelatinExtractor implements IRecipe<InventoryGelatinExtractor
 			int inputCount, outputCount, tick;
 			inputCount = JSONUtils.getInt(json, "input_count", -1);
 			outputCount = JSONUtils.getInt(json, "output_count", -1);
-			tick = JSONUtils.getInt(json, "ticks", -1);
+			tick = JSONUtils.getInt(json, "tick_cost", -1);
 			return new RecipeGelatinExtractor(recipeId, itemName, inputCount, outputCount, tick, true);
 		}
 

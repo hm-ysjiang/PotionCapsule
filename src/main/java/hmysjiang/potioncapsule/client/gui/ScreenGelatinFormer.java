@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 
-import hmysjiang.potioncapsule.container.ContainerGelatinExtractor;
+import hmysjiang.potioncapsule.container.ContainerGelatinFormer;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
@@ -12,11 +12,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
-public class ScreenGelatinExtractor extends ContainerScreen<ContainerGelatinExtractor> {
+public class ScreenGelatinFormer extends ContainerScreen<ContainerGelatinFormer> {
 	public static final ResourceLocation TEXTURE = Defaults.modPrefix
-			.apply("textures/gui/container/gelatin_extractor.png");
+			.apply("textures/gui/container/gelatin_former.png");
 
-	public ScreenGelatinExtractor(ContainerGelatinExtractor screenContainer, PlayerInventory inv,
+	public ScreenGelatinFormer(ContainerGelatinFormer screenContainer, PlayerInventory inv,
 			ITextComponent titleIn) {
 		super(screenContainer, inv, titleIn);
 
@@ -34,12 +34,12 @@ public class ScreenGelatinExtractor extends ContainerScreen<ContainerGelatinExtr
 			if (!container.getTile().isWorking()) {
 				renderTooltip(
 						Arrays.asList(
-								new TranslationTextComponent("potioncapsule.gui.gelatin_ex.progress_percentage",
+								new TranslationTextComponent("potioncapsule.gui.gelatin_form.progress_percentage",
 										String.valueOf(per), "%").getFormattedText(),
-								new TranslationTextComponent("potioncapsule.gui.gelatin_ex.zero_descr").getFormattedText()), mouseX, mouseY);
+								new TranslationTextComponent("potioncapsule.gui.gelatin_form.zero_descr").getFormattedText()), mouseX, mouseY);
 			}
 			else {
-				renderTooltip(new TranslationTextComponent("potioncapsule.gui.gelatin_ex.progress_percentage",
+				renderTooltip(new TranslationTextComponent("potioncapsule.gui.gelatin_form.progress_percentage",
 						String.valueOf(per), "%").getFormattedText(), mouseX, mouseY);
 			}
 		}

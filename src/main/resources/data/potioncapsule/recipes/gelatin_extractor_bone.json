@@ -3,5 +3,5 @@
 	"item": "minecraft:bone",
 	"input_count": 1,
 	"output_count": 8,
-	"ticks": 200
+	"tick_cost": 200
 }

@@ -10,13 +10,16 @@ public class Reference {
 
 		public static final String CAPSULE = "item_capsule";
 		public static final String PENDANT = "item_capsule_pendant";
+
 		public static final String GELATIN_POWDER = "item_gelatin_powder";
+		public static final String WART_DUST = "item_wart_dust";
 		
 	}
 	
 	public static final class BlockRegs {
-		
+
 		public static final String GELATIN_EXTRACTOR = "block_gelatin_extractor";
+		public static final String GELATIN_FORMER = "block_gelatin_former";
 		
 	}
 	

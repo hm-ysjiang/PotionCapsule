@@ -1,4 +1,4 @@
-package hmysjiang.potioncapsule.blocks.gelatin;
+package hmysjiang.potioncapsule.blocks.gelatin_extractor;
 
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.RecipeWrapper;

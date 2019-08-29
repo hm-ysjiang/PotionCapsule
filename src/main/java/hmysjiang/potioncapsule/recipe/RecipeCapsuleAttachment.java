@@ -10,6 +10,7 @@ import com.google.gson.JsonObject;
 
 import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.Reference;
+import hmysjiang.potioncapsule.configs.ServerConfigs;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.inventory.CraftingInventory;
@@ -75,7 +76,7 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 				if (potion)
 					return false;
 				for (EffectInstance ins: PotionUtils.getEffectsFromStack(inv.getStackInSlot(i))) {
-					if (ins.duration >= 100) {
+					if (ins.duration >= ServerConfigs.capsule_capacity.get()) {
 						potion = true;
 						continue FOR_SREACH;
 					}
@@ -98,8 +99,7 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 			}
 		}
 		for (int i = 0 ; i<effects.size() ; i++) {
-			if (effects.get(i).duration >= 100) {
-//				PotionCapsule.Logger.info(i + ", effect: " + effects.get(i).getEffectName() + ", dur: " + effects.get(i).duration);
+			if (effects.get(i).duration >= ServerConfigs.capsule_capacity.get()) {
 				effect2Apply = new EffectInstance(effects.get(i));
 				break;
 			}
@@ -119,7 +119,7 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 			return RESULT.copy();
 		}
 		
-		effect2Apply.duration = 100;
+		effect2Apply.duration = ServerConfigs.capsule_capacity.get();
 		return PotionUtils.appendEffects(new ItemStack(ModItems.CAPSULE), Arrays.asList(effect2Apply));
 	}
 	
@@ -135,21 +135,27 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 			effects.add(new EffectInstance(effect));
 		NonNullList<ItemStack> remain = super.getRemainingItems(inv);
 		for (int i = 0 ; i<effects.size() ; i++) {
-			if (effects.get(i).duration < 100) {
-				remainEffects.add(effects.get(i));
+			if (effects.get(i).duration < ServerConfigs.capsule_capacity.get()) {
+				if (!ServerConfigs.recipe_removeExcessDuration.get())
+					remainEffects.add(effects.get(i));
 			}
-			else if (effects.get(i).duration == 100) {
+			else if (effects.get(i).duration == ServerConfigs.capsule_capacity.get()) {
 				if (!tax) {
 					tax = true;
-					effects.get(i).duration -= 100;
+					effects.get(i).duration -= ServerConfigs.capsule_capacity.get();
 				}
 			}
 			else {
 				if (!tax) {
 					tax = true;
-					effects.get(i).duration -= 100;
+					effects.get(i).duration -= ServerConfigs.capsule_capacity.get();
 				}
-				remainEffects.add(effects.get(i));
+				if (effects.get(i).duration < ServerConfigs.capsule_capacity.get()) {
+					if (!ServerConfigs.recipe_removeExcessDuration.get())
+						remainEffects.add(effects.get(i));
+				}
+				else
+					remainEffects.add(effects.get(i));
 				
 				// Might add a config for remove useless effect
 			}
