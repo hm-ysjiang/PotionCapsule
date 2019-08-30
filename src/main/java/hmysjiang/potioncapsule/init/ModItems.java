@@ -8,6 +8,7 @@ import hmysjiang.potioncapsule.items.ItemCapsule;
 import hmysjiang.potioncapsule.items.ItemCapsulePendant;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -25,6 +26,7 @@ public class ModItems {
 
 	public static final Item GELATIN_POWDER = new Item(Defaults.itemProp.get()).setRegistryName(Defaults.modPrefix.apply(ItemRegs.GELATIN_POWDER));
 	public static final Item WART_DUST = new Item(Defaults.itemProp.get()).setRegistryName(Defaults.modPrefix.apply(ItemRegs.WART_DUST));
+	public static final Item APPLE_JELLY = new Item(Defaults.itemProp.get().food((new Food.Builder()).setAlwaysEdible().fastToEat().hunger(2).saturation(0.3F).build())).setRegistryName(Defaults.modPrefix.apply(ItemRegs.APPLE_JELLY));
 	
 	@SubscribeEvent
 	public static void onItemRegister(RegistryEvent.Register<Item> event) {
@@ -37,7 +39,8 @@ public class ModItems {
 						BLOCK_GELATIN_FORMER
 						,
 						GELATIN_POWDER,
-						WART_DUST);
+						WART_DUST,
+						APPLE_JELLY);
 	}
 	
 }

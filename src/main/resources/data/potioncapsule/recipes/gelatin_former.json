@@ -1,0 +1,32 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": 
+	[
+		"SWS",
+		"WIW",
+		"SLS"
+	],
+	"key": 
+	{
+		"I": 
+		{
+			"item": "minecraft:iron_block"
+		},
+		"W": 
+		{
+			"item": "minecraft:water_bucket"
+		},
+		"S": 
+		{
+			"item": "minecraft:stone"
+		},
+		"L": 
+		{
+			"item": "minecraft:lava_bucket"
+		}
+	},
+	"result": 
+	{
+		"item": "potioncapsule:block_gelatin_former"
+	}
+}

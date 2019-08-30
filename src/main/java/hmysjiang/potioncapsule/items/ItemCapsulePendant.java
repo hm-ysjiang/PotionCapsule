@@ -69,8 +69,8 @@ public class ItemCapsulePendant extends Item {
 		return new ICapabilitySerializable<INBT>() {
 			private final IItemHandler handler = new ItemStackHandler(8) {
 				@Override public boolean isItemValid(int slot, ItemStack stack) { return stack.getItem() instanceof ItemCapsule; };
-				@Override public int getSlotLimit(int slot) { return ServerConfigs.pendant_slotSize.get(); }
-				@Override protected int getStackLimit(int slot, ItemStack stack) { return ServerConfigs.pendant_slotSize.get(); }
+				@Override public int getSlotLimit(int slot) { return ServerConfigs.capsule_stackSize.get(); }
+				@Override protected int getStackLimit(int slot, ItemStack stack) { return ServerConfigs.capsule_stackSize.get(); }
 			};
 			
 			@Override

@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 
 import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.blocks.gelatin_former.InventoryGelatinFormer;
+import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -52,9 +53,10 @@ public class RecipeGelatinFormer implements IRecipe<InventoryGelatinFormer> {
 
 	@Override
 	public ItemStack getRecipeOutput() {
-		// Why TF is client side getting a non-null nbt tag ?
+		// Why TF are capsules getting a non-null nbt tag on client side ?
 		ItemStack out = result.copy();
-		out.getOrCreateTag();
+		if (out.getItem() == ModItems.CAPSULE)
+			out.getOrCreateTag();
 		return out;
 	}
 

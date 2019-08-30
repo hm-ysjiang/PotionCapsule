@@ -5,6 +5,7 @@ import java.util.TreeSet;
 
 import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.configs.ServerConfigs;
+import hmysjiang.potioncapsule.effects.EffectNightVisionNF;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.inventory.CraftingInventory;
@@ -13,6 +14,7 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.SpecialRecipe;
 import net.minecraft.item.crafting.SpecialRecipeSerializer;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -51,6 +53,9 @@ public class RecipeCapsuleCombinationOrClear extends SpecialRecipe {
 			if (!PotionUtils.getEffectsFromStack(inv.getStackInSlot(i)).isEmpty()) {
 				FOR_ITER:
 				for (EffectInstance effect: PotionUtils.getEffectsFromStack(inv.getStackInSlot(i))) {
+					if (ServerConfigs.misc_replaceNvWithNvnf.get() && effect.getPotion() == Effects.NIGHT_VISION) {
+						effect = new EffectInstance(EffectNightVisionNF.INSTANCE, effect.getDuration(), effect.getAmplifier(), effect.isAmbient(), effect.doesShowParticles(), effect.isShowIcon());
+					}
 					for (EffectInstance stored: effects) {
 						if (effect.getPotion().equals(stored.getPotion())) {
 							stored.combine(effect);

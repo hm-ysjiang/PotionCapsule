@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import hmysjiang.potioncapsule.configs.ClientConfigs;
+import hmysjiang.potioncapsule.configs.ServerConfigs;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.gui.screen.Screen;
@@ -47,7 +48,7 @@ public class ItemCapsule extends Item {
 	public static final String TAG_CUSTOM_POTION = "CustomPotionEffects";
 
 	public ItemCapsule() {
-		super(Defaults.itemProp.get());
+		super(Defaults.itemProp.get().maxStackSize(ServerConfigs.capsule_stackSize.get()));
 	}
 
 	@Override

@@ -11,6 +11,7 @@ import com.google.gson.JsonObject;
 import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.configs.ServerConfigs;
+import hmysjiang.potioncapsule.effects.EffectNightVisionNF;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.inventory.CraftingInventory;
@@ -20,6 +21,7 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.SpecialRecipe;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraft.util.JSONUtils;
@@ -100,7 +102,7 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 		}
 		for (int i = 0 ; i<effects.size() ; i++) {
 			if (effects.get(i).duration >= ServerConfigs.capsule_capacity.get()) {
-				effect2Apply = new EffectInstance(effects.get(i));
+				effect2Apply = new EffectInstance((ServerConfigs.misc_replaceNvWithNvnf.get() && effects.get(i).getPotion() == Effects.NIGHT_VISION) ? new EffectInstance(EffectNightVisionNF.INSTANCE) : effects.get(i));
 				break;
 			}
 		}

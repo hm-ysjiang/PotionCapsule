@@ -7,7 +7,8 @@
 	"item.potioncapsule.item_capsule.with": "Potion Capsule (%s)",
 	"item.potioncapsule.item_capsule_pendant": "Capsule Pendant",
 	"item.potioncapsule.item_gelatin_powder": "Gelatin Powder",
-	"item.potioncapsule.item_wart_dust": "Nether Wart Dust"
+	"item.potioncapsule.item_wart_dust": "Nether Wart Dust",
+	"item.potioncapsule.item_apple_jelly": "Apple Jelly"
 	,
 	"_Blocks": "",
 	"block.potioncapsule.block_gelatin_extractor": "Gelatin Extractor",
@@ -32,6 +33,9 @@
 	"potioncapsule.gui.pendant.tooltip.slotdescr_NIGHT": "Trigger when is night time",
 	"potioncapsule.gui.pendant.tooltip.slotdescr_KEYBIND": "Triggered when keybind being pressed",
 	"potioncapsule.gui.pendant.tooltip.keyhint": "Keybind: %s"
+	,
+	"_Effects": "",
+	"effect.potioncapsule.effect_night_vision_nf": "Night Vision NF"
 	,
 	"_Miscellaneous": "",
 	"potioncapsule.misc.left_potion_display_name": "Partially Used Potion",

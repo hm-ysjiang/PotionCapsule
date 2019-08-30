@@ -1,0 +1,13 @@
+{
+	"type":"potioncapsule:gelatin_form",
+	"gelatin_count": 8,
+	"tick_cost": 100,
+	"catalyst": {
+		"item": "minecraft:apple",
+		"count": 1
+	},
+	"result": {
+		"item": "potioncapsule:item_apple_jelly",
+		"count": 8
+	}
+}

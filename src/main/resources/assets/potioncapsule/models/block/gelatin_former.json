@@ -1,10 +1,10 @@
 {
     "parent": "block/orientable_with_bottom",
     "textures": {
-        "bottom": "block/andesite",
-        "front": "block/granite",
-        "side": "block/diorite",
-        "top": "block/andesite",
-        "south": "block/stone"
+        "bottom": "potioncapsule:block/machine_base",
+        "front": "potioncapsule:block/former",
+        "side": "potioncapsule:block/machine_base",
+        "top": "potioncapsule:block/machine_base",
+        "south": "potioncapsule:block/machine_base"
     }
 }
