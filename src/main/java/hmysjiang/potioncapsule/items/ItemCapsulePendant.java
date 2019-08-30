@@ -41,7 +41,7 @@ public class ItemCapsulePendant extends Item {
 	);
 
 	public ItemCapsulePendant() {
-		super(Defaults.itemProp.get());
+		super(Defaults.itemProp.get().maxStackSize(1));
 	}
 	
 	@Override
@@ -59,7 +59,8 @@ public class ItemCapsulePendant extends Item {
 	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		if (!worldIn.isRemote) {
 			if (entityIn instanceof PlayerEntity) {
-				onTick(stack, (PlayerEntity) entityIn, worldIn);
+				if (InventoryHelper.findStackFromInventory(((PlayerEntity) entityIn).inventory, stack) == stack)
+					onTick(stack, (PlayerEntity) entityIn, worldIn);
 			}
 		}
 	}
