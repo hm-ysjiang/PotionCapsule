@@ -80,13 +80,14 @@ public class TileEntityGelatinFormer extends TileEntity implements ITickableTile
 						if (handler.getStackInSlot(2).isEmpty()) {
 							handler.setStackInSlot(2, r.getRecipeOutput());
 						}
-						else {
+						else if (r.getRecipeOutput().isItemEqual(handler.getStackInSlot(2))) {
 							handler.getStackInSlot(2).grow(r.getRecipeOutput().getCount());
 						}
 					});
 					
 					world.getRecipeManager().getRecipe(RecipeGelatinFormer.TYPE, invWrapper, world).ifPresent(r -> {
-						if (handler.getStackInSlot(2).getCount() + r.getResult().getCount() <= 64) {
+						if (handler.getStackInSlot(2).isEmpty() || 
+								(handler.getStackInSlot(2).isItemEqual(r.getResult()) && handler.getStackInSlot(2).getCount() + r.getResult().getCount() <= 64)) {
 							full_countdown = r.getTickCost();
 							working_countdown = full_countdown;
 							r.getCraftingResult(invWrapper);
