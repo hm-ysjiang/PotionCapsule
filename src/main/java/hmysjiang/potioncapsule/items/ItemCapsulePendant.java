@@ -155,15 +155,19 @@ public class ItemCapsulePendant extends Item {
 	@SubscribeEvent
 	public static void onPlayerGetDamaged(LivingHurtEvent event) {
 		PlayerEntity player = event.getEntityLiving() instanceof PlayerEntity ? (PlayerEntity) event.getEntityLiving() : null;
-		if (player == null || event.getSource().isFireDamage())
+		if (player == null)
 			return;
 		ItemStack pendant = InventoryHelper.findStackFromInventory(player.inventory, ModItems.PENDANT.getDefaultInstance());
 		if (pendant.getOrCreateTag().contains("opened") && pendant.getTag().getBoolean("opened"))
 			return;
 		if (!pendant.isEmpty()) {
-			pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-				((ItemStackHandler) handler).setStackInSlot(1, ((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(handler.getStackInSlot(CapsuleSlots.DAMAGED.index), player.world, player));
-			});
+			if (event.getSource().isFireDamage()) {
+				((ItemCapsulePendant) ModItems.PENDANT).playerInFire(pendant, player, player.world);
+			}
+			else
+				pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
+					((ItemStackHandler) handler).setStackInSlot(1, ((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(handler.getStackInSlot(CapsuleSlots.DAMAGED.index), player.world, player));
+				});
 		}
 	}
 
@@ -172,12 +176,8 @@ public class ItemCapsulePendant extends Item {
 			return;
 		// FIRE
 		if (player.isBurning() || player.isInLava())
-			pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-				((ItemStackHandler) handler).setStackInSlot(2,
-						((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(
-								handler.getStackInSlot(CapsuleSlots.FIRE.index), world, player));
-			});
-	
+			playerInFire(pendant, player, world);
+		
 		// WATER
 		if (player.isInWater())
 			pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
@@ -210,6 +210,14 @@ public class ItemCapsulePendant extends Item {
 								handler.getStackInSlot(CapsuleSlots.NIGHT.index), world, player));
 			});
 		
+	}
+	
+	public void playerInFire(ItemStack pendant, PlayerEntity player, World world) {
+		pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
+			((ItemStackHandler) handler).setStackInSlot(2,
+					((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(
+							handler.getStackInSlot(CapsuleSlots.FIRE.index), world, player));
+		});
 	}
 	
 	public static void onKeyBindPressed(PlayerEntity player) {

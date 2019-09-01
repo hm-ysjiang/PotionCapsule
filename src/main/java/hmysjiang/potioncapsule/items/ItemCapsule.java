@@ -11,6 +11,7 @@ import java.util.Set;
 import hmysjiang.potioncapsule.configs.ClientConfigs;
 import hmysjiang.potioncapsule.configs.ServerConfigs;
 import hmysjiang.potioncapsule.utils.Defaults;
+import hmysjiang.potioncapsule.utils.text.CapsuleUsedTextComponent;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
@@ -97,6 +98,7 @@ public class ItemCapsule extends Item {
 			PlayerEntity player = entityLiving instanceof PlayerEntity ? (PlayerEntity) entityLiving : null;
 			if (player == null || !player.abilities.isCreativeMode) {
 				stack.shrink(1);
+				player.sendStatusMessage(new CapsuleUsedTextComponent("potioncapsule.tooltip.capsule.used", stack.getDisplayName()), true);
 			}
 
 			if (player instanceof ServerPlayerEntity) {

@@ -17,6 +17,7 @@
 	"_Tooltips": "",
 	"potioncapsule.tooltip.capsule.empty": "Empty",
 	"potioncapsule.tooltip.capsule.shiftdown": "<Hold shift for more info>",
+	"potioncapsule.tooltip.capsule.used": "Used %s",
 	"potioncapsule.tooltip.pendant.slotcont": "Slot %1$s: %2$s"
 	,
 	"_Gui": "",
