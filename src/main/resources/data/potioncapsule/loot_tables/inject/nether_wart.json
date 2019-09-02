@@ -1,0 +1,48 @@
+{
+	"type": "minecraft:block",
+	"pools": 
+	[
+		{
+			"name": "_pool",
+			"rolls": 1,
+			"entries": 
+			[
+				{
+					"type": "minecraft:item",
+					"weight": 60,
+					"conditions": 
+					[
+						{
+							"condition": "minecraft:block_state_property",
+							"block": "minecraft:nether_wart",
+							"properties": 
+							{
+								"age": "3"
+							}
+						}
+					],
+
+					"functions": 
+					[
+						{
+							"function": "minecraft:set_count",
+							"count": 
+							{
+								"min": 1.0,
+								"max": 3.0,
+								"type": "minecraft:uniform"
+							}
+						}
+					],
+
+					"name": "potioncapsule:item_wart_dust"
+				},
+
+				{
+					"type": "empty",
+					"weight": 40
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,58 @@
+{
+	"pools": 
+	[
+		{
+			"name": "_pool",
+			"rolls": 1,
+			"entries": 
+			[
+				{
+					"type": "item",
+					"name": "potioncapsule:item_capsule_pendant",
+					"weight": 10
+				},
+
+				{
+					"type": "item",
+					"name": "potioncapsule:item_capsule",
+					"weight": 20,
+					"functions": 
+					[
+						{
+							"function": "minecraft:set_count",
+							"count": 
+							{
+								"min": 3.0,
+								"max": 9.0,
+								"type": "minecraft:uniform"
+							}
+						}
+					]
+				},
+
+				{
+					"type": "item",
+					"name": "potioncapsule:item_apple_jelly",
+					"weight": 30,
+					"functions": 
+					[
+						{
+							"function": "minecraft:set_count",
+							"count": 
+							{
+								"min": 5.0,
+								"max": 11.0,
+								"type": "minecraft:uniform"
+							}
+						}
+					]
+				},
+
+				{
+					"type": "empty",
+					"weight": 40
+				}
+			]
+		}
+	]
+}

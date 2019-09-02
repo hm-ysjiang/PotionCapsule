@@ -1,15 +1,3 @@
 {
-	"type": "minecraft:crafting_shapeless",
-	"ingredients": 
-	[
-		{
-			"item": "minecraft:nether_wart"
-		}
-	],
-
-	"result": 
-	{
-		"item": "potioncapsule:item_wart_dust",
-		"count": 9
-	}
+	"type": "potioncapsule:wart_dust"
 }

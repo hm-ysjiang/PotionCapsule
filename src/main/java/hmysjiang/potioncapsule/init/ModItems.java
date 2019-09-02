@@ -10,6 +10,10 @@ import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -25,7 +29,13 @@ public class ModItems {
 	public static final Item BLOCK_GELATIN_FORMER = new BlockItem(ModBlocks.GELATIN_FORMER, Defaults.itemProp.get()).setRegistryName(BlockRegs.GELATIN_FORMER);
 
 	public static final Item GELATIN_POWDER = new Item(Defaults.itemProp.get()).setRegistryName(Defaults.modPrefix.apply(ItemRegs.GELATIN_POWDER));
-	public static final Item WART_DUST = new Item(Defaults.itemProp.get()).setRegistryName(Defaults.modPrefix.apply(ItemRegs.WART_DUST));
+	public static final Item WART_DUST = new Item(Defaults.itemProp.get()) {
+		@OnlyIn(Dist.CLIENT)
+		@Override
+		public void addInformation(net.minecraft.item.ItemStack stack, net.minecraft.world.World worldIn, java.util.List<net.minecraft.util.text.ITextComponent> tooltip, net.minecraft.client.util.ITooltipFlag flagIn) {
+			tooltip.add(new TranslationTextComponent("potioncapsule.tooltip.wart_dust.obtain").applyTextStyle(TextFormatting.GRAY));
+		};
+	}.setRegistryName(Defaults.modPrefix.apply(ItemRegs.WART_DUST));
 	public static final Item APPLE_JELLY = new Item(Defaults.itemProp.get().food((new Food.Builder()).setAlwaysEdible().fastToEat().hunger(2).saturation(0.3F).build())).setRegistryName(Defaults.modPrefix.apply(ItemRegs.APPLE_JELLY));
 	
 	@SubscribeEvent

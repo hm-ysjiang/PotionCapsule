@@ -9,6 +9,7 @@ public class ServerConfigs {
 	
 	public static ForgeConfigSpec.BooleanValue recipe_allowCapsuleCombine;
 	public static ForgeConfigSpec.BooleanValue recipe_removeExcessDuration;
+	public static ForgeConfigSpec.BooleanValue recipe_enableWartDust;
 	
 	public static ForgeConfigSpec.BooleanValue misc_replaceNvWithNvnf;
 	
@@ -24,6 +25,8 @@ public class ServerConfigs {
 												  .define("recipe.allowCombine", true);
 		recipe_removeExcessDuration = serverBuilder.comment(" Set this to true will remove a certain effect from a potion item if its duration is less than required in recipe")
 												   .define("recipe.removeExcessDuration", false);
+		recipe_enableWartDust = serverBuilder.comment(" Set this to true will enable the crafting recipe of Nether Wart Dust")
+											 .define("recipe.enableWartDust", false);
 		
 		// misc
 		misc_replaceNvWithNvnf = serverBuilder.comment(" Set this to true will automatically replace any NightVision with NightVisionNoFlicker, a wrapper effect just to solve the vanilla flickering NightVision")

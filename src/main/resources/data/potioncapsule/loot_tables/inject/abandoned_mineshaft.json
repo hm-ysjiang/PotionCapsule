@@ -1,0 +1,22 @@
+{
+	"pools": 
+	[
+		{
+			"name": "_pool",
+			"rolls": 1,
+			"entries": 
+			[
+				{
+					"type": "item",
+					"name": "potioncapsule:item_capsule_pendant",
+					"weight": 10
+				},
+
+				{
+					"type": "empty",
+					"weight": 90
+				}
+			]
+		}
+	]
+}
