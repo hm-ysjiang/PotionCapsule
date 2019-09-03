@@ -1,3 +1,6 @@
+1.0.3
+ - Fix #1
+
 1.0.2
  - Add item spawn into vanilla loot table
  - Wart Dust is no longer craftable by default(still can be enabled in config), it can be obtained by harvesting mature nether wart

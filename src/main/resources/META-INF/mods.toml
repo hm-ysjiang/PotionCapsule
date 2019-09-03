@@ -7,12 +7,13 @@ modId="potioncapsule" #mandatory
 
 version="1.0.3" #mandatory
 
-#displayURL="http://example.com/" #optional
-#issueTrackerURL="http://my.issue.tracker/" #optional
+displayURL="https://www.curseforge.com/minecraft/mc-mods/potion-capsule/" #optional
+issueTrackerURL="https://github.com/hm-ysjiang/PotionCapsule/issues/" #optional
 
 credits="Thanks for all the efforts you guys put into Forge!" #optional
 authors="hmysjiang" #optional
 description='''
+A more efficient way to use potion
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.potioncapsule]] #optional

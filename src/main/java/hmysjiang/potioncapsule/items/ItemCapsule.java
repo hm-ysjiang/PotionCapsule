@@ -2,14 +2,17 @@ package hmysjiang.potioncapsule.items;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashSet;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeSet;
 
+import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.configs.ClientConfigs;
 import hmysjiang.potioncapsule.configs.ServerConfigs;
+import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.utils.Defaults;
 import hmysjiang.potioncapsule.utils.text.CapsuleUsedTextComponent;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -45,11 +48,41 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ItemCapsule extends Item {
+	public static boolean isItemCapsule(ItemStack stack) {
+		return getCapsuleType(stack.getItem()) != null;
+	}
+	public static EnumCapsuleType getCapsuleType(Item item) {
+		if (item != ModItems.CAPSULE && item != ModItems.CAPSULE_INSTANT && item != ModItems.CAPSULE_SPECIAL)
+			return null;
+		return ((ItemCapsule) item).TYPE;
+	}
+	public static boolean canApplyEffectOnCapsule(ItemStack capsule, Effect effect) {
+		if (effect == null)
+			return false;
+		EnumCapsuleType type = getCapsuleType(capsule.getItem());
+		if (type == null || type == EnumCapsuleType.SPECIAL)
+			return false;
+		return type == EnumCapsuleType.NORMAL ^ effect.isInstant();
+	}
+	public static ItemStack getDefaultInstance(EnumCapsuleType type) {
+		switch (type) {
+		case INSTANT:
+			return ModItems.CAPSULE_INSTANT.getDefaultInstance();
+		case NORMAL:
+			return ModItems.CAPSULE.getDefaultInstance();
+		case SPECIAL:
+			return ModItems.CAPSULE_SPECIAL.getDefaultInstance();
+		default:
+			return ModItems.CAPSULE.getDefaultInstance();
+		}
+	}
 
-	public static final String TAG_CUSTOM_POTION = "CustomPotionEffects";
+	private final EnumCapsuleType TYPE;
+	private static Set<EffectInstance> effects;
 
-	public ItemCapsule() {
+	public ItemCapsule(EnumCapsuleType type) {
 		super(Defaults.itemProp.get().maxStackSize(ServerConfigs.capsule_stackSize.get()));
+		TYPE = type;
 	}
 
 	@Override
@@ -85,7 +118,8 @@ public class ItemCapsule extends Item {
 		if (stack.isEmpty())
 			return stack;
 		
-		boolean shouldApply = false;
+		EnumCapsuleType type = getCapsuleType(stack.getItem());
+		boolean shouldApply = (type == EnumCapsuleType.INSTANT || type == EnumCapsuleType.SPECIAL);
 		for (EffectInstance effect: PotionUtils.getEffectsFromStack(stack)) {
 			if (shouldApply)
 				break;
@@ -138,7 +172,7 @@ public class ItemCapsule extends Item {
 	public ITextComponent getDisplayName(ItemStack stack) {
 		if (ClientConfigs.capsule_effectRenderCount.get() == 0)
 			return super.getDisplayName(stack);
-		if (stack.getOrCreateTag().contains(TAG_CUSTOM_POTION)) {
+		if (!PotionUtils.getEffectsFromStack(stack).isEmpty()) {
 			return new TranslationTextComponent(getTranslationKey() + ".with", getDescriptionString(stack));
 		}
 		return super.getDisplayName(stack);
@@ -167,7 +201,7 @@ public class ItemCapsule extends Item {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		if (stack.getOrCreateTag().contains(TAG_CUSTOM_POTION)) {
+		if (!PotionUtils.getEffectsFromStack(stack).isEmpty()) {
 			if (Screen.hasShiftDown()) {
 				PotionUtils.addPotionTooltip(stack, tooltip, 1.0F);
 			}
@@ -287,17 +321,43 @@ public class ItemCapsule extends Item {
 		if (this.isInGroup(group)) {
 			items.add(getDefaultInstance());
 			
-			Set<EffectInstance> effects = new LinkedHashSet<>();
-			for (Potion potion: Registry.POTION) {
-				for (EffectInstance effect: potion.getEffects()) {
-					effects.add(new EffectInstance(effect));
+			if (effects == null) {
+				PotionCapsule.Logger.info("Start querying effect instances from existing potion");
+				effects = new TreeSet<>(new Comparator<EffectInstance>() {
+					@Override
+					public int compare(EffectInstance o1, EffectInstance o2) {
+						String name1 = o1.getEffectName(), name2 = o2.getEffectName();
+						if (name1.equals(name2))
+							return o1.getAmplifier() < o2.getAmplifier() ? -1 : (o1.getAmplifier() > o2.getAmplifier() ? 1 : 0);
+						return name1.compareTo(name2);
+					}
+				});
+				for (Potion potion: Registry.POTION) {
+					for (EffectInstance effect: potion.getEffects()) {
+						EffectInstance toadd = new EffectInstance(effect);
+						toadd.duration = ServerConfigs.capsule_capacity.get();
+						if (effects.add(toadd)) {
+							PotionCapsule.Logger.info(toadd.getAmplifier() > 0 ? new TranslationTextComponent(toadd.getEffectName()).getFormattedText() + " x " + (toadd.getAmplifier() + 1) : new TranslationTextComponent(toadd.getEffectName()).getFormattedText());
+						}
+					}
 				}
+				PotionCapsule.Logger.info("Querying complete");
 			}
 			
 			for (EffectInstance effect: effects) {
-				effect.duration = 100;
 				items.add(PotionUtils.appendEffects(getDefaultInstance(), Arrays.asList(effect)));
 			}
+		}
+	}
+	
+	public static enum EnumCapsuleType {
+		NORMAL("normal"),
+		INSTANT("instant"),
+		SPECIAL("special");
+		
+		public String name;
+		EnumCapsuleType(String name) {
+			this.name = name;
 		}
 	}
 

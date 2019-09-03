@@ -5,6 +5,7 @@ import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.Reference.BlockRegs;
 import hmysjiang.potioncapsule.Reference.ItemRegs;
 import hmysjiang.potioncapsule.items.ItemCapsule;
+import hmysjiang.potioncapsule.items.ItemCapsule.EnumCapsuleType;
 import hmysjiang.potioncapsule.items.ItemCapsulePendant;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.item.BlockItem;
@@ -22,7 +23,9 @@ import net.minecraftforge.registries.IForgeRegistry;
 @EventBusSubscriber(modid = Reference.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class ModItems {
 
-	public static final Item CAPSULE = new ItemCapsule().setRegistryName(Defaults.modPrefix.apply(ItemRegs.CAPSULE));
+	public static final Item CAPSULE = new ItemCapsule(EnumCapsuleType.NORMAL).setRegistryName(Defaults.modPrefix.apply(ItemRegs.CAPSULE));
+	public static final Item CAPSULE_INSTANT = new ItemCapsule(EnumCapsuleType.INSTANT).setRegistryName(Defaults.modPrefix.apply(ItemRegs.CAPSULE + "_instant"));
+	public static final Item CAPSULE_SPECIAL = new ItemCapsule(EnumCapsuleType.SPECIAL).setRegistryName(Defaults.modPrefix.apply(ItemRegs.CAPSULE + "_special"));
 	public static final Item PENDANT = new ItemCapsulePendant().setRegistryName(Defaults.modPrefix.apply(ItemRegs.PENDANT));
 
 	public static final Item BLOCK_GELATIN_EXTRACTOR = new BlockItem(ModBlocks.GELATIN_EXTRACTOR, Defaults.itemProp.get()).setRegistryName(BlockRegs.GELATIN_EXTRACTOR);

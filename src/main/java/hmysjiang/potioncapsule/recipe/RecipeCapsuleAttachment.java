@@ -12,7 +12,7 @@ import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.configs.ServerConfigs;
 import hmysjiang.potioncapsule.effects.EffectNightVisionNF;
-import hmysjiang.potioncapsule.init.ModItems;
+import hmysjiang.potioncapsule.items.ItemCapsule;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.Item;
@@ -23,7 +23,6 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.PotionUtils;
-import net.minecraft.potion.Potions;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -32,9 +31,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 public class RecipeCapsuleAttachment extends SpecialRecipe {
-	private static final ItemStack RESULT = PotionUtils.addPotionToItemStack(new ItemStack(ModItems.CAPSULE), Potions.AWKWARD);
 	public static final IRecipeSerializer<?> SERIALIZER = new Serializer().setRegistryName(Defaults.modPrefix.apply("capsule_attachment"));
-//	public static final IRecipeSerializer<?> SERIALIZER = new SpecialRecipeSerializer<>(RecipeCapsuleAttachment::new).setRegistryName(Defaults.modPrefix.apply("capsule_attachment"));
 
 	@Nullable
 	private final Item potion_item;
@@ -63,41 +60,46 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 	public boolean matches(CraftingInventory inv, World worldIn) {
 		if (!active)
 			return false;
-		boolean cap = false, potion = false;
+		int cap = -1, potion = -1;
+		EffectInstance toapply = null;
 		
 		FOR_SREACH:
 		for (int i = 0 ; i<inv.getSizeInventory() ; i++) {
-			if (inv.getStackInSlot(i).getItem() == ModItems.CAPSULE) {
-				if (cap)
+			if (ItemCapsule.isItemCapsule(inv.getStackInSlot(i))) {
+				if (cap != -1)
 					return false;
 				if (PotionUtils.getEffectsFromStack(inv.getStackInSlot(i)).size() > 0)
 					return false;
-				cap = true;
+				cap = i;
 			}
 			else if (inv.getStackInSlot(i).getItem().equals(potion_item)) {
-				if (potion)
+				if (potion != -1)
 					return false;
 				for (EffectInstance ins: PotionUtils.getEffectsFromStack(inv.getStackInSlot(i))) {
 					if (ins.duration >= ServerConfigs.capsule_capacity.get()) {
-						potion = true;
+						potion = i;
+						toapply = ins;
 						continue FOR_SREACH;
 					}
 				}
 				return false;
 			}
 		}
-		return cap && potion;
+		return cap != -1 && potion != -1 && ItemCapsule.canApplyEffectOnCapsule(inv.getStackInSlot(cap), toapply.getPotion());
 	}
 
 	@Override
 	public ItemStack getCraftingResult(CraftingInventory inv) {
 		List<EffectInstance> effects = new ArrayList<>();
 		EffectInstance effect2Apply = null;
-		int potionPos;
-		for (potionPos = 0 ; potionPos<inv.getSizeInventory() ; potionPos++) {
-			if (inv.getStackInSlot(potionPos).getItem().equals(potion_item)) {
-				effects = PotionUtils.getEffectsFromStack(inv.getStackInSlot(potionPos));
-				break;
+		int potionPos = -1, capPos = -1;
+		for (int i = 0 ; i<inv.getSizeInventory() ; i++) {
+			if (inv.getStackInSlot(i).getItem().equals(potion_item)) {
+				effects = PotionUtils.getEffectsFromStack(inv.getStackInSlot(i));
+				potionPos = i;
+			}
+			else if (ItemCapsule.isItemCapsule(inv.getStackInSlot(i))) {
+				capPos = i;
 			}
 		}
 		for (int i = 0 ; i<effects.size() ; i++) {
@@ -118,11 +120,11 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 					PotionCapsule.Logger.error("	Pos " + i + ", Size " + i + ", StackContent: " + inv.getStackInSlot(i));
 				}
 			} catch(IndexOutOfBoundsException exp) { Arrays.asList(exp.getStackTrace()).forEach(PotionCapsule.Logger::error); }
-			return RESULT.copy();
+			return ItemStack.EMPTY;
 		}
 		
 		effect2Apply.duration = ServerConfigs.capsule_capacity.get();
-		return PotionUtils.appendEffects(new ItemStack(ModItems.CAPSULE), Arrays.asList(effect2Apply));
+		return PotionUtils.appendEffects(ItemCapsule.getDefaultInstance(ItemCapsule.getCapsuleType(inv.getStackInSlot(capPos).getItem())), Arrays.asList(effect2Apply));
 	}
 	
 	@Override
@@ -177,8 +179,8 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 	}
 	
 	@Override
-	public ItemStack getRecipeOutput() {
-		return RESULT;
+	public boolean isDynamic() {
+		return true;
 	}
 	
 	@Override
