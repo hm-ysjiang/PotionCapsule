@@ -5,7 +5,7 @@ loaderVersion="[28,)" #mandatory (26 is current forge version)
 displayName="Potion Capsule" #mandatory
 modId="potioncapsule" #mandatory
 
-version="1.0.2" #mandatory
+version="1.0.3" #mandatory
 
 #displayURL="http://example.com/" #optional
 #issueTrackerURL="http://my.issue.tracker/" #optional
