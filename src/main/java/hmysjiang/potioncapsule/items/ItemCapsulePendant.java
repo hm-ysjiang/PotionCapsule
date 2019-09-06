@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
@@ -48,11 +49,17 @@ public class ItemCapsulePendant extends Item {
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		if (!worldIn.isRemote) {
 			playerIn.getHeldItem(handIn).getOrCreateTag().putBoolean("opened", true);
+			playerIn.setActiveHand(handIn);
 			NetworkHooks.openGui((ServerPlayerEntity) playerIn, provider, buf->{
 				buf.writeBoolean(handIn == Hand.MAIN_HAND);
 			});
 		}
-		return super.onItemRightClick(worldIn, playerIn, handIn);
+		return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
+	}
+	
+	@Override
+	public int getUseDuration(ItemStack stack) {
+		return 1;
 	}
 	
 	@Override

@@ -1,5 +1,6 @@
 package hmysjiang.potioncapsule.recipe;
 
+import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.configs.ServerConfigs;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.utils.Defaults;
@@ -60,6 +61,11 @@ public class RecipeWartDust extends SpecialRecipe {
 	@Override
 	public IRecipeSerializer<?> getSerializer() {
 		return SERIALIZER;
+	}
+	
+	@Override
+	public String getGroup() {
+		return Reference.CAPSULE_CRAFTING_GROUP;
 	}
 	
 }

@@ -1,0 +1,11 @@
+{
+    "parent": "potioncapsule:item/item_capsule_instant_empty",
+    "overrides": [
+        {
+            "predicate": {
+                "potion": 1
+            },
+            "model": "potioncapsule:item/item_capsule_instant_filled"
+        }
+    ]
+}

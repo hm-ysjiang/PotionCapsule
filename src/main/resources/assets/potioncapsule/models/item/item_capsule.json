@@ -1,6 +1,11 @@
 {
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "potioncapsule:item/capsule"
-    }
+    "parent": "potioncapsule:item/item_capsule_empty",
+    "overrides": [
+        {
+            "predicate": {
+                "potion": 1
+            },
+            "model": "potioncapsule:item/item_capsule_filled"
+        }
+    ]
 }

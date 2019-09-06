@@ -37,6 +37,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
@@ -57,9 +58,11 @@ public class ItemCapsule extends Item {
 		return ((ItemCapsule) item).TYPE;
 	}
 	public static boolean canApplyEffectOnCapsule(ItemStack capsule, Effect effect) {
+		return canApplyEffectOnType(getCapsuleType(capsule.getItem()), effect);
+	}
+	public static boolean canApplyEffectOnType(EnumCapsuleType type, Effect effect) {
 		if (effect == null)
 			return false;
-		EnumCapsuleType type = getCapsuleType(capsule.getItem());
 		if (type == null || type == EnumCapsuleType.SPECIAL)
 			return false;
 		return type == EnumCapsuleType.NORMAL ^ effect.isInstant();
@@ -82,6 +85,9 @@ public class ItemCapsule extends Item {
 
 	public ItemCapsule(EnumCapsuleType type) {
 		super(Defaults.itemProp.get().maxStackSize(ServerConfigs.capsule_stackSize.get()));
+		this.addPropertyOverride(new ResourceLocation("potion"), (stack, world, entity) -> {
+			return PotionUtils.getEffectsFromStack(stack).isEmpty() ? 0.0F : 1.0F;
+		});
 		TYPE = type;
 	}
 
@@ -165,7 +171,7 @@ public class ItemCapsule extends Item {
 
 	@OnlyIn(Dist.CLIENT)
 	public boolean hasEffect(ItemStack stack) {
-		return super.hasEffect(stack) || !PotionUtils.getEffectsFromStack(stack).isEmpty();
+		return ClientConfigs.capsule_glowWithEffect.get() || !PotionUtils.getEffectsFromStack(stack).isEmpty();
 	}
 
 	@Override
@@ -335,7 +341,8 @@ public class ItemCapsule extends Item {
 				for (Potion potion: Registry.POTION) {
 					for (EffectInstance effect: potion.getEffects()) {
 						EffectInstance toadd = new EffectInstance(effect);
-						toadd.duration = ServerConfigs.capsule_capacity.get();
+						if (!toadd.getPotion().isInstant())
+							toadd.duration = ServerConfigs.capsule_capacity.get();
 						if (effects.add(toadd)) {
 							PotionCapsule.Logger.info(toadd.getAmplifier() > 0 ? new TranslationTextComponent(toadd.getEffectName()).getFormattedText() + " x " + (toadd.getAmplifier() + 1) : new TranslationTextComponent(toadd.getEffectName()).getFormattedText());
 						}
@@ -345,7 +352,8 @@ public class ItemCapsule extends Item {
 			}
 			
 			for (EffectInstance effect: effects) {
-				items.add(PotionUtils.appendEffects(getDefaultInstance(), Arrays.asList(effect)));
+				if (canApplyEffectOnType(TYPE, effect.getPotion()))
+					items.add(PotionUtils.appendEffects(getDefaultInstance(), Arrays.asList(effect)));
 			}
 		}
 	}

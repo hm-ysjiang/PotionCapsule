@@ -46,6 +46,7 @@ public class ModItems {
 		PotionCapsule.Logger.info("Items Registering");
 		IForgeRegistry<Item> reg = event.getRegistry();
 		reg.registerAll(CAPSULE,
+//						CAPSULE_INSTANT,
 						PENDANT
 						,
 						BLOCK_GELATIN_EXTRACTOR,

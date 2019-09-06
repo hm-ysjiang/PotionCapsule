@@ -12,7 +12,7 @@ import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.configs.ServerConfigs;
 import hmysjiang.potioncapsule.effects.EffectNightVisionNF;
-import hmysjiang.potioncapsule.items.ItemCapsule;
+import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.Item;
@@ -60,46 +60,41 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 	public boolean matches(CraftingInventory inv, World worldIn) {
 		if (!active)
 			return false;
-		int cap = -1, potion = -1;
-		EffectInstance toapply = null;
+		boolean cap = false, potion = false;
 		
 		FOR_SREACH:
 		for (int i = 0 ; i<inv.getSizeInventory() ; i++) {
-			if (ItemCapsule.isItemCapsule(inv.getStackInSlot(i))) {
-				if (cap != -1)
+			if (inv.getStackInSlot(i).getItem() == ModItems.CAPSULE) {
+				if (cap)
 					return false;
 				if (PotionUtils.getEffectsFromStack(inv.getStackInSlot(i)).size() > 0)
 					return false;
-				cap = i;
+				cap = true;
 			}
 			else if (inv.getStackInSlot(i).getItem().equals(potion_item)) {
-				if (potion != -1)
+				if (potion)
 					return false;
 				for (EffectInstance ins: PotionUtils.getEffectsFromStack(inv.getStackInSlot(i))) {
 					if (ins.duration >= ServerConfigs.capsule_capacity.get()) {
-						potion = i;
-						toapply = ins;
+						potion = true;
 						continue FOR_SREACH;
 					}
 				}
 				return false;
 			}
 		}
-		return cap != -1 && potion != -1 && ItemCapsule.canApplyEffectOnCapsule(inv.getStackInSlot(cap), toapply.getPotion());
+		return cap && potion;
 	}
 
 	@Override
 	public ItemStack getCraftingResult(CraftingInventory inv) {
 		List<EffectInstance> effects = new ArrayList<>();
 		EffectInstance effect2Apply = null;
-		int potionPos = -1, capPos = -1;
-		for (int i = 0 ; i<inv.getSizeInventory() ; i++) {
-			if (inv.getStackInSlot(i).getItem().equals(potion_item)) {
-				effects = PotionUtils.getEffectsFromStack(inv.getStackInSlot(i));
-				potionPos = i;
-			}
-			else if (ItemCapsule.isItemCapsule(inv.getStackInSlot(i))) {
-				capPos = i;
+		int potionPos;
+		for (potionPos = 0 ; potionPos<inv.getSizeInventory() ; potionPos++) {
+			if (inv.getStackInSlot(potionPos).getItem().equals(potion_item)) {
+				effects = PotionUtils.getEffectsFromStack(inv.getStackInSlot(potionPos));
+				break;
 			}
 		}
 		for (int i = 0 ; i<effects.size() ; i++) {
@@ -124,7 +119,7 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 		}
 		
 		effect2Apply.duration = ServerConfigs.capsule_capacity.get();
-		return PotionUtils.appendEffects(ItemCapsule.getDefaultInstance(ItemCapsule.getCapsuleType(inv.getStackInSlot(capPos).getItem())), Arrays.asList(effect2Apply));
+		return PotionUtils.appendEffects(new ItemStack(ModItems.CAPSULE), Arrays.asList(effect2Apply));
 	}
 	
 	@Override

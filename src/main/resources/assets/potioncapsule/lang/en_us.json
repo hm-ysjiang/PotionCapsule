@@ -5,6 +5,8 @@
 	"_Items": "",
 	"item.potioncapsule.item_capsule": "Potion Capsule",
 	"item.potioncapsule.item_capsule.with": "Potion Capsule (%s)",
+	"item.potioncapsule.item_capsule_instant": "Instant Potion Capsule",
+	"item.potioncapsule.item_capsule_instant.with": "Instant Potion Capsule (%s)",
 	"item.potioncapsule.item_capsule_pendant": "Capsule Pendant",
 	"item.potioncapsule.item_gelatin_powder": "Gelatin Powder",
 	"item.potioncapsule.item_wart_dust": "Nether Wart Dust",
