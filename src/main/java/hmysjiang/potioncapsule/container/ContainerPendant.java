@@ -61,14 +61,12 @@ public class ContainerPendant extends BaseContainer {
 		}
 	}
 	
-	public ItemStackHandler getHandler() {
-		return handler;
+	public ItemStack getStack() {
+		return stack;
 	}
 	
-	@Override
-	public void onContainerClosed(PlayerEntity playerIn) {
-		super.onContainerClosed(playerIn);
-		stack.getOrCreateTag().putBoolean("opened", false);
+	public ItemStackHandler getHandler() {
+		return handler;
 	}
 	
 	private static class SlotCapsule extends SlotItemHandler {

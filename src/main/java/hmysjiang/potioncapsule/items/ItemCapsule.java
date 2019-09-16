@@ -12,6 +12,7 @@ import java.util.TreeSet;
 import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.configs.ClientConfigs;
 import hmysjiang.potioncapsule.configs.ServerConfigs;
+import hmysjiang.potioncapsule.effects.EffectNightVisionNF;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.utils.Defaults;
 import hmysjiang.potioncapsule.utils.text.CapsuleUsedTextComponent;
@@ -30,6 +31,7 @@ import net.minecraft.item.UseAction;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectUtils;
+import net.minecraft.potion.Effects;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.stats.Stats;
@@ -343,6 +345,8 @@ public class ItemCapsule extends Item {
 						EffectInstance toadd = new EffectInstance(effect);
 						if (!toadd.getPotion().isInstant())
 							toadd.duration = ServerConfigs.capsule_capacity.get();
+						if (toadd.getPotion() == Effects.NIGHT_VISION && ServerConfigs.misc_replaceNvWithNvnf.get())
+							toadd = new EffectInstance(EffectNightVisionNF.INSTANCE, toadd.getDuration(), toadd.getAmplifier(), toadd.isAmbient(), toadd.doesShowParticles(), toadd.isShowIcon());
 						if (effects.add(toadd)) {
 							PotionCapsule.Logger.info(toadd.getAmplifier() > 0 ? new TranslationTextComponent(toadd.getEffectName()).getFormattedText() + " x " + (toadd.getAmplifier() + 1) : new TranslationTextComponent(toadd.getEffectName()).getFormattedText());
 						}

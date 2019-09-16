@@ -32,9 +32,9 @@ public class PotionCapsule {
 
 		ModLoadingContext.get().registerConfig(Type.SERVER, ConfigManager.SConfig);
 		ModLoadingContext.get().registerConfig(Type.CLIENT, ConfigManager.CConfig);
-
-		ConfigManager.loadServerConfigFromPath(FMLPaths.CONFIGDIR.get().resolve("potioncapsule-server.toml").toString());
-		ConfigManager.loadClientConfigFromPath(FMLPaths.CONFIGDIR.get().resolve("potioncapsule-client.toml").toString());
+		
+        ConfigManager.loadServerConfigFromPath(FMLPaths.CONFIGDIR.get().resolve("potioncapsule-server.toml").toString());
+        ConfigManager.loadClientConfigFromPath(FMLPaths.CONFIGDIR.get().resolve("potioncapsule-client.toml").toString());
 		
 		Logger.info("Hello Minecraft!");
 	}

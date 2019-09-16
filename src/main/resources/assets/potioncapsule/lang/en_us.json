@@ -34,7 +34,7 @@
 	"potioncapsule.gui.pendant.tooltip.slotdescr_WATER": "Triggered when is in water",
 	"potioncapsule.gui.pendant.tooltip.slotdescr_SPRINT": "Triggered when sprinting",
 	"potioncapsule.gui.pendant.tooltip.slotdescr_FALLING": "Triggered when falling",
-	"potioncapsule.gui.pendant.tooltip.slotdescr_NIGHT": "Trigger when is night time",
+	"potioncapsule.gui.pendant.tooltip.slotdescr_NIGHT": "Trigger when is in dark",
 	"potioncapsule.gui.pendant.tooltip.slotdescr_KEYBIND": "Triggered when keybind being pressed",
 	"potioncapsule.gui.pendant.tooltip.keyhint": "Keybind: %s"
 	,
