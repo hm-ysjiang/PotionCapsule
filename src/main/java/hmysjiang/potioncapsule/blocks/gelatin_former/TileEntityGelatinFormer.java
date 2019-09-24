@@ -157,7 +157,7 @@ public class TileEntityGelatinFormer extends TileEntity implements ITickableTile
 
 	@Override
 	public ITextComponent getDisplayName() {
-		return ModItems.BLOCK_GELATIN_FORMER.getDisplayName(ModItems.BLOCK_GELATIN_FORMER.getDefaultInstance());
+		return ModItems.BLOCK_GELATIN_FORMER.getDisplayName(new ItemStack(ModItems.BLOCK_GELATIN_FORMER));
 	}
 
 }

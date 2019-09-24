@@ -72,13 +72,12 @@ public class ItemCapsule extends Item {
 	public static ItemStack getDefaultInstance(EnumCapsuleType type) {
 		switch (type) {
 		case INSTANT:
-			return ModItems.CAPSULE_INSTANT.getDefaultInstance();
-		case NORMAL:
-			return ModItems.CAPSULE.getDefaultInstance();
+			return new ItemStack(ModItems.CAPSULE_INSTANT);
 		case SPECIAL:
-			return ModItems.CAPSULE_SPECIAL.getDefaultInstance();
+			return new ItemStack(ModItems.CAPSULE_SPECIAL);
+		case NORMAL:
 		default:
-			return ModItems.CAPSULE.getDefaultInstance();
+			return new ItemStack(ModItems.CAPSULE);
 		}
 	}
 
@@ -327,7 +326,7 @@ public class ItemCapsule extends Item {
 	@SuppressWarnings("deprecation")
 	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
 		if (this.isInGroup(group)) {
-			items.add(getDefaultInstance());
+			items.add(new ItemStack(this));
 			
 			if (effects == null) {
 				PotionCapsule.Logger.info("Start querying effect instances from existing potion");
@@ -357,7 +356,7 @@ public class ItemCapsule extends Item {
 			
 			for (EffectInstance effect: effects) {
 				if (canApplyEffectOnType(TYPE, effect.getPotion()))
-					items.add(PotionUtils.appendEffects(getDefaultInstance(), Arrays.asList(effect)));
+					items.add(PotionUtils.appendEffects(new ItemStack(this), Arrays.asList(effect)));
 			}
 		}
 	}

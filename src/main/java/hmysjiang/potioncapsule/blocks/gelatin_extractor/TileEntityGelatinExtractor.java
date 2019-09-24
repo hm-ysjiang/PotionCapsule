@@ -139,7 +139,7 @@ public class TileEntityGelatinExtractor extends TileEntity implements ITickableT
 
 	@Override
 	public ITextComponent getDisplayName() {
-		return ModItems.BLOCK_GELATIN_EXTRACTOR.getDisplayName(ModItems.BLOCK_GELATIN_EXTRACTOR.getDefaultInstance());
+		return ModItems.BLOCK_GELATIN_EXTRACTOR.getDisplayName(new ItemStack(ModItems.BLOCK_GELATIN_EXTRACTOR));
 	}
 	
 }

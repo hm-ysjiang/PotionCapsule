@@ -36,7 +36,7 @@ import net.minecraftforge.items.ItemStackHandler;
 @EventBusSubscriber(modid = Reference.MOD_ID)
 public class ItemCapsulePendant extends Item {
 	private static ContainerProvider<ContainerPendant> provider = new ContainerProvider<>(
-			() -> ModItems.PENDANT.getDisplayName(ModItems.PENDANT.getDefaultInstance()), 
+			() -> ModItems.PENDANT.getDisplayName(new ItemStack(ModItems.PENDANT)), 
 			(int winId, PlayerInventory inv, PlayerEntity player) -> new ContainerPendant(winId, inv, player.getActiveHand())
 	);
 
@@ -146,7 +146,7 @@ public class ItemCapsulePendant extends Item {
 	@SubscribeEvent
 	public static void onPlayerAbout2Attacc(AttackEntityEvent event) {
 		PlayerEntity player = event.getPlayer();
-		ItemStack pendant = InventoryHelper.findStackFromInventory(player.inventory, ModItems.PENDANT.getDefaultInstance());
+		ItemStack pendant = InventoryHelper.findStackFromInventory(player.inventory, new ItemStack(ModItems.PENDANT));
 		if (player.openContainer != null && player.openContainer instanceof ContainerPendant && ((ContainerPendant) player.openContainer).getStack() == pendant)
 			return;
 		if (!pendant.isEmpty()) {
@@ -161,7 +161,7 @@ public class ItemCapsulePendant extends Item {
 		PlayerEntity player = event.getEntityLiving() instanceof PlayerEntity ? (PlayerEntity) event.getEntityLiving() : null;
 		if (player == null)
 			return;
-		ItemStack pendant = InventoryHelper.findStackFromInventory(player.inventory, ModItems.PENDANT.getDefaultInstance());
+		ItemStack pendant = InventoryHelper.findStackFromInventory(player.inventory, new ItemStack(ModItems.PENDANT));
 		if (player.openContainer != null && player.openContainer instanceof ContainerPendant && ((ContainerPendant) player.openContainer).getStack() == pendant)
 			return;
 		if (!pendant.isEmpty()) {
@@ -227,7 +227,7 @@ public class ItemCapsulePendant extends Item {
 	public static void onKeyBindPressed(PlayerEntity player) {
 		if (player.world.isRemote)
 			return;
-		ItemStack pendant = InventoryHelper.findStackFromInventory(player.inventory, ModItems.PENDANT.getDefaultInstance());
+		ItemStack pendant = InventoryHelper.findStackFromInventory(player.inventory, new ItemStack(ModItems.PENDANT));
 		if (player.openContainer != null && player.openContainer instanceof ContainerPendant && ((ContainerPendant) player.openContainer).getStack() == pendant)
 			return;
 		if (!pendant.isEmpty()) {
