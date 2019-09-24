@@ -2,7 +2,7 @@ package hmysjiang.potioncapsule.configs;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 
-public class ServerConfigs {
+public class CommonConfigs {
 	
 	public static ForgeConfigSpec.IntValue capsule_capacity;
 	public static ForgeConfigSpec.IntValue capsule_stackSize;

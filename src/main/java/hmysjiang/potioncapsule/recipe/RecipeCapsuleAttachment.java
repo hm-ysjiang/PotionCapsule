@@ -10,7 +10,7 @@ import com.google.gson.JsonObject;
 
 import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.Reference;
-import hmysjiang.potioncapsule.configs.ServerConfigs;
+import hmysjiang.potioncapsule.configs.CommonConfigs;
 import hmysjiang.potioncapsule.effects.EffectNightVisionNF;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.utils.Defaults;
@@ -75,7 +75,7 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 				if (potion)
 					return false;
 				for (EffectInstance ins: PotionUtils.getEffectsFromStack(inv.getStackInSlot(i))) {
-					if (ins.duration >= ServerConfigs.capsule_capacity.get()) {
+					if (ins.duration >= CommonConfigs.capsule_capacity.get()) {
 						potion = true;
 						continue FOR_SREACH;
 					}
@@ -98,8 +98,8 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 			}
 		}
 		for (int i = 0 ; i<effects.size() ; i++) {
-			if (effects.get(i).duration >= ServerConfigs.capsule_capacity.get()) {
-				effect2Apply = new EffectInstance((ServerConfigs.misc_replaceNvWithNvnf.get() && effects.get(i).getPotion() == Effects.NIGHT_VISION) ? new EffectInstance(EffectNightVisionNF.INSTANCE) : effects.get(i));
+			if (effects.get(i).duration >= CommonConfigs.capsule_capacity.get()) {
+				effect2Apply = new EffectInstance((CommonConfigs.misc_replaceNvWithNvnf.get() && effects.get(i).getPotion() == Effects.NIGHT_VISION) ? new EffectInstance(EffectNightVisionNF.INSTANCE) : effects.get(i));
 				break;
 			}
 		}
@@ -118,7 +118,7 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 			return ItemStack.EMPTY;
 		}
 		
-		effect2Apply.duration = ServerConfigs.capsule_capacity.get();
+		effect2Apply.duration = CommonConfigs.capsule_capacity.get();
 		return PotionUtils.appendEffects(new ItemStack(ModItems.CAPSULE), Arrays.asList(effect2Apply));
 	}
 	
@@ -134,23 +134,23 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 			effects.add(new EffectInstance(effect));
 		NonNullList<ItemStack> remain = super.getRemainingItems(inv);
 		for (int i = 0 ; i<effects.size() ; i++) {
-			if (effects.get(i).duration < ServerConfigs.capsule_capacity.get()) {
-				if (!ServerConfigs.recipe_removeExcessDuration.get())
+			if (effects.get(i).duration < CommonConfigs.capsule_capacity.get()) {
+				if (!CommonConfigs.recipe_removeExcessDuration.get())
 					remainEffects.add(effects.get(i));
 			}
-			else if (effects.get(i).duration == ServerConfigs.capsule_capacity.get()) {
+			else if (effects.get(i).duration == CommonConfigs.capsule_capacity.get()) {
 				if (!tax) {
 					tax = true;
-					effects.get(i).duration -= ServerConfigs.capsule_capacity.get();
+					effects.get(i).duration -= CommonConfigs.capsule_capacity.get();
 				}
 			}
 			else {
 				if (!tax) {
 					tax = true;
-					effects.get(i).duration -= ServerConfigs.capsule_capacity.get();
+					effects.get(i).duration -= CommonConfigs.capsule_capacity.get();
 				}
-				if (effects.get(i).duration < ServerConfigs.capsule_capacity.get()) {
-					if (!ServerConfigs.recipe_removeExcessDuration.get())
+				if (effects.get(i).duration < CommonConfigs.capsule_capacity.get()) {
+					if (!CommonConfigs.recipe_removeExcessDuration.get())
 						remainEffects.add(effects.get(i));
 				}
 				else

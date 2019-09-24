@@ -1,7 +1,7 @@
 package hmysjiang.potioncapsule.items;
 
 import hmysjiang.potioncapsule.Reference;
-import hmysjiang.potioncapsule.configs.ServerConfigs;
+import hmysjiang.potioncapsule.configs.CommonConfigs;
 import hmysjiang.potioncapsule.container.ContainerPendant;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.utils.ContainerProvider;
@@ -75,8 +75,8 @@ public class ItemCapsulePendant extends Item {
 		return new ICapabilitySerializable<INBT>() {
 			private final IItemHandler handler = new ItemStackHandler(8) {
 				@Override public boolean isItemValid(int slot, ItemStack stack) { return stack.getItem() instanceof ItemCapsule; };
-				@Override public int getSlotLimit(int slot) { return ServerConfigs.capsule_stackSize.get(); }
-				@Override protected int getStackLimit(int slot, ItemStack stack) { return ServerConfigs.capsule_stackSize.get(); }
+				@Override public int getSlotLimit(int slot) { return CommonConfigs.capsule_stackSize.get(); }
+				@Override protected int getStackLimit(int slot, ItemStack stack) { return CommonConfigs.capsule_stackSize.get(); }
 			};
 			
 			@Override

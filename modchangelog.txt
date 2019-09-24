@@ -1,5 +1,9 @@
+1.0.6
+ - Resolve #3 by change the server config to common config, may need user side config reset
+ - Fix #6
+
 1.0.5
- - Change the night-time trigger in to in-dark
+ - Change the night-time trigger into in-dark
 
 1.0.4
  - Fix #2

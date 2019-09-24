@@ -1,6 +1,6 @@
 # Potion Capsule
-forge-1.14.3-27.0.60
+forge-1.14.4-28.0.55
 
-A mod for minecraft 1.14.3
+A mod for minecraft 1.14.4
 
 Attach the effect on the potion onto the capsules!

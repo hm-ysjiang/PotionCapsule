@@ -11,7 +11,7 @@ import java.util.TreeSet;
 
 import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.configs.ClientConfigs;
-import hmysjiang.potioncapsule.configs.ServerConfigs;
+import hmysjiang.potioncapsule.configs.CommonConfigs;
 import hmysjiang.potioncapsule.effects.EffectNightVisionNF;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.utils.Defaults;
@@ -86,7 +86,7 @@ public class ItemCapsule extends Item {
 	private static Set<EffectInstance> effects;
 
 	public ItemCapsule(EnumCapsuleType type) {
-		super(Defaults.itemProp.get().maxStackSize(ServerConfigs.capsule_stackSize.get()));
+		super(Defaults.itemProp.get().maxStackSize(CommonConfigs.capsule_stackSize.get()));
 		this.addPropertyOverride(new ResourceLocation("potion"), (stack, world, entity) -> {
 			return PotionUtils.getEffectsFromStack(stack).isEmpty() ? 0.0F : 1.0F;
 		});
@@ -139,8 +139,8 @@ public class ItemCapsule extends Item {
 		if (shouldApply) {
 			PlayerEntity player = entityLiving instanceof PlayerEntity ? (PlayerEntity) entityLiving : null;
 			if (player == null || !player.abilities.isCreativeMode) {
-				stack.shrink(1);
 				player.sendStatusMessage(new CapsuleUsedTextComponent("potioncapsule.tooltip.capsule.used", stack.getDisplayName()), true);
+				stack.shrink(1);
 			}
 
 			if (player instanceof ServerPlayerEntity) {
@@ -344,8 +344,8 @@ public class ItemCapsule extends Item {
 					for (EffectInstance effect: potion.getEffects()) {
 						EffectInstance toadd = new EffectInstance(effect);
 						if (!toadd.getPotion().isInstant())
-							toadd.duration = ServerConfigs.capsule_capacity.get();
-						if (toadd.getPotion() == Effects.NIGHT_VISION && ServerConfigs.misc_replaceNvWithNvnf.get())
+							toadd.duration = CommonConfigs.capsule_capacity.get();
+						if (toadd.getPotion() == Effects.NIGHT_VISION && CommonConfigs.misc_replaceNvWithNvnf.get())
 							toadd = new EffectInstance(EffectNightVisionNF.INSTANCE, toadd.getDuration(), toadd.getAmplifier(), toadd.isAmbient(), toadd.doesShowParticles(), toadd.isShowIcon());
 						if (effects.add(toadd)) {
 							PotionCapsule.Logger.info(toadd.getAmplifier() > 0 ? new TranslationTextComponent(toadd.getEffectName()).getFormattedText() + " x " + (toadd.getAmplifier() + 1) : new TranslationTextComponent(toadd.getEffectName()).getFormattedText());

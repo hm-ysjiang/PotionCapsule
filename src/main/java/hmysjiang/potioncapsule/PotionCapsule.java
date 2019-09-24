@@ -9,12 +9,12 @@ import hmysjiang.potioncapsule.proxy.ISidedProxy;
 import hmysjiang.potioncapsule.proxy.ServerProxy;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig.Type;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -27,14 +27,16 @@ public class PotionCapsule {
 		INSTANCE_REF = this;
 
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onCommonSetup);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onClientRegistries);
+		// FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onClientRegistries);
 		MinecraftForge.EVENT_BUS.register(this);
 
-		ModLoadingContext.get().registerConfig(Type.SERVER, ConfigManager.SConfig);
-		ModLoadingContext.get().registerConfig(Type.CLIENT, ConfigManager.CConfig);
-		
-        ConfigManager.loadServerConfigFromPath(FMLPaths.CONFIGDIR.get().resolve("potioncapsule-server.toml").toString());
-        ConfigManager.loadClientConfigFromPath(FMLPaths.CONFIGDIR.get().resolve("potioncapsule-client.toml").toString());
+		ModLoadingContext.get().registerConfig(Type.COMMON, ConfigManager.SConfig);
+        ConfigManager.loadCommonConfigFromPath(FMLPaths.CONFIGDIR.get().resolve("potioncapsule-common.toml").toString());
+        
+        DistExecutor.runWhenOn(Dist.CLIENT, ()->()->{
+        	ModLoadingContext.get().registerConfig(Type.CLIENT, ConfigManager.CConfig);
+        	ConfigManager.loadClientConfigFromPath(FMLPaths.CONFIGDIR.get().resolve("potioncapsule-client.toml").toString());
+		});
 		
 		Logger.info("Hello Minecraft!");
 	}
@@ -50,10 +52,6 @@ public class PotionCapsule {
 	
 	private void onCommonSetup(final FMLCommonSetupEvent event) {
 		proxy.init();
-	}
-	
-	private void onClientRegistries(final FMLClientSetupEvent event) {
-		
 	}
 	
 	public static class Logger {

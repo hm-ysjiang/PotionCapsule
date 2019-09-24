@@ -15,7 +15,7 @@ public class ConfigManager {
 	public static final ForgeConfigSpec.Builder CConfigBuilder = new ForgeConfigSpec.Builder();
 	public static final ForgeConfigSpec CConfig;
 	
-	public static void loadServerConfigFromPath(String path) {
+	public static void loadCommonConfigFromPath(String path) {
 		loadConfigFromPath(SConfig, path);
 	}
 	
@@ -30,7 +30,7 @@ public class ConfigManager {
 	}
 	
 	static {
-		ServerConfigs.init(SConfigBuilder);
+		CommonConfigs.init(SConfigBuilder);
 		ClientConfigs.init(CConfigBuilder);
 		SConfig = SConfigBuilder.build();
 		CConfig = CConfigBuilder.build();

@@ -4,7 +4,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import hmysjiang.potioncapsule.Reference;
-import hmysjiang.potioncapsule.configs.ServerConfigs;
+import hmysjiang.potioncapsule.configs.CommonConfigs;
 import hmysjiang.potioncapsule.effects.EffectNightVisionNF;
 import hmysjiang.potioncapsule.items.ItemCapsule;
 import hmysjiang.potioncapsule.items.ItemCapsule.EnumCapsuleType;
@@ -49,7 +49,7 @@ public class RecipeCapsuleCombinationOrClear extends SpecialRecipe {
 					return false;
 			}
 		}
-		return match && (ServerConfigs.recipe_allowCapsuleCombine.get() || capsules == 1);
+		return match && (CommonConfigs.recipe_allowCapsuleCombine.get() || capsules == 1);
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class RecipeCapsuleCombinationOrClear extends SpecialRecipe {
 					type = ItemCapsule.getCapsuleType(inv.getStackInSlot(i).getItem());
 				FOR_ITER:
 				for (EffectInstance effect: PotionUtils.getEffectsFromStack(inv.getStackInSlot(i))) {
-					if (ServerConfigs.misc_replaceNvWithNvnf.get() && effect.getPotion() == Effects.NIGHT_VISION) {
+					if (CommonConfigs.misc_replaceNvWithNvnf.get() && effect.getPotion() == Effects.NIGHT_VISION) {
 						effect = new EffectInstance(EffectNightVisionNF.INSTANCE, effect.getDuration(), effect.getAmplifier(), effect.isAmbient(), effect.doesShowParticles(), effect.isShowIcon());
 					}
 					for (EffectInstance stored: effects) {

@@ -1,7 +1,7 @@
 package hmysjiang.potioncapsule.recipe;
 
 import hmysjiang.potioncapsule.Reference;
-import hmysjiang.potioncapsule.configs.ServerConfigs;
+import hmysjiang.potioncapsule.configs.CommonConfigs;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.inventory.CraftingInventory;
@@ -26,7 +26,7 @@ public class RecipeWartDust extends SpecialRecipe {
 
 	@Override
 	public boolean matches(CraftingInventory inv, World worldIn) {
-		if (!ServerConfigs.recipe_enableWartDust.get())
+		if (!CommonConfigs.recipe_enableWartDust.get())
 			return false;
 		boolean wart = false;
 		for (int i = 0 ; i<inv.getSizeInventory() ; i++) {
