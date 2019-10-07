@@ -70,6 +70,7 @@ public class PotionCapsule {
 							Class.forName("hmysjiang.potioncapsule.compact.CurioProxy").asSubclass(ICurioProxy.class).newInstance() :
 							new DummyCurioProxy();
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+			Logger.error("Wierd thing happened while trying to instantiate proxy for Curios");
 			e.printStackTrace();
 			curioProxy = new DummyCurioProxy();
 		}
