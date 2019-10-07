@@ -64,7 +64,7 @@ public class ItemCapsulePendant extends Item {
 	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		if (!worldIn.isRemote) {
 			if (entityIn instanceof PlayerEntity) {
-				if (InventoryHelper.findStackFromInventory(((PlayerEntity) entityIn).inventory, stack) == stack)
+				if (InventoryHelper.findStackFromPlayerInventory(((PlayerEntity) entityIn).inventory, stack) == stack)
 					onTick(stack, (PlayerEntity) entityIn, worldIn);
 			}
 		}
@@ -146,7 +146,7 @@ public class ItemCapsulePendant extends Item {
 	@SubscribeEvent
 	public static void onPlayerAbout2Attacc(AttackEntityEvent event) {
 		PlayerEntity player = event.getPlayer();
-		ItemStack pendant = InventoryHelper.findStackFromInventory(player.inventory, new ItemStack(ModItems.PENDANT));
+		ItemStack pendant = InventoryHelper.findStackFromPlayerInventory(player.inventory, new ItemStack(ModItems.PENDANT));
 		if (player.openContainer != null && player.openContainer instanceof ContainerPendant && ((ContainerPendant) player.openContainer).getStack() == pendant)
 			return;
 		if (!pendant.isEmpty()) {
@@ -161,7 +161,7 @@ public class ItemCapsulePendant extends Item {
 		PlayerEntity player = event.getEntityLiving() instanceof PlayerEntity ? (PlayerEntity) event.getEntityLiving() : null;
 		if (player == null)
 			return;
-		ItemStack pendant = InventoryHelper.findStackFromInventory(player.inventory, new ItemStack(ModItems.PENDANT));
+		ItemStack pendant = InventoryHelper.findStackFromPlayerInventory(player.inventory, new ItemStack(ModItems.PENDANT));
 		if (player.openContainer != null && player.openContainer instanceof ContainerPendant && ((ContainerPendant) player.openContainer).getStack() == pendant)
 			return;
 		if (!pendant.isEmpty()) {
@@ -175,7 +175,7 @@ public class ItemCapsulePendant extends Item {
 		}
 	}
 
-	private void onTick(ItemStack pendant, PlayerEntity player, World world) {
+	public void onTick(ItemStack pendant, PlayerEntity player, World world) {
 		if (player.openContainer != null && player.openContainer instanceof ContainerPendant && ((ContainerPendant) player.openContainer).getStack() == pendant)
 			return;
 		// FIRE
@@ -227,7 +227,7 @@ public class ItemCapsulePendant extends Item {
 	public static void onKeyBindPressed(PlayerEntity player) {
 		if (player.world.isRemote)
 			return;
-		ItemStack pendant = InventoryHelper.findStackFromInventory(player.inventory, new ItemStack(ModItems.PENDANT));
+		ItemStack pendant = InventoryHelper.findStackFromPlayerInventory(player.inventory, new ItemStack(ModItems.PENDANT));
 		if (player.openContainer != null && player.openContainer instanceof ContainerPendant && ((ContainerPendant) player.openContainer).getStack() == pendant)
 			return;
 		if (!pendant.isEmpty()) {

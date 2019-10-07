@@ -1,16 +1,17 @@
 package hmysjiang.potioncapsule.utils.helper;
 
-import net.minecraft.inventory.IInventory;
+import hmysjiang.potioncapsule.PotionCapsule;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 
 public class InventoryHelper {
 	
-	public static ItemStack findStackFromInventory(IInventory inv, ItemStack sample) {
+	public static ItemStack findStackFromPlayerInventory(PlayerInventory inv, ItemStack sample) {
 		for (int i = 0 ; i<inv.getSizeInventory() ; i++) {
 			if (inv.getStackInSlot(i).isItemEqual(sample))
 				return inv.getStackInSlot(i);
 		}
-		return ItemStack.EMPTY;
+		return PotionCapsule.curioProxy.findCurio(sample, inv.player);
 	}
 	
 }
