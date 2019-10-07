@@ -34,3 +34,9 @@ A more efficient way to use potion
     versionRange="[1.14.4]"
     ordering="NONE"
     side="BOTH"
+[[dependencies.potioncapsule]]
+    modId="curios"
+    mandatory=false
+    versionRange="[FORGE-1.14.4-1.0,)"
+    ordering="AFTER"
+    side="BOTH"

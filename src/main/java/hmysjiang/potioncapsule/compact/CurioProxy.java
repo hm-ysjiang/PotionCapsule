@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 
+import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.items.ItemCapsulePendant;
 import net.minecraft.entity.LivingEntity;
@@ -50,6 +51,7 @@ public class CurioProxy implements ICurioProxy {
 	
 	@Override
 	public void enqueueIMC() {
+		PotionCapsule.Logger.info("Curios is loaded, registering Capsule Pendant as a necklace");
 		InterModComms.sendTo("curios", CuriosAPI.IMC.REGISTER_TYPE, () -> new CurioIMCMessage("necklace"));
 	}
 	
