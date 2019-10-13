@@ -1,4 +1,4 @@
-package hmysjiang.potioncapsule.compact;
+package hmysjiang.potioncapsule.compact.curio;
 
 public class DummyCurioProxy implements ICurioProxy {
 

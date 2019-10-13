@@ -1,4 +1,4 @@
-package hmysjiang.potioncapsule.compact;
+package hmysjiang.potioncapsule.compact.curio;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

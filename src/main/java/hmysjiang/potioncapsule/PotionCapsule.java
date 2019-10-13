@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 
-import hmysjiang.potioncapsule.compact.DummyCurioProxy;
-import hmysjiang.potioncapsule.compact.ICurioProxy;
+import hmysjiang.potioncapsule.compact.curio.DummyCurioProxy;
+import hmysjiang.potioncapsule.compact.curio.ICurioProxy;
 import hmysjiang.potioncapsule.configs.ConfigManager;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.proxy.ClientProxy;
@@ -64,10 +64,11 @@ public class PotionCapsule {
 	
 	private void onCommonSetup(final FMLCommonSetupEvent event) {
 		proxy.init();
+		
 		curioOpt = ModList.get().getModContainerById("curios");
 		try {
 			curioProxy = ICurioProxy.isCurioLoaded() ? 
-							Class.forName("hmysjiang.potioncapsule.compact.CurioProxy").asSubclass(ICurioProxy.class).newInstance() :
+							Class.forName("hmysjiang.potioncapsule.compact.curio.CurioProxy").asSubclass(ICurioProxy.class).newInstance() :
 							new DummyCurioProxy();
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 			Logger.error("Wierd thing happened while trying to instantiate proxy for Curios");
