@@ -59,7 +59,7 @@ public class GelExtractorJei {
 		
 		@Override
 		public void draw(RecipeGelatinExtractor recipe, double mouseX, double mouseY) {
-			arrow.draw(38, 17);
+			arrow.draw(37, 16);
 		}
 
 		@Override
@@ -71,8 +71,8 @@ public class GelExtractorJei {
 		@Override
 		public void setRecipe(IRecipeLayout recipeLayout, RecipeGelatinExtractor recipe, IIngredients ingredients) {
 			IGuiItemStackGroup group = recipeLayout.getItemStacks();
-			group.init(0, true, 19, 17);
-			group.init(1, false, 65, 17);
+			group.init(0, true, 18, 16);
+			group.init(1, false, 64, 16);
 			group.set(ingredients);
 		}
 		

@@ -28,8 +28,8 @@ public class ScreenGelatinFormer extends ContainerScreen<ContainerGelatinFormer>
 		renderBackground();
 		super.render(mouseX, mouseY, partialTicks);
 		renderHoveredToolTip(mouseX, mouseY);
-		if (mouseX >= this.guiLeft + 76 && mouseX < this.guiLeft + 100 && mouseY >= this.guiTop + 35
-				&& mouseY < this.guiTop + 52) {
+		if (mouseX >= this.guiLeft + 6 && mouseX < this.guiLeft + 18 && mouseY >= this.guiTop + 37
+				&& mouseY < this.guiTop + 55) {
 			int per = (int) (container.getTile().getWorkedPercnetage() * 100);
 			if (!container.getTile().isWorking()) {
 				renderTooltip(
