@@ -14,6 +14,7 @@ public class Reference {
 		public static final String GELATIN_POWDER = "item_gelatin_powder";
 		public static final String WART_DUST = "item_wart_dust";
 		public static final String APPLE_JELLY = "item_apple_jelly";
+		public static final String CATALYST = "item_catalyst";
 		
 	}
 	

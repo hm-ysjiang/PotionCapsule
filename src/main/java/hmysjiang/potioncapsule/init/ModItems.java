@@ -4,6 +4,7 @@ import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.Reference.BlockRegs;
 import hmysjiang.potioncapsule.Reference.ItemRegs;
+import hmysjiang.potioncapsule.configs.CommonConfigs;
 import hmysjiang.potioncapsule.items.ItemCapsule;
 import hmysjiang.potioncapsule.items.ItemCapsule.EnumCapsuleType;
 import hmysjiang.potioncapsule.items.ItemCapsulePendant;
@@ -40,6 +41,15 @@ public class ModItems {
 		};
 	}.setRegistryName(Defaults.modPrefix.apply(ItemRegs.WART_DUST));
 	public static final Item APPLE_JELLY = new Item(Defaults.itemProp.get().food((new Food.Builder()).setAlwaysEdible().fastToEat().hunger(2).saturation(0.3F).build())).setRegistryName(Defaults.modPrefix.apply(ItemRegs.APPLE_JELLY));
+	public static final Item CATALYST = new Item(Defaults.itemProp.get()) {
+		@OnlyIn(Dist.CLIENT)
+		@Override
+		public void addInformation(net.minecraft.item.ItemStack stack, net.minecraft.world.World worldIn, java.util.List<net.minecraft.util.text.ITextComponent> tooltip, net.minecraft.client.util.ITooltipFlag flagIn) {
+			tooltip.add(new TranslationTextComponent("potioncapsule.tooltip.catalyst_1").applyTextStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslationTextComponent("potioncapsule.tooltip.catalyst_2").applyTextStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslationTextComponent("potioncapsule.tooltip.catalyst_3", String.valueOf(CommonConfigs.recipe_instantCatalystAllowed.get())));
+		};
+	}.setRegistryName(Defaults.modPrefix.apply(ItemRegs.CATALYST));
 	
 	@SubscribeEvent
 	public static void onItemRegister(RegistryEvent.Register<Item> event) {
@@ -54,7 +64,8 @@ public class ModItems {
 						,
 						GELATIN_POWDER,
 						WART_DUST,
-						APPLE_JELLY);
+						APPLE_JELLY,
+						CATALYST);
 	}
 	
 }
