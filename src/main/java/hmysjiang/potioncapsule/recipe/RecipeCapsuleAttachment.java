@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.annotation.Nullable;
-
 import com.google.gson.JsonObject;
 
 import hmysjiang.potioncapsule.PotionCapsule;
@@ -15,9 +13,9 @@ import hmysjiang.potioncapsule.effects.EffectNightVisionNF;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.ShapedRecipe;
 import net.minecraft.item.crafting.SpecialRecipe;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.potion.EffectInstance;
@@ -26,33 +24,22 @@ import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 public class RecipeCapsuleAttachment extends SpecialRecipe {
 	public static final IRecipeSerializer<?> SERIALIZER = new Serializer().setRegistryName(Defaults.modPrefix.apply("capsule_attachment"));
 
-	@Nullable
-	private final Item potion_item;
-	@Nullable 
-	private final Item retrive_item;
+	private final ItemStack potion_item;
+	private final ItemStack retrive_item;
 	public boolean active = true;
 	public boolean doColor;
 	
-	@SuppressWarnings("deprecation")
-	public RecipeCapsuleAttachment(ResourceLocation location, String potionItemName, String retriveItemName, boolean doColor) {
+	public RecipeCapsuleAttachment(ResourceLocation location, ItemStack potionIn, ItemStack retriveIn, boolean doColor) {
 		super(location);
 		PotionCapsule.Logger.info("Registering recipe " + location);
-		potion_item = Registry.ITEM.getValue(new ResourceLocation(potionItemName)).orElseGet(() -> {
-			PotionCapsule.Logger.error("	Recipe " + location + " has an invalid potionItem " + potionItemName + ",this recipe will be disabled");
-			active = false;
-			return null;
-		});
-		retrive_item = Registry.ITEM.getValue(new ResourceLocation(retriveItemName)).orElseGet(() -> {
-			PotionCapsule.Logger.error("Recipe " + location + " has an invalid or empty retriveItem " + retriveItemName + ",this recipe will clear the slot of the potionItem that has been used");
-			return null;
-		});
+		potion_item = potionIn.copy();
+		retrive_item = retriveIn.copy();
 		this.doColor = doColor;
 	}
 
@@ -71,7 +58,7 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 					return false;
 				cap = true;
 			}
-			else if (inv.getStackInSlot(i).getItem().equals(potion_item)) {
+			else if (inv.getStackInSlot(i).isItemEqual(potion_item)) {
 				if (potion)
 					return false;
 				for (EffectInstance ins: PotionUtils.getEffectsFromStack(inv.getStackInSlot(i))) {
@@ -92,7 +79,7 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 		EffectInstance effect2Apply = null;
 		int potionPos;
 		for (potionPos = 0 ; potionPos<inv.getSizeInventory() ; potionPos++) {
-			if (inv.getStackInSlot(potionPos).getItem().equals(potion_item)) {
+			if (inv.getStackInSlot(potionPos).isItemEqual(potion_item)) {
 				effects = PotionUtils.getEffectsFromStack(inv.getStackInSlot(potionPos));
 				break;
 			}
@@ -127,7 +114,7 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 		int potionPos;
 		boolean tax = false;
 		for (potionPos = 0 ; potionPos<inv.getSizeInventory() ; potionPos++) 
-			if (inv.getStackInSlot(potionPos).getItem().equals(potion_item)) 
+			if (inv.getStackInSlot(potionPos).isItemEqual(potion_item)) 
 				break;
 		List<EffectInstance> effects = new ArrayList<>(), remainEffects = new ArrayList<>();
 		for (EffectInstance effect: PotionUtils.getEffectsFromStack(inv.getStackInSlot(potionPos)))
@@ -160,15 +147,15 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 			}
 		}
 		if (remainEffects.size() > 0) {
-			ItemStack newstack = PotionUtils.appendEffects(new ItemStack(potion_item), remainEffects);
+			ItemStack newstack = PotionUtils.appendEffects(potion_item.copy(), remainEffects);
 			newstack.setDisplayName(new TranslationTextComponent("potioncapsule.misc.left_potion_display_name"));
 			if (doColor) {
 				newstack.getOrCreateTag().putInt("CustomPotionColor", PotionUtils.getPotionColorFromEffectList(remainEffects));
 			}
 			remain.set(potionPos, newstack);
 		}
-		else if (retrive_item != null) {
-			remain.set(potionPos, new ItemStack(retrive_item));
+		else if (!retrive_item.isEmpty()) {
+			remain.set(potionPos, retrive_item.copy());
 		}
 		return remain;
 	}
@@ -192,30 +179,24 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 
 		@Override
 		public RecipeCapsuleAttachment read(ResourceLocation recipeId, JsonObject json) {
-			String potionItemName = JSONUtils.getString(json, "potionitem", "");
-			if (potionItemName == "") 
-				PotionCapsule.Logger.error("Found an invalid recipe while deserializing " + recipeId + ",missing field: potionitem");
-			
-			String retriveItemName = JSONUtils.getString(json, "retriveitem", "");
-			boolean doColor = JSONUtils.getBoolean(json, "rerender_color", false);
-			return new RecipeCapsuleAttachment(recipeId, potionItemName, retriveItemName, doColor);
+			JsonObject retriveJson = JSONUtils.getJsonObject(json, "retriveitem");
+			ItemStack toRetrive = ItemStack.EMPTY;
+			if (JSONUtils.getBoolean(retriveJson, "hasRetriveItem", false))
+				toRetrive = ShapedRecipe.deserializeItem(retriveJson);
+			return new RecipeCapsuleAttachment(recipeId, ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "potionitem")), 
+														 toRetrive,
+														 JSONUtils.getBoolean(json, "rerender_color", false));
 		}
 
 		@Override
 		public RecipeCapsuleAttachment read(ResourceLocation recipeId, PacketBuffer buffer) {
-			String potionItem = buffer.readString();
-			if (potionItem.equals("")) 
-				PotionCapsule.Logger.error("Found an invalid recipe while deserializing " + recipeId + " from the packet");
-
-			String retriveItemName = buffer.readString();
-			boolean doColor = buffer.readBoolean();
-			return new RecipeCapsuleAttachment(recipeId, potionItem, retriveItemName, doColor);
+			return new RecipeCapsuleAttachment(recipeId, buffer.readItemStack(), buffer.readItemStack(), buffer.readBoolean());
 		}
 
 		@Override
 		public void write(PacketBuffer buffer, RecipeCapsuleAttachment recipe) {
-			buffer.writeString(recipe.potion_item.getRegistryName().toString());
-			buffer.writeString(recipe.retrive_item.getRegistryName().toString());
+			buffer.writeItemStack(recipe.potion_item);
+			buffer.writeItemStack(recipe.retrive_item);
 			buffer.writeBoolean(recipe.doColor);
 		}
 		

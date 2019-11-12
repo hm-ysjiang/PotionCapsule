@@ -1,7 +1,9 @@
 {
 	"type":"potioncapsule:gelatin_ex",
-	"item": "minecraft:bone",
-	"input_count": 1,
+	"item": {
+		"item": "minecraft:bone",
+		"count": 1
+	},
 	"output_count": 8,
 	"tick_cost": 200
 }

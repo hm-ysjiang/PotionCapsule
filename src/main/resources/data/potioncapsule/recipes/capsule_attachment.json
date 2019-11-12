@@ -1,6 +1,13 @@
 {
 	"type":"potioncapsule:capsule_attachment",
-	"potionitem": "minecraft:potion",
-	"retriveitem": "minecraft:glass_bottle",
+	"potionitem": {
+		"item": "minecraft:potion",
+		"count": 1
+	},
+	"retriveitem": {
+		"hasRetriveItem": true,
+		"item": "minecraft:glass_bottle",
+		"count": 1
+	},
 	"rerender_color": true
 }

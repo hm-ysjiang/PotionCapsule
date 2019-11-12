@@ -7,15 +7,14 @@ import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.blocks.gelatin_extractor.InventoryGelatinExtractor;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.utils.Defaults;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.item.crafting.ShapedRecipe;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 public class RecipeGelatinExtractor implements IRecipe<InventoryGelatinExtractor> {
@@ -26,28 +25,15 @@ public class RecipeGelatinExtractor implements IRecipe<InventoryGelatinExtractor
 	public static final IRecipeSerializer<?> SERIALIZER = new Serializer().setRegistryName(Defaults.modPrefix.apply("gelatin_ex"));
 	
 	private ResourceLocation id;
-	private final Item input;
-	private final String inputName;
-	private int inputUsed;
+	private ItemStack input;
 	private int outputCount;
 	private int tickCost;
 	public boolean active = true;
 	
-	@SuppressWarnings("deprecation")
-	public RecipeGelatinExtractor(ResourceLocation idIn, String inputIn, int inputUsedIn, int outputCountIn, int tickCostIn, boolean setActive) {
+	public RecipeGelatinExtractor(ResourceLocation idIn, ItemStack inputIn, int outputCountIn, int tickCostIn, boolean setActive) {
 		PotionCapsule.Logger.info("Loading recipe of type gelatin_ex, id: " + idIn);
 		id = idIn;
-		
-		input = Registry.ITEM.getValue(new ResourceLocation(inputIn)).orElseGet(() -> {
-			PotionCapsule.Logger.error("Recipe " + idIn + " of type gelatin_ex has an invalid input " + inputIn + ",this recipe will be disabled");
-			active = false;
-			return null;
-		});
-		if (inputUsedIn == -1 || outputCountIn == -1 || tickCostIn == -1 || !setActive)
-			active = false;
-		
-		inputName = inputIn;
-		inputUsed = inputUsedIn;
+		input = inputIn;
 		outputCount = outputCountIn;
 		tickCost = tickCostIn;
 	}
@@ -56,12 +42,12 @@ public class RecipeGelatinExtractor implements IRecipe<InventoryGelatinExtractor
 	public boolean matches(InventoryGelatinExtractor inv, World worldIn) {
 		if (!active)
 			return false;
-		return (inv.getStackInSlot(0).getItem() == input && inv.getStackInSlot(0).getCount() >= inputUsed);
+		return (inv.getStackInSlot(0).isItemEqual(input) && inv.getStackInSlot(0).getCount() >= input.getCount());
 	}
 
 	@Override
 	public ItemStack getCraftingResult(InventoryGelatinExtractor inv) {
-		inv.getStackInSlot(0).shrink(inputUsed);
+		inv.getStackInSlot(0).shrink(input.getCount());
 		return new ItemStack(ModItems.GELATIN_POWDER, outputCount);
 	}
 
@@ -80,12 +66,12 @@ public class RecipeGelatinExtractor implements IRecipe<InventoryGelatinExtractor
 		return id;
 	}
 
-	public Item getInput() {
-		return input;
+	public ItemStack getInputCopy() {
+		return input.copy();
 	}
 
 	public int getInputUsed() {
-		return inputUsed;
+		return input.getCount();
 	}
 
 	public int getOutputCount() {
@@ -94,10 +80,6 @@ public class RecipeGelatinExtractor implements IRecipe<InventoryGelatinExtractor
 
 	public int getTickCost() {
 		return tickCost;
-	}
-
-	public String getInputName() {
-		return inputName;
 	}
 
 	@Override
@@ -115,38 +97,24 @@ public class RecipeGelatinExtractor implements IRecipe<InventoryGelatinExtractor
 		return Reference.CAPSULE_CRAFTING_GROUP;
 	}
 	
-	@Override
-	public String toString() {
-		return inputName + " " + inputUsed + " " + outputCount + " " + tickCost;
-	}
-	
 	private static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RecipeGelatinExtractor> {
 
 		@Override
 		public RecipeGelatinExtractor read(ResourceLocation recipeId, JsonObject json) {
-			String itemName = JSONUtils.getString(json, "item", "");
-			int inputCount, outputCount, tick;
-			inputCount = JSONUtils.getInt(json, "input_count", -1);
+			int outputCount, tick;
 			outputCount = JSONUtils.getInt(json, "output_count", -1);
 			tick = JSONUtils.getInt(json, "tick_cost", -1);
-			return new RecipeGelatinExtractor(recipeId, itemName, inputCount, outputCount, tick, true);
+			return new RecipeGelatinExtractor(recipeId, ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "item")), outputCount, tick, true);
 		}
 
 		@Override
 		public RecipeGelatinExtractor read(ResourceLocation recipeId, PacketBuffer buffer) {
-			String name = buffer.readString();
-			int input, output, tick;
-			input = buffer.readInt();
-			output = buffer.readInt();
-			tick = buffer.readInt();
-			boolean active = buffer.readBoolean();
-			return new RecipeGelatinExtractor(recipeId, name, input, output, tick, active);
+			return new RecipeGelatinExtractor(recipeId, buffer.readItemStack(), buffer.readInt(), buffer.readInt(), buffer.readBoolean());
 		}
 
 		@Override
 		public void write(PacketBuffer buffer, RecipeGelatinExtractor recipe) {
-			buffer.writeString(recipe.getInputName());
-			buffer.writeInt(recipe.getInputUsed());
+			buffer.writeItemStack(recipe.getInputCopy());
 			buffer.writeInt(recipe.getOutputCount());
 			buffer.writeInt(recipe.getTickCost());
 			buffer.writeBoolean(recipe.active);

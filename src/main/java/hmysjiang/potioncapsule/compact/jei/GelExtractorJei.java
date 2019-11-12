@@ -64,7 +64,7 @@ public class GelExtractorJei {
 
 		@Override
 		public void setIngredients(RecipeGelatinExtractor recipe, IIngredients ingredients) {
-			ingredients.setInput(VanillaTypes.ITEM, new ItemStack(recipe.getInput()));
+			ingredients.setInput(VanillaTypes.ITEM, recipe.getInputCopy());
 			ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
 		}
 
