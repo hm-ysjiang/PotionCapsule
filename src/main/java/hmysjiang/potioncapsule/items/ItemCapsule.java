@@ -80,6 +80,11 @@ public class ItemCapsule extends Item {
 			return new ItemStack(ModItems.CAPSULE);
 		}
 	}
+	public static ItemStack getDefaultInstance(EnumCapsuleType type, int count) {
+		ItemStack ret = getDefaultInstance(type);
+		ret.setCount(count);
+		return ret;
+	}
 
 	private final EnumCapsuleType TYPE;
 	private static Set<EffectInstance> effects;

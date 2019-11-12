@@ -46,8 +46,7 @@ public class ModItems {
 		@Override
 		public void addInformation(net.minecraft.item.ItemStack stack, net.minecraft.world.World worldIn, java.util.List<net.minecraft.util.text.ITextComponent> tooltip, net.minecraft.client.util.ITooltipFlag flagIn) {
 			tooltip.add(new TranslationTextComponent("potioncapsule.tooltip.catalyst_1").applyTextStyle(TextFormatting.GRAY));
-			tooltip.add(new TranslationTextComponent("potioncapsule.tooltip.catalyst_2").applyTextStyle(TextFormatting.GRAY));
-			tooltip.add(new TranslationTextComponent("potioncapsule.tooltip.catalyst_3", String.valueOf(CommonConfigs.recipe_instantCatalystAllowed.get())));
+			tooltip.add(new TranslationTextComponent("potioncapsule.tooltip.catalyst_2", String.valueOf(CommonConfigs.recipe_instantCatalystAllowed.get())));
 		};
 	}.setRegistryName(Defaults.modPrefix.apply(ItemRegs.CATALYST));
 	

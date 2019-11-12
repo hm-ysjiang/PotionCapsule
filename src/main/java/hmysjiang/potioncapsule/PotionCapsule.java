@@ -71,7 +71,7 @@ public class PotionCapsule {
 							Class.forName("hmysjiang.potioncapsule.compact.curio.CurioProxy").asSubclass(ICurioProxy.class).newInstance() :
 							new DummyCurioProxy();
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-			Logger.error("Wierd thing happened while trying to instantiate proxy for Curios");
+			Logger.error("Wierd thing happened while trying to instantiate proxy for Curios, report this to the issue tracker.");
 			e.printStackTrace();
 			curioProxy = new DummyCurioProxy();
 		}
@@ -88,18 +88,9 @@ public class PotionCapsule {
 	
 	public static class Logger {
 		private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger(Reference.MOD_ID);
-
-		public static void info(Object obj) {
-			LOGGER.info(obj == null ? "null" : obj.toString());
-		}
-		
-		public static void warn(Object obj) {
-			LOGGER.warn(obj == null ? "null" : obj.toString());
-		}
-		
-		public static void error(Object obj) {
-			LOGGER.error(obj == null ? "null" : obj.toString());
-		}
+		public static void info(Object obj) { LOGGER.info(obj == null ? "null" : obj.toString()); }
+		public static void warn(Object obj) { LOGGER.warn(obj == null ? "null" : obj.toString()); }
+		public static void error(Object obj) { LOGGER.error(obj == null ? "null" : obj.toString()); }
 	}
 	
 }

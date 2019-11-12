@@ -11,6 +11,8 @@ import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.configs.CommonConfigs;
 import hmysjiang.potioncapsule.effects.EffectNightVisionNF;
 import hmysjiang.potioncapsule.init.ModItems;
+import hmysjiang.potioncapsule.items.ItemCapsule;
+import hmysjiang.potioncapsule.items.ItemCapsule.EnumCapsuleType;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
@@ -32,7 +34,6 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 
 	private final ItemStack potion_item;
 	private final ItemStack retrive_item;
-	public boolean active = true;
 	public boolean doColor;
 	
 	public RecipeCapsuleAttachment(ResourceLocation location, ItemStack potionIn, ItemStack retriveIn, boolean doColor) {
@@ -45,30 +46,53 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 
 	@Override
 	public boolean matches(CraftingInventory inv, World worldIn) {
-		if (!active)
-			return false;
 		boolean cap = false, potion = false;
+		int capPos = 0, amps = 0;
+		EnumCapsuleType type = EnumCapsuleType.NORMAL;
 		
-		FOR_SREACH:
 		for (int i = 0 ; i<inv.getSizeInventory() ; i++) {
-			if (inv.getStackInSlot(i).getItem() == ModItems.CAPSULE) {
+			if (ItemCapsule.isItemCapsule(inv.getStackInSlot(i))) {
 				if (cap)
 					return false;
 				if (PotionUtils.getEffectsFromStack(inv.getStackInSlot(i)).size() > 0)
 					return false;
 				cap = true;
+				type = ItemCapsule.getCapsuleType(inv.getStackInSlot(i).getItem());
+				capPos = i;
+				if (type == EnumCapsuleType.SPECIAL)
+					return false;
 			}
-			else if (inv.getStackInSlot(i).isItemEqual(potion_item)) {
+		}
+		
+		FOR_POTION:
+		for (int i = 0 ; i<inv.getSizeInventory() ; i++) {
+			if (i == capPos)
+				continue;
+			if (inv.getStackInSlot(i).isItemEqual(potion_item)) {
 				if (potion)
 					return false;
 				for (EffectInstance ins: PotionUtils.getEffectsFromStack(inv.getStackInSlot(i))) {
-					if (ins.duration >= CommonConfigs.capsule_capacity.get()) {
+					if (ins.getPotion().isInstant()) {
+						if (type == EnumCapsuleType.INSTANT) {
+							potion = true;
+							continue FOR_POTION;
+						}
+					}
+					else if (type == EnumCapsuleType.NORMAL && ins.duration >= CommonConfigs.capsule_capacity.get()) {
 						potion = true;
-						continue FOR_SREACH;
+						continue FOR_POTION;
 					}
 				}
 				return false;
 			}
+			else if (!inv.getStackInSlot(i).isEmpty() && !(type == EnumCapsuleType.INSTANT && inv.getStackInSlot(i).getItem() == ModItems.CATALYST)) {
+				return false;
+			}
+		}
+		for (int i = 0 ; i<inv.getSizeInventory() ; i++) {
+			if (inv.getStackInSlot(i).getItem() == ModItems.CATALYST)
+				if (++amps > inv.getStackInSlot(capPos).getCount() - 1)
+					return false;
 		}
 		return cap && potion;
 	}
@@ -76,6 +100,17 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 	@Override
 	public ItemStack getCraftingResult(CraftingInventory inv) {
 		List<EffectInstance> effects = new ArrayList<>();
+		
+		EnumCapsuleType type = EnumCapsuleType.NORMAL;
+		int capsuleCount = 0;
+		for (int i = 0 ; i<inv.getSizeInventory() ; i++) {
+			if (ItemCapsule.isItemCapsule(inv.getStackInSlot(i))) {
+				type = ItemCapsule.getCapsuleType(inv.getStackInSlot(i).getItem());
+				capsuleCount = inv.getStackInSlot(i).getCount();
+				break;
+			}
+		}
+		
 		EffectInstance effect2Apply = null;
 		int potionPos;
 		for (potionPos = 0 ; potionPos<inv.getSizeInventory() ; potionPos++) {
@@ -85,8 +120,14 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 			}
 		}
 		for (int i = 0 ; i<effects.size() ; i++) {
-			if (effects.get(i).duration >= CommonConfigs.capsule_capacity.get()) {
-				effect2Apply = new EffectInstance((CommonConfigs.misc_replaceNvWithNvnf.get() && effects.get(i).getPotion() == Effects.NIGHT_VISION) ? new EffectInstance(EffectNightVisionNF.INSTANCE) : effects.get(i));
+			if (type == EnumCapsuleType.INSTANT) {
+				if (effects.get(i).getPotion().isInstant()) {
+					effect2Apply = new EffectInstance(effects.get(i));
+				}
+			}
+			else if (effects.get(i).duration >= CommonConfigs.capsule_capacity.get()) {
+				effect2Apply = new EffectInstance((CommonConfigs.misc_replaceNvWithNvnf.get() && effects.get(i).getPotion() == Effects.NIGHT_VISION) ?
+													new EffectInstance(EffectNightVisionNF.INSTANCE) : effects.get(i));
 				break;
 			}
 		}
@@ -105,36 +146,78 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 			return ItemStack.EMPTY;
 		}
 		
-		effect2Apply.duration = CommonConfigs.capsule_capacity.get();
-		return PotionUtils.appendEffects(new ItemStack(ModItems.CAPSULE), Arrays.asList(effect2Apply));
+		int instantAmp = 0;
+		if (type == EnumCapsuleType.NORMAL)
+			effect2Apply.duration = CommonConfigs.capsule_capacity.get();
+		else if (CommonConfigs.recipe_instantCatalystAllowed.get() > 0){
+			for (int i = 0 ; i<inv.getSizeInventory() ; i++) {
+				if (inv.getStackInSlot(i).getItem() == ModItems.CATALYST) {
+					if (++instantAmp >= CommonConfigs.recipe_instantCatalystAllowed.get())
+						break;
+				}
+			}
+		}
+		if (instantAmp > capsuleCount - 1)
+			instantAmp = capsuleCount - 1;
+		return PotionUtils.appendEffects(ItemCapsule.getDefaultInstance(type, 1 + instantAmp), Arrays.asList(effect2Apply));
 	}
 	
 	@Override
 	public NonNullList<ItemStack> getRemainingItems(CraftingInventory inv) {
-		int potionPos;
+		int potionPos = 0, amps = 0, capsulePos = 0;
 		boolean tax = false;
-		for (potionPos = 0 ; potionPos<inv.getSizeInventory() ; potionPos++) 
-			if (inv.getStackInSlot(potionPos).isItemEqual(potion_item)) 
-				break;
+		EnumCapsuleType type = EnumCapsuleType.NORMAL;
+		for (int i  = 0 ; i<inv.getSizeInventory() ; i++) {
+			if (inv.getStackInSlot(i).isItemEqual(potion_item)) 
+				potionPos = i;
+			else if (inv.getStackInSlot(i).getItem() == ModItems.CATALYST) {
+				amps++;
+			}
+			else if (ItemCapsule.isItemCapsule(inv.getStackInSlot(i))) {
+				capsulePos = i;
+				type = ItemCapsule.getCapsuleType(inv.getStackInSlot(i).getItem());
+			}
+		}
 		List<EffectInstance> effects = new ArrayList<>(), remainEffects = new ArrayList<>();
 		for (EffectInstance effect: PotionUtils.getEffectsFromStack(inv.getStackInSlot(potionPos)))
 			effects.add(new EffectInstance(effect));
 		NonNullList<ItemStack> remain = super.getRemainingItems(inv);
 		for (int i = 0 ; i<effects.size() ; i++) {
 			if (effects.get(i).duration < CommonConfigs.capsule_capacity.get()) {
-				if (!CommonConfigs.recipe_removeExcessDuration.get())
+				if (effects.get(i).getPotion().isInstant()) {
+					if (type == EnumCapsuleType.INSTANT && !tax) {
+						tax = true;
+					}
+					else 
+						remainEffects.add(effects.get(i));
+				}
+				else if (!CommonConfigs.recipe_removeExcessDuration.get())
 					remainEffects.add(effects.get(i));
 			}
 			else if (effects.get(i).duration == CommonConfigs.capsule_capacity.get()) {
 				if (!tax) {
-					tax = true;
-					effects.get(i).duration -= CommonConfigs.capsule_capacity.get();
+					if (effects.get(i).getPotion().isInstant()) {
+						if (type == EnumCapsuleType.INSTANT) {
+							tax = true;
+						}
+					}
+					else if (type == EnumCapsuleType.NORMAL) {
+						tax = true;
+					}
 				}
 			}
 			else {
 				if (!tax) {
-					tax = true;
-					effects.get(i).duration -= CommonConfigs.capsule_capacity.get();
+					if (effects.get(i).getPotion().isInstant()) {
+						if (type == EnumCapsuleType.INSTANT) {
+							tax = true;
+							continue;
+						}
+					}
+					else if (type == EnumCapsuleType.NORMAL) {
+						tax = true;
+						effects.get(i).duration -= CommonConfigs.capsule_capacity.get();
+					}
 				}
 				if (effects.get(i).duration < CommonConfigs.capsule_capacity.get()) {
 					if (!CommonConfigs.recipe_removeExcessDuration.get())
@@ -142,8 +225,6 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 				}
 				else
 					remainEffects.add(effects.get(i));
-				
-				// Might add a config for remove useless effect
 			}
 		}
 		if (remainEffects.size() > 0) {
@@ -157,6 +238,7 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 		else if (!retrive_item.isEmpty()) {
 			remain.set(potionPos, retrive_item.copy());
 		}
+		inv.getStackInSlot(capsulePos).shrink(amps);
 		return remain;
 	}
 	

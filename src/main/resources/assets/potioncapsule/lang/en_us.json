@@ -23,8 +23,7 @@
 	"potioncapsule.tooltip.pendant.slotcont": "Slot %1$s: %2$s",
 	"potioncapsule.tooltip.wart_dust.obtain": "Obtained from harvesting nether wart",
 	"potioncapsule.tooltip.catalyst_1": "Add this to the crafting grid to obtain more yields while attaching instant capsules",
-	"potioncapsule.tooltip.catalyst_2": "Place into multiple slots to amplify the yield",
-	"potioncapsule.tooltip.catalyst_3": "Catalysts allowed: %sx"
+	"potioncapsule.tooltip.catalyst_2": "Catalysts allowed: %sx"
 	,
 	"_Gui": "",
 	"potioncapsule.gui.gelatin_ex.progress_percentage": "%1$s %2$s",
