@@ -10,7 +10,8 @@
 	"item.potioncapsule.item_capsule_pendant": "Capsule Pendant",
 	"item.potioncapsule.item_gelatin_powder": "Gelatin Powder",
 	"item.potioncapsule.item_wart_dust": "Nether Wart Dust",
-	"item.potioncapsule.item_apple_jelly": "Apple Jelly"
+	"item.potioncapsule.item_apple_jelly": "Apple Jelly",
+	"item.potioncapsule.item_catalyst": "\u00a7bInstant Catalyst\u00a7r"
 	,
 	"_Blocks": "",
 	"block.potioncapsule.block_gelatin_extractor": "Gelatin Extractor",

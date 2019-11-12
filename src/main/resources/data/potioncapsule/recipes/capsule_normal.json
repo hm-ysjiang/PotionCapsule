@@ -17,7 +17,7 @@
 		
 		"D": 
 		{
-			"item": "minecraft:red_dye"
+			"tag": "forge:dyes/red"
 		}
 	},
 

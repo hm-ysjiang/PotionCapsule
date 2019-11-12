@@ -11,19 +11,19 @@
 	{
 		"S": 
 		{
-			"item": "minecraft:string"
+			"tag": "forge:string"
 		},
 		"G": 
 		{
-			"item": "minecraft:gold_nugget"
+			"tag": "forge:nuggets/gold"
 		},
 		"C": 
 		{
-			"item": "potioncapsule:item_capsule"
+			"tag": "potioncapsule:capsules"
 		},
 		"D": 
 		{
-			"item": "minecraft:diamond"
+			"tag": "forge:gems/diamond"
 		}
 	},
 	"result": 

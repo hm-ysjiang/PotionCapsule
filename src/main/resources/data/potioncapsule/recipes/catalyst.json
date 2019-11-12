@@ -1,0 +1,30 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "potioncapsule_crafting_group",
+	"pattern": 
+	[
+		"BNB",
+		"NGN",
+		"BNB"
+	],
+	"key": 
+	{
+		"B": 
+		{
+			"item": "minecraft:blaze_powder"
+		},
+		"G": 
+		{
+			"item": "minecraft:gold_block"
+		},
+		"N": 
+		{
+			"item": "potioncapsule:item_wart_dust"
+		}
+	},
+	"result": 
+	{
+		"item": "potioncapsule:item_catalyst",
+		"count": 4
+	}
+}
