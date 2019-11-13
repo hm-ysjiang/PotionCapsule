@@ -6,6 +6,7 @@ public class CommonConfigs {
 	
 	public static ForgeConfigSpec.IntValue capsule_capacity;
 	public static ForgeConfigSpec.IntValue capsule_stackSize;
+	public static ForgeConfigSpec.IntValue capsule_preUsage;
 	
 	public static ForgeConfigSpec.BooleanValue recipe_allowCapsuleCombine;
 	public static ForgeConfigSpec.BooleanValue recipe_removeExcessDuration;
@@ -20,6 +21,8 @@ public class CommonConfigs {
 										.defineInRange("capsule.capacity", 100, 40, 400);
 		capsule_stackSize = builder.comment(" This number represents the stack limit of capsule inside the pendant")
 										.defineInRange("capsule.stackSize", 128, 1, 4096);
+		capsule_preUsage = builder.comment(" This number tells the pendant how long before a specific effect goes off should it consume a capsule")
+				.defineInRange("capsule.preUsage", 2, 0, 99);
 		
 		// recipe
 		recipe_allowCapsuleCombine = builder.comment(" Set this to true will allow Potion Capsules to be combined in crafting grids")

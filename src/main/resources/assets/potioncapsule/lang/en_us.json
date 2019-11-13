@@ -13,7 +13,8 @@
 	"item.potioncapsule.item_wart_dust": "Nether Wart Dust",
 	"item.potioncapsule.item_apple_jelly": "Apple Jelly",
 	"item.potioncapsule.item_catalyst": "\u00a7bInstant Catalyst\u00a7r",
-	"item.potioncapsule.item_creative_catalyst": "\u00a76Creative Catalyst\u00a7r"
+	"item.potioncapsule.item_creative_catalyst": "\u00a76Creative Catalyst\u00a7r",
+	"item.potioncapsule.item_special_capsule": "Special Capsule (%s)"
 	,
 	"_Blocks": "",
 	"block.potioncapsule.block_gelatin_extractor": "Gelatin Extractor",
@@ -28,7 +29,8 @@
 	"potioncapsule.tooltip.catalyst_1": "Add this to the crafting grid to obtain more yields while attaching instant capsules",
 	"potioncapsule.tooltip.catalyst_2": "Catalysts allowed: %sx",
 	"potioncapsule.tooltip.c_catalyst_1": "CREATIVE ONLY",
-	"potioncapsule.tooltip.c_catalyst_2": "Craft with capsule to apply creative effect on it"
+	"potioncapsule.tooltip.c_catalyst_2": "Craft with capsule to apply creative effect on it",
+	"potioncapsule.tooltip.special_capsule_bite_za_dust": "Killer Queen the third bomb, BITE ZA DUSTO"
 	,
 	"_Gui": "",
 	"potioncapsule.gui.gelatin_ex.progress_percentage": "%1$s %2$s",
@@ -43,7 +45,8 @@
 	"potioncapsule.gui.pendant.tooltip.slotdescr_FALLING": "Triggered when falling",
 	"potioncapsule.gui.pendant.tooltip.slotdescr_NIGHT": "Trigger when is in dark",
 	"potioncapsule.gui.pendant.tooltip.slotdescr_KEYBIND": "Triggered when keybind being pressed",
-	"potioncapsule.gui.pendant.tooltip.keyhint": "Keybind: %s"
+	"potioncapsule.gui.pendant.tooltip.keyhint": "Keybind: %s",
+	"potioncapsule.gui.pendant.tooltip.specialslot": "Special Slots"
 	,
 	"_Effects": "",
 	"effect.potioncapsule.effect_night_vision_nf": "Night Vision NF"

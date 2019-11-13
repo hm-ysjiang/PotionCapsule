@@ -128,7 +128,7 @@ public class ItemCapsule extends Item {
 		return stack;
 	}
 	
-	public ItemStack onItemUseFinishRegardsActiveEffects(ItemStack stack, World world, LivingEntity entityLiving) {
+	public ItemStack onItemUseFinishRegardsActiveEffects(ItemStack stack, World world, LivingEntity entityLiving, int pendantSlot) {
 		if (stack.isEmpty())
 			return stack;
 		
@@ -137,7 +137,7 @@ public class ItemCapsule extends Item {
 		for (EffectInstance effect: PotionUtils.getEffectsFromStack(stack)) {
 			if (shouldApply)
 				break;
-			if (entityLiving.getActivePotionEffect(effect.getPotion()) == null) {
+			if (entityLiving.getActivePotionEffect(effect.getPotion()) == null || entityLiving.getActivePotionEffect(effect.getPotion()).duration <= CommonConfigs.capsule_preUsage.get()) {
 				shouldApply = true;
 			}
 		}

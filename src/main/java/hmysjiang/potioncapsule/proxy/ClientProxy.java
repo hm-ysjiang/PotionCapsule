@@ -2,6 +2,7 @@ package hmysjiang.potioncapsule.proxy;
 
 import hmysjiang.potioncapsule.client.CapsuleItemColor;
 import hmysjiang.potioncapsule.client.KeyBindHandler;
+import hmysjiang.potioncapsule.client.SpecialCapsuleItemColor;
 import hmysjiang.potioncapsule.client.gui.ScreenGelatinExtractor;
 import hmysjiang.potioncapsule.client.gui.ScreenGelatinFormer;
 import hmysjiang.potioncapsule.client.gui.ScreenPendant;
@@ -21,6 +22,8 @@ public class ClientProxy implements ISidedProxy {
 
 		Minecraft.getInstance().getItemColors().register(CapsuleItemColor.INSTANCE, ModItems.CAPSULE);
 		Minecraft.getInstance().getItemColors().register(CapsuleItemColor.INSTANCE, ModItems.CAPSULE_INSTANT);
+		
+		Minecraft.getInstance().getItemColors().register(SpecialCapsuleItemColor.INSTANCE, ModItems.S_CAPSULE_BITEZDUST);
 		
 		ScreenManager.registerFactory(ContainerPendant.TYPE, ScreenPendant::new);
 		ScreenManager.registerFactory(ContainerGelatinExtractor.TYPE, ScreenGelatinExtractor::new);

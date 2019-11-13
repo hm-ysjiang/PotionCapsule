@@ -21,7 +21,7 @@ public class ScreenPendant extends ContainerScreen<ContainerPendant> {
 	
 	public ScreenPendant(ContainerPendant screenContainer, PlayerInventory inv, ITextComponent titleIn) {
 		super(screenContainer, inv, titleIn);
-		ySize = 228;
+		ySize = 246;
 	}
 	
 	@Override
@@ -36,6 +36,7 @@ public class ScreenPendant extends ContainerScreen<ContainerPendant> {
 		String formattedTitle = title.getFormattedText();
 		this.font.drawString(formattedTitle, (float) (this.xSize / 2 - this.font.getStringWidth(formattedTitle) / 2), 6.0F, 4210752);
 		this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8.0F, (float)(this.ySize - 96 + 2), 4210752);
+		this.font.drawString(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.specialslot").getFormattedText(), 106.0F, (float)(this.ySize - 117 + 2), 4210752);
 	}
 
 	@Override

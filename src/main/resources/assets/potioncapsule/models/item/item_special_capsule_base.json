@@ -1,0 +1,8 @@
+{
+    "parent": "item/generated",
+    "textures": {
+    	"layer2": "potioncapsule:item/capsule_special_top",
+        "layer1": "potioncapsule:item/capsule_overlay",
+        "layer0": "potioncapsule:item/capsule_special"
+    }
+}

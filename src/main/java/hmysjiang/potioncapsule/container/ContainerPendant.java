@@ -1,6 +1,7 @@
 package hmysjiang.potioncapsule.container;
 
 import hmysjiang.potioncapsule.items.ItemCapsule;
+import hmysjiang.potioncapsule.items.ItemSpecialCapsule;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -39,10 +40,14 @@ public class ContainerPendant extends BaseContainer {
 			addSlot(new SlotCapsule(handler, 5, 40, 104));
 			addSlot(new SlotCapsule(handler, 6, 120, 104));
 			addSlot(new SlotCapsule(handler, 7, 80, 120));
+
+			addSlot(new SlotSpecialCapsule(handler, 8, 116, 143));
+			addSlot(new SlotSpecialCapsule(handler, 9, 134, 143));
+			addSlot(new SlotSpecialCapsule(handler, 10, 152, 143));
 		});
 		
 		int xPos = 8;
-		int yPos = 146;
+		int yPos = 164;
 		
 		for (int y = 0; y < 3; ++y) {
 			for (int x = 0; x < 9; ++x) {
@@ -78,6 +83,19 @@ public class ContainerPendant extends BaseContainer {
 		@Override
 		public boolean isItemValid(ItemStack stack) {
 			return super.isItemValid(stack) && stack.getItem() instanceof ItemCapsule;
+		}
+		
+	}
+	
+	private static class SlotSpecialCapsule extends SlotItemHandler {
+
+		public SlotSpecialCapsule(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
+			super(itemHandler, index, xPosition, yPosition);
+		}
+		
+		@Override
+		public boolean isItemValid(ItemStack stack) {
+			return super.isItemValid(stack) && stack.getItem() instanceof ItemSpecialCapsule;
 		}
 		
 	}

@@ -73,10 +73,10 @@ public class ItemCapsulePendant extends Item {
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT nbt) {
 		return new ICapabilitySerializable<INBT>() {
-			private final IItemHandler handler = new ItemStackHandler(8) {
-				@Override public boolean isItemValid(int slot, ItemStack stack) { return stack.getItem() instanceof ItemCapsule; };
-				@Override public int getSlotLimit(int slot) { return CommonConfigs.capsule_stackSize.get(); }
-				@Override protected int getStackLimit(int slot, ItemStack stack) { return CommonConfigs.capsule_stackSize.get(); }
+			private final IItemHandler handler = new ItemStackHandler(8 + 3) {
+				@Override public boolean isItemValid(int slot, ItemStack stack) { return slot < 8 ? stack.getItem() instanceof ItemCapsule : stack.getItem() instanceof ItemSpecialCapsule; };
+				@Override public int getSlotLimit(int slot) { return slot < 8 ? CommonConfigs.capsule_stackSize.get() : 64; }
+				@Override protected int getStackLimit(int slot, ItemStack stack) { return slot < 8 ? CommonConfigs.capsule_stackSize.get() : 64; }
 			};
 			
 			@Override
@@ -151,7 +151,7 @@ public class ItemCapsulePendant extends Item {
 			return;
 		if (!pendant.isEmpty()) {
 			pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-				((ItemStackHandler) handler).setStackInSlot(0, ((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(handler.getStackInSlot(CapsuleSlots.ATTACK.index), player.world, player));
+				((ItemStackHandler) handler).setStackInSlot(0, ((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(handler.getStackInSlot(CapsuleSlots.ATTACK.index), player.world, player, 0));
 			});
 		}
 	}
@@ -170,7 +170,7 @@ public class ItemCapsulePendant extends Item {
 			}
 			else
 				pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-					((ItemStackHandler) handler).setStackInSlot(1, ((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(handler.getStackInSlot(CapsuleSlots.DAMAGED.index), player.world, player));
+					((ItemStackHandler) handler).setStackInSlot(1, ((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(handler.getStackInSlot(CapsuleSlots.DAMAGED.index), player.world, player, 1));
 				});
 		}
 	}
@@ -187,7 +187,7 @@ public class ItemCapsulePendant extends Item {
 			pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
 				((ItemStackHandler) handler).setStackInSlot(3,
 						((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(
-								handler.getStackInSlot(CapsuleSlots.WATER.index), world, player));
+								handler.getStackInSlot(CapsuleSlots.WATER.index), world, player, 3));
 			});
 		
 		// SPRINT
@@ -195,7 +195,7 @@ public class ItemCapsulePendant extends Item {
 			pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
 				((ItemStackHandler) handler).setStackInSlot(4,
 						((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(
-								handler.getStackInSlot(CapsuleSlots.SPRINT.index), world, player));
+								handler.getStackInSlot(CapsuleSlots.SPRINT.index), world, player, 4));
 			});
 		
 		// FALLING
@@ -203,7 +203,7 @@ public class ItemCapsulePendant extends Item {
 			pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
 				((ItemStackHandler) handler).setStackInSlot(5,
 						((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(
-								handler.getStackInSlot(CapsuleSlots.FALLING.index), world, player));
+								handler.getStackInSlot(CapsuleSlots.FALLING.index), world, player, 5));
 			});
 		
 		// NIGHT
@@ -211,7 +211,7 @@ public class ItemCapsulePendant extends Item {
 			pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
 				((ItemStackHandler) handler).setStackInSlot(6,
 						((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(
-								handler.getStackInSlot(CapsuleSlots.NIGHT.index), world, player));
+								handler.getStackInSlot(CapsuleSlots.NIGHT.index), world, player, 6));
 			});
 		
 	}
@@ -220,7 +220,7 @@ public class ItemCapsulePendant extends Item {
 		pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
 			((ItemStackHandler) handler).setStackInSlot(2,
 					((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(
-							handler.getStackInSlot(CapsuleSlots.FIRE.index), world, player));
+							handler.getStackInSlot(CapsuleSlots.FIRE.index), world, player, 2));
 		});
 	}
 	
@@ -232,7 +232,7 @@ public class ItemCapsulePendant extends Item {
 			return;
 		if (!pendant.isEmpty()) {
 			pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-				((ItemStackHandler) handler).setStackInSlot(7, ((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(handler.getStackInSlot(CapsuleSlots.KEYBIND.index), player.world, player));
+				((ItemStackHandler) handler).setStackInSlot(7, ((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(handler.getStackInSlot(CapsuleSlots.KEYBIND.index), player.world, player, 7));
 			});
 		}
 	}
