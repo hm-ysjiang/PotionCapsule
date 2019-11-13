@@ -177,7 +177,7 @@ public class ItemCapsule extends Item {
 
 	@OnlyIn(Dist.CLIENT)
 	public boolean hasEffect(ItemStack stack) {
-		return ClientConfigs.capsule_glowWithEffect.get() || !PotionUtils.getEffectsFromStack(stack).isEmpty();
+		return ClientConfigs.capsule_glowWithEffect.get() && !PotionUtils.getEffectsFromStack(stack).isEmpty();
 	}
 
 	@Override
