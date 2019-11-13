@@ -26,7 +26,7 @@ public class ModItems {
 
 	public static final Item CAPSULE = new ItemCapsule(EnumCapsuleType.NORMAL).setRegistryName(Defaults.modPrefix.apply(ItemRegs.CAPSULE));
 	public static final Item CAPSULE_INSTANT = new ItemCapsule(EnumCapsuleType.INSTANT).setRegistryName(Defaults.modPrefix.apply(ItemRegs.CAPSULE + "_instant"));
-	public static final Item CAPSULE_SPECIAL = new ItemCapsule(EnumCapsuleType.SPECIAL).setRegistryName(Defaults.modPrefix.apply(ItemRegs.CAPSULE + "_special"));
+	//public static final Item CAPSULE_SPECIAL = new ItemCapsule(EnumCapsuleType.SPECIAL).setRegistryName(Defaults.modPrefix.apply(ItemRegs.CAPSULE + "_special"));
 	public static final Item PENDANT = new ItemCapsulePendant().setRegistryName(Defaults.modPrefix.apply(ItemRegs.PENDANT));
 
 	public static final Item BLOCK_GELATIN_EXTRACTOR = new BlockItem(ModBlocks.GELATIN_EXTRACTOR, Defaults.itemProp.get()).setRegistryName(BlockRegs.GELATIN_EXTRACTOR);
@@ -49,6 +49,14 @@ public class ModItems {
 			tooltip.add(new TranslationTextComponent("potioncapsule.tooltip.catalyst_2", String.valueOf(CommonConfigs.recipe_instantCatalystAllowed.get())));
 		};
 	}.setRegistryName(Defaults.modPrefix.apply(ItemRegs.CATALYST));
+	public static final Item CREATIVE_CATALYST = new Item(Defaults.itemProp.get().maxStackSize(1)) {
+		@OnlyIn(Dist.CLIENT)
+		@Override
+		public void addInformation(net.minecraft.item.ItemStack stack, net.minecraft.world.World worldIn, java.util.List<net.minecraft.util.text.ITextComponent> tooltip, net.minecraft.client.util.ITooltipFlag flagIn) {
+			tooltip.add(new TranslationTextComponent("potioncapsule.tooltip.c_catalyst_1").applyTextStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslationTextComponent("potioncapsule.tooltip.c_catalyst_2", String.valueOf(CommonConfigs.recipe_instantCatalystAllowed.get())).applyTextStyle(TextFormatting.GRAY));
+		};
+	}.setRegistryName(Defaults.modPrefix.apply(ItemRegs.CREATIVE_CATALYST));
 	
 	@SubscribeEvent
 	public static void onItemRegister(RegistryEvent.Register<Item> event) {
@@ -64,7 +72,8 @@ public class ModItems {
 						GELATIN_POWDER,
 						WART_DUST,
 						APPLE_JELLY,
-						CATALYST);
+						CATALYST,
+						CREATIVE_CATALYST);
 	}
 	
 }

@@ -59,8 +59,6 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 				cap = true;
 				type = ItemCapsule.getCapsuleType(inv.getStackInSlot(i).getItem());
 				capPos = i;
-				if (type == EnumCapsuleType.SPECIAL)
-					return false;
 			}
 		}
 		

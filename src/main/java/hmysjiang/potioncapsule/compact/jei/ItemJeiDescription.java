@@ -14,7 +14,7 @@ public class ItemJeiDescription {
 		registration.addIngredientInfo(new ItemStack(ModItems.APPLE_JELLY), VanillaTypes.ITEM, "potioncapsule.jei_desc.jelly");
 		registration.addIngredientInfo(new ItemStack(ModItems.CAPSULE), VanillaTypes.ITEM, "potioncapsule.jei_desc.capsule");
 		registration.addIngredientInfo(new ItemStack(ModItems.CAPSULE_INSTANT), VanillaTypes.ITEM, "potioncapsule.jei_desc.capsule_instant");
-		registration.addIngredientInfo(new ItemStack(ModItems.CAPSULE_SPECIAL), VanillaTypes.ITEM, "potioncapsule.jei_desc.capsule_special");
+		// registration.addIngredientInfo(new ItemStack(ModItems.CAPSULE_SPECIAL), VanillaTypes.ITEM, "potioncapsule.jei_desc.capsule_special");
 		registration.addIngredientInfo(new ItemStack(ModItems.GELATIN_POWDER), VanillaTypes.ITEM, "potioncapsule.jei_desc.gelatin_powder");
 		
 		if (ICurioProxy.isCurioLoaded()) {
@@ -32,7 +32,8 @@ public class ItemJeiDescription {
 		else {
 			registration.addIngredientInfo(new ItemStack(ModItems.WART_DUST), VanillaTypes.ITEM, "potioncapsule.jei_desc.wart_dust");
 		}
-		
+		registration.addIngredientInfo(new ItemStack(ModItems.CATALYST), VanillaTypes.ITEM, "potioncapsule.jei_desc.catalyst");
+		registration.addIngredientInfo(new ItemStack(ModItems.CREATIVE_CATALYST), VanillaTypes.ITEM, "potioncapsule.jei_desc.c_catalyst");
 		
 		
 		registration.addIngredientInfo(new ItemStack(ModBlocks.GELATIN_EXTRACTOR), VanillaTypes.ITEM, "potioncapsule.jei_desc.gel_extractor");

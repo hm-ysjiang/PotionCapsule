@@ -55,7 +55,7 @@ public class ItemCapsule extends Item {
 		return getCapsuleType(stack.getItem()) != null;
 	}
 	public static EnumCapsuleType getCapsuleType(Item item) {
-		if (item != ModItems.CAPSULE && item != ModItems.CAPSULE_INSTANT && item != ModItems.CAPSULE_SPECIAL)
+		if (item != ModItems.CAPSULE && item != ModItems.CAPSULE_INSTANT)
 			return null;
 		return ((ItemCapsule) item).TYPE;
 	}
@@ -63,9 +63,7 @@ public class ItemCapsule extends Item {
 		return canApplyEffectOnType(getCapsuleType(capsule.getItem()), effect);
 	}
 	public static boolean canApplyEffectOnType(EnumCapsuleType type, Effect effect) {
-		if (effect == null)
-			return false;
-		if (type == null || type == EnumCapsuleType.SPECIAL)
+		if (type == null || effect == null)
 			return false;
 		return type == EnumCapsuleType.NORMAL ^ effect.isInstant();
 	}
@@ -73,8 +71,6 @@ public class ItemCapsule extends Item {
 		switch (type) {
 		case INSTANT:
 			return new ItemStack(ModItems.CAPSULE_INSTANT);
-		case SPECIAL:
-			return new ItemStack(ModItems.CAPSULE_SPECIAL);
 		case NORMAL:
 		default:
 			return new ItemStack(ModItems.CAPSULE);
@@ -106,8 +102,14 @@ public class ItemCapsule extends Item {
 	@Override
 	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
 		PlayerEntity player = entityLiving instanceof PlayerEntity ? (PlayerEntity) entityLiving : null;
-		if (player == null || !player.abilities.isCreativeMode) {
-			stack.shrink(1);
+		if (!stack.getOrCreateTag().getBoolean("CapsuleCreative")) {
+			if (player == null || !player.abilities.isCreativeMode) {
+				stack.shrink(1);
+			}
+		}
+		
+		if (player != null) {
+			player.resetActiveHand();
 		}
 
 		if (player instanceof ServerPlayerEntity) {
@@ -131,7 +133,7 @@ public class ItemCapsule extends Item {
 			return stack;
 		
 		EnumCapsuleType type = getCapsuleType(stack.getItem());
-		boolean shouldApply = (type == EnumCapsuleType.INSTANT || type == EnumCapsuleType.SPECIAL);
+		boolean shouldApply = type == EnumCapsuleType.INSTANT;
 		for (EffectInstance effect: PotionUtils.getEffectsFromStack(stack)) {
 			if (shouldApply)
 				break;
@@ -144,7 +146,9 @@ public class ItemCapsule extends Item {
 			PlayerEntity player = entityLiving instanceof PlayerEntity ? (PlayerEntity) entityLiving : null;
 			if (player == null || !player.abilities.isCreativeMode) {
 				player.sendStatusMessage(new CapsuleUsedTextComponent("potioncapsule.tooltip.capsule.used", stack.getDisplayName()), true);
-				stack.shrink(1);
+				if (!stack.getOrCreateTag().getBoolean("CapsuleCreative")) {
+					stack.shrink(1);
+				}
 			}
 
 			if (player instanceof ServerPlayerEntity) {
@@ -177,11 +181,19 @@ public class ItemCapsule extends Item {
 
 	@OnlyIn(Dist.CLIENT)
 	public boolean hasEffect(ItemStack stack) {
-		return ClientConfigs.capsule_glowWithEffect.get() && !PotionUtils.getEffectsFromStack(stack).isEmpty();
+		return stack.getOrCreateTag().getBoolean("CapsuleCreative");
 	}
 
 	@Override
 	public ITextComponent getDisplayName(ItemStack stack) {
+		if (hasEffect(stack)) {
+			if (ClientConfigs.capsule_effectRenderCount.get() == 0)
+				return new TranslationTextComponent("item.potioncapsule.item_creative_capsule_prefix").appendSibling(super.getDisplayName(stack));
+			if (!PotionUtils.getEffectsFromStack(stack).isEmpty()) {
+				return new TranslationTextComponent("item.potioncapsule.item_creative_capsule_prefix").appendSibling(
+						new TranslationTextComponent(getTranslationKey() + ".with", getDescriptionString(stack)));
+			}
+		}
 		if (ClientConfigs.capsule_effectRenderCount.get() == 0)
 			return super.getDisplayName(stack);
 		if (!PotionUtils.getEffectsFromStack(stack).isEmpty()) {
@@ -368,8 +380,7 @@ public class ItemCapsule extends Item {
 	
 	public static enum EnumCapsuleType {
 		NORMAL("normal"),
-		INSTANT("instant"),
-		SPECIAL("special");
+		INSTANT("instant");
 		
 		public String name;
 		EnumCapsuleType(String name) {

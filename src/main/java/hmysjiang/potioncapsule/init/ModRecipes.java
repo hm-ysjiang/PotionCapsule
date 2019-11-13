@@ -4,6 +4,7 @@ import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.recipe.RecipeCapsuleAttachment;
 import hmysjiang.potioncapsule.recipe.RecipeCapsuleCombinationOrClear;
+import hmysjiang.potioncapsule.recipe.RecipeCapsuleCreativeAttach;
 import hmysjiang.potioncapsule.recipe.RecipeGelatinExtractor;
 import hmysjiang.potioncapsule.recipe.RecipeGelatinFormer;
 import hmysjiang.potioncapsule.recipe.RecipeWartDust;
@@ -19,7 +20,8 @@ public class ModRecipes {
 	public static void onRecipeRegister(RegistryEvent.Register<IRecipeSerializer<?>> event) {
 		PotionCapsule.Logger.info("Recipes Registering");
 		event.getRegistry().registerAll(RecipeCapsuleAttachment.SERIALIZER,
-										RecipeCapsuleCombinationOrClear.SERIALIZER
+										RecipeCapsuleCombinationOrClear.SERIALIZER,
+										RecipeCapsuleCreativeAttach.SERIALIZER
 										,
 										RecipeGelatinExtractor.SERIALIZER,
 										RecipeGelatinFormer.SERIALIZER

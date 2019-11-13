@@ -7,11 +7,13 @@
 	"item.potioncapsule.item_capsule.with": "Potion Capsule (%s)",
 	"item.potioncapsule.item_capsule_instant": "Instant Potion Capsule",
 	"item.potioncapsule.item_capsule_instant.with": "Instant Potion Capsule (%s)",
+	"item.potioncapsule.item_creative_capsule_prefix": "Creative ",
 	"item.potioncapsule.item_capsule_pendant": "Capsule Pendant",
 	"item.potioncapsule.item_gelatin_powder": "Gelatin Powder",
 	"item.potioncapsule.item_wart_dust": "Nether Wart Dust",
 	"item.potioncapsule.item_apple_jelly": "Apple Jelly",
-	"item.potioncapsule.item_catalyst": "\u00a7bInstant Catalyst\u00a7r"
+	"item.potioncapsule.item_catalyst": "\u00a7bInstant Catalyst\u00a7r",
+	"item.potioncapsule.item_creative_catalyst": "\u00a76Creative Catalyst\u00a7r"
 	,
 	"_Blocks": "",
 	"block.potioncapsule.block_gelatin_extractor": "Gelatin Extractor",
@@ -24,7 +26,9 @@
 	"potioncapsule.tooltip.pendant.slotcont": "Slot %1$s: %2$s",
 	"potioncapsule.tooltip.wart_dust.obtain": "Obtained from harvesting nether wart",
 	"potioncapsule.tooltip.catalyst_1": "Add this to the crafting grid to obtain more yields while attaching instant capsules",
-	"potioncapsule.tooltip.catalyst_2": "Catalysts allowed: %sx"
+	"potioncapsule.tooltip.catalyst_2": "Catalysts allowed: %sx",
+	"potioncapsule.tooltip.c_catalyst_1": "CREATIVE ONLY",
+	"potioncapsule.tooltip.c_catalyst_2": "Craft with capsule to apply creative effect on it"
 	,
 	"_Gui": "",
 	"potioncapsule.gui.gelatin_ex.progress_percentage": "%1$s %2$s",
@@ -59,6 +63,8 @@
 	"potioncapsule.jei_desc.wart_dust": "Drop while harvesting mature nether wart, can be used to craft into Potion Capsule with gelatin powder inside a Gelatin Former.",
 	"potioncapsule.jei_desc.pendant_curio": "Can be equipped in necklace slot (Curios)",
 	"potioncapsule.jei_desc.wart_dust_craft": "Can also be obtained by decomposing nether wart.",
+	"potioncapsule.jei_desc.catalyst": "Put into additional slots while attaching effects on Instant Capsules to increase the yield.",
+	"potioncapsule.jei_desc.c_catalyst": "Craft with any Potion Capsule to make it creative.",
 	"potioncapsule.jei_desc.gel_extractor": "Extract Gelatin Powder from items.",
 	"potioncapsule.jei_desc.gel_former": "Craft Gelatin Powder with other catalysts into items.",
 	"potioncapsule.jei_category.gel_extractor": "Gelatin Extractor",
