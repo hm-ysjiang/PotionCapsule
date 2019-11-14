@@ -22,8 +22,9 @@ public class ClientProxy implements ISidedProxy {
 
 		Minecraft.getInstance().getItemColors().register(CapsuleItemColor.INSTANCE, ModItems.CAPSULE);
 		Minecraft.getInstance().getItemColors().register(CapsuleItemColor.INSTANCE, ModItems.CAPSULE_INSTANT);
-		
+
 		Minecraft.getInstance().getItemColors().register(SpecialCapsuleItemColor.INSTANCE, ModItems.S_CAPSULE_BITEZDUST);
+		Minecraft.getInstance().getItemColors().register(SpecialCapsuleItemColor.INSTANCE, ModItems.S_CAPSULE_LOSTXMAS);
 		
 		ScreenManager.registerFactory(ContainerPendant.TYPE, ScreenPendant::new);
 		ScreenManager.registerFactory(ContainerGelatinExtractor.TYPE, ScreenGelatinExtractor::new);

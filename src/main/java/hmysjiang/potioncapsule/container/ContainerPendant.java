@@ -26,7 +26,7 @@ public class ContainerPendant extends BaseContainer {
 	private PlayerInventory inv;
 	
 	public ContainerPendant(int id, PlayerInventory invIn, Hand hand) {
-		super(TYPE, id, 8);
+		super(TYPE, id, 11);
 		stack = invIn.player.getHeldItem(hand);
 		inv = invIn;
 		

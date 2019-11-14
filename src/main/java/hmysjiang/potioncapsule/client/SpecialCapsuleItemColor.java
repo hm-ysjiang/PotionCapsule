@@ -13,7 +13,7 @@ public class SpecialCapsuleItemColor implements IItemColor {
 		if (tintIndex == 1)
 			return 0xffff70;
 		if (tintIndex == 2)
-			return ((ItemSpecialCapsule) stack.getItem()).type.color;
+			return ((ItemSpecialCapsule) stack.getItem()).type.getCapColor();
 		return -1;
 	}
 

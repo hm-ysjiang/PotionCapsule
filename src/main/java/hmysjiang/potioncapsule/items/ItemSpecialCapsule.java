@@ -3,12 +3,14 @@ package hmysjiang.potioncapsule.items;
 import java.util.List;
 
 import hmysjiang.potioncapsule.Reference.ItemRegs;
+import hmysjiang.potioncapsule.container.ContainerPendant;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.network.PacketHandler;
 import hmysjiang.potioncapsule.network.packets.SPacketVisualExplosion;
 import hmysjiang.potioncapsule.utils.Defaults;
 import hmysjiang.potioncapsule.utils.helper.InventoryHelper;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -17,7 +19,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -42,45 +46,91 @@ public class ItemSpecialCapsule extends Item {
 	}
 	
 	@SubscribeEvent(priority=EventPriority.HIGHEST)
-	public static void biteZaDust(LivingDeathEvent dusto) {
-		if (dusto.getEntityLiving() instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) dusto.getEntityLiving();
+	public static void onLivingDeath(LivingDeathEvent event) {
+		if (event.getEntityLiving() instanceof PlayerEntity) {
+			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
 			ItemStack pendant = InventoryHelper.findStackFromPlayerInventory(player.inventory, new ItemStack(ModItems.PENDANT));
+			if (player.openContainer != null && player.openContainer instanceof ContainerPendant && ((ContainerPendant) player.openContainer).getStack() == pendant)
+				return;
 			if (!pendant.isEmpty()) {
 				pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
+					int bzd = -1, xmas = -1;
+					
 					for (int i = 8 ; i<11 ; i++) {
-						if (handler.getStackInSlot(i).getItem() == ModItems.S_CAPSULE_BITEZDUST) {
-							ItemStack stack = handler.getStackInSlot(i);
-							if (!player.isCreative() && !stack.getOrCreateTag().getBoolean("CapsuleCreative")) {
-								stack.shrink(1);
-							}
-							if (player instanceof ServerPlayerEntity) {
-								CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, stack);
-							}
-							player.addStat(Stats.ITEM_USED.get(ModItems.S_CAPSULE_BITEZDUST));
-							dusto.setCanceled(true);
-							player.setHealth(player.getMaxHealth());
-							player.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 100, 2, false, false));
-							player.sendStatusMessage(new TranslationTextComponent("potioncapsule.tooltip.capsule.used", stack.getDisplayName()), true);
-							PacketHandler.toPlayer(new SPacketVisualExplosion(), (ServerPlayerEntity) player);
-							return;
+						ItemStack stack = handler.getStackInSlot(i);
+						if (stack.getItem() == ModItems.S_CAPSULE_LOSTXMAS) {
+							xmas = i;
 						}
+						else if (stack.getItem() == ModItems.S_CAPSULE_BITEZDUST) {
+							bzd = i;
+						}
+					}
+					
+					if (xmas > 0) {
+						if (saluteTheBirthOfKing(handler.getStackInSlot(xmas), player, event))
+							return;
+					}
+					if (bzd > 0) {
+						biteZaDust(handler.getStackInSlot(bzd), player, event);
 					}
 				});
 			}
 		}
 	}
 	
+	public static boolean biteZaDust(ItemStack stack, PlayerEntity player, LivingDeathEvent dusto) {
+		player.setHealth(player.getMaxHealth());
+		player.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 100, 2, false, false));
+		player.sendStatusMessage(new TranslationTextComponent("potioncapsule.tooltip.capsule.used", stack.getDisplayName()), true);
+		PacketHandler.toPlayer(new SPacketVisualExplosion(), (ServerPlayerEntity) player);
+		
+		if (!player.isCreative() && !stack.getOrCreateTag().getBoolean("CapsuleCreative")) {
+			stack.shrink(1);
+		}
+		if (player instanceof ServerPlayerEntity) {
+			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, stack);
+		}
+		player.addStat(Stats.ITEM_USED.get(ModItems.S_CAPSULE_BITEZDUST));
+		dusto.setCanceled(true);
+		return true;
+	}
+	
+	public static boolean saluteTheBirthOfKing(ItemStack stack, PlayerEntity player, LivingDeathEvent vergissmeinnicht) {
+		if (!(vergissmeinnicht.getSource().equals(DamageSource.OUT_OF_WORLD) && player.posZ < -60))
+			return false;
+		
+		player.setHealth(1);
+		player.sendStatusMessage(new TranslationTextComponent("potioncapsule.tooltip.capsule.used", stack.getDisplayName()), true);
+		BlockPos pos = player.getPosition();
+		for(pos = new BlockPos(pos.getX(), 0, pos.getZ()); !player.world.isAirBlock(pos.up()); pos = pos.up());
+		player.world.setBlockState(pos, Blocks.GLASS.getDefaultState());
+		player.setMotion(player.getMotion().x, 0, player.getMotion().z);
+		player.fallDistance = 0.0F;
+		player.onGround = true;
+		player.setPositionAndUpdate(player.posX, pos.getY() + 1.2, player.posZ);
+		
+		if (!player.isCreative() && !stack.getOrCreateTag().getBoolean("CapsuleCreative")) {
+			stack.shrink(1);
+		}
+		if (player instanceof ServerPlayerEntity) {
+			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, stack);
+		}
+		player.addStat(Stats.ITEM_USED.get(ModItems.S_CAPSULE_LOSTXMAS));
+		vergissmeinnicht.setCanceled(true);
+		return true;
+	}
+	
 	public static enum EnumSpecialType implements IStringSerializable {
-		BITEZDUST("bite_za_dust", 0xcf4afc, TextFormatting.LIGHT_PURPLE);
+		BITEZDUST("bite_za_dust", 0xcf4afc, TextFormatting.LIGHT_PURPLE),
+		LOST_CHRISTMAS("lost_christmas", 0x2a7bcc, TextFormatting.DARK_GRAY);
 		
 		public String name;
-		public int color;
+		public int capcolor;
 		private TextFormatting[] format;
 		
 		private EnumSpecialType(String name, int color, TextFormatting... formats) {
 			this.name = name;
-			this.color = color;
+			this.capcolor = color;
 			this.format = formats;
 		}
 		
@@ -88,8 +138,8 @@ public class ItemSpecialCapsule extends Item {
 			return "_" + this.name;
 		}
 		
-		public int getColor() {
-			return this.color;
+		public int getCapColor() {
+			return this.capcolor;
 		}
 		
 		public String getDisplayKey() {
@@ -116,6 +166,11 @@ public class ItemSpecialCapsule extends Item {
 		public String getName() {
 			return this.name;
 		}
+	}
+	
+	@Override
+	public boolean hasEffect(ItemStack stack) {
+		return stack.getOrCreateTag().getBoolean("CapsuleCreative");
 	}
 	
 	@OnlyIn(Dist.CLIENT)

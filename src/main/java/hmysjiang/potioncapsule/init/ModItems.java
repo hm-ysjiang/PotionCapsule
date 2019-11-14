@@ -28,8 +28,9 @@ public class ModItems {
 
 	public static final Item CAPSULE = new ItemCapsule(EnumCapsuleType.NORMAL).setRegistryName(Defaults.modPrefix.apply(ItemRegs.CAPSULE));
 	public static final Item CAPSULE_INSTANT = new ItemCapsule(EnumCapsuleType.INSTANT).setRegistryName(Defaults.modPrefix.apply(ItemRegs.CAPSULE + "_instant"));
-	
+
 	public static final Item S_CAPSULE_BITEZDUST = new ItemSpecialCapsule(EnumSpecialType.BITEZDUST);
+	public static final Item S_CAPSULE_LOSTXMAS = new ItemSpecialCapsule(EnumSpecialType.LOST_CHRISTMAS);
 	
 	public static final Item PENDANT = new ItemCapsulePendant().setRegistryName(Defaults.modPrefix.apply(ItemRegs.PENDANT));
 
@@ -69,7 +70,8 @@ public class ModItems {
 		reg.registerAll(CAPSULE,
 						CAPSULE_INSTANT
 						,
-						S_CAPSULE_BITEZDUST
+						S_CAPSULE_BITEZDUST,
+						S_CAPSULE_LOSTXMAS
 						,
 						PENDANT
 						,

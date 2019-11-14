@@ -15,7 +15,8 @@
 	"item.potioncapsule.item_catalyst": "\u00a7bInstant Catalyst\u00a7r",
 	"item.potioncapsule.item_creative_catalyst": "\u00a76Creative Catalyst\u00a7r",
 	"item.potioncapsule.item_special_capsule": "Special Capsule (%s)",
-	"item.potioncapsule.item_special_capsule.bite_za_dust": "Bite The Dust"
+	"item.potioncapsule.item_special_capsule.bite_za_dust": "Bite The Dust",
+	"item.potioncapsule.item_special_capsule.lost_christmas": "The Lost Christmas"
 	,
 	"_Blocks": "",
 	"block.potioncapsule.block_gelatin_extractor": "Gelatin Extractor",
@@ -56,7 +57,10 @@
 	"potioncapsule.tooltip.special_capsule.pre.effect": "Effect: ",
 	"potioncapsule.tooltip.special_capsule.bite_za_dust.desc": "Killer Queen the third bomb, \u00a7oBITE ZA DUSTO\u00a7r",
 	"potioncapsule.tooltip.special_capsule.bite_za_dust.trigger": "When player dies",
-	"potioncapsule.tooltip.special_capsule.bite_za_dust.effect": "Revive at current position with full health"
+	"potioncapsule.tooltip.special_capsule.bite_za_dust.effect": "Revive at current position with full health",
+	"potioncapsule.tooltip.special_capsule.lost_christmas.desc": "Ahhh, my arm..., my \u00a7oVoid Power\u00a7r...!",
+	"potioncapsule.tooltip.special_capsule.lost_christmas.trigger": "When player about to die in the void",
+	"potioncapsule.tooltip.special_capsule.lost_christmas.effect": "Teleport to the world bottom with a cobble place beneath"
 	,
 	"_Miscellaneous": "",
 	"potioncapsule.misc.left_potion_display_name": "Partially Used Potion",
