@@ -1,0 +1,34 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "potioncapsule_crafting_group",
+	"pattern": 
+	[
+		" H ",
+		"TPT",
+		" C "
+	],
+	"key": 
+	{
+		"H": 
+		{
+			"item": "minecraft:wither_skeleton_skull"
+		},
+		"T": 
+		{
+			"item": "minecraft:tnt"
+		},
+		"P": 
+		{
+			"tag": "potioncapsule:capsules"
+		},
+		"C": 
+		{
+			"item": "minecraft:clock"
+		}
+	},
+	"result": 
+	{
+		"item": "potioncapsule:item_special_capsule_bite_za_dust",
+		"count": 1
+	}
+}

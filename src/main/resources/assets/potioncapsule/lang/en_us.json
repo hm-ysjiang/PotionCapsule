@@ -14,7 +14,8 @@
 	"item.potioncapsule.item_apple_jelly": "Apple Jelly",
 	"item.potioncapsule.item_catalyst": "\u00a7bInstant Catalyst\u00a7r",
 	"item.potioncapsule.item_creative_catalyst": "\u00a76Creative Catalyst\u00a7r",
-	"item.potioncapsule.item_special_capsule": "Special Capsule (%s)"
+	"item.potioncapsule.item_special_capsule": "Special Capsule (%s)",
+	"item.potioncapsule.item_special_capsule.bite_za_dust": "Bite The Dust"
 	,
 	"_Blocks": "",
 	"block.potioncapsule.block_gelatin_extractor": "Gelatin Extractor",
@@ -29,8 +30,7 @@
 	"potioncapsule.tooltip.catalyst_1": "Add this to the crafting grid to obtain more yields while attaching instant capsules",
 	"potioncapsule.tooltip.catalyst_2": "Catalysts allowed: %sx",
 	"potioncapsule.tooltip.c_catalyst_1": "CREATIVE ONLY",
-	"potioncapsule.tooltip.c_catalyst_2": "Craft with capsule to apply creative effect on it",
-	"potioncapsule.tooltip.special_capsule_bite_za_dust": "Killer Queen the third bomb, BITE ZA DUSTO"
+	"potioncapsule.tooltip.c_catalyst_2": "Craft with capsule to apply creative effect on it"
 	,
 	"_Gui": "",
 	"potioncapsule.gui.gelatin_ex.progress_percentage": "%1$s %2$s",
@@ -50,6 +50,13 @@
 	,
 	"_Effects": "",
 	"effect.potioncapsule.effect_night_vision_nf": "Night Vision NF"
+	,
+	"_Special Capsules": "",
+	"potioncapsule.tooltip.special_capsule.pre.trigger": "Trigger: ",
+	"potioncapsule.tooltip.special_capsule.pre.effect": "Effect: ",
+	"potioncapsule.tooltip.special_capsule.bite_za_dust.desc": "Killer Queen the third bomb, \u00a7oBITE ZA DUSTO\u00a7r",
+	"potioncapsule.tooltip.special_capsule.bite_za_dust.trigger": "When player dies",
+	"potioncapsule.tooltip.special_capsule.bite_za_dust.effect": "Revive at current position with full health"
 	,
 	"_Miscellaneous": "",
 	"potioncapsule.misc.left_potion_display_name": "Partially Used Potion",

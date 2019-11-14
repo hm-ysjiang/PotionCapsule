@@ -6,7 +6,7 @@ import java.util.List;
 
 import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.network.PacketHandler;
-import hmysjiang.potioncapsule.network.packets.PacketKeyBinding;
+import hmysjiang.potioncapsule.network.packets.CPacketKeyBinding;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.api.distmarker.Dist;
@@ -37,7 +37,7 @@ public class KeyBindHandler {
 			return;
 		for (int i = 0 ; i<keybindings.size() ; i++)
 			if (event.getKey() == keybindings.get(i).getKey().getKeyCode()) {
-				PacketHandler.toServer(new PacketKeyBinding(i));
+				PacketHandler.toServer(new CPacketKeyBinding(i));
 			}
 	}
 	

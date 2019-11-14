@@ -3,6 +3,7 @@ package hmysjiang.potioncapsule.recipe;
 import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.items.ItemCapsule;
+import hmysjiang.potioncapsule.items.ItemSpecialCapsule;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
@@ -29,6 +30,9 @@ public class RecipeCapsuleCreativeAttach extends SpecialRecipe {
 					return false;
 				caps++;
 			}
+			else if (inv.getStackInSlot(i).getItem() instanceof ItemSpecialCapsule) {
+				caps++;
+			}
 			else if (inv.getStackInSlot(i).getItem() == ModItems.CREATIVE_CATALYST) {
 				cc++;
 			}
@@ -40,7 +44,7 @@ public class RecipeCapsuleCreativeAttach extends SpecialRecipe {
 	public ItemStack getCraftingResult(CraftingInventory inv) {
 		ItemStack capsule = ItemStack.EMPTY;
 		for (int i = 0 ; i<inv.getSizeInventory() ; i++) {
-			if (ItemCapsule.isItemCapsule(inv.getStackInSlot(i))) {
+			if (ItemCapsule.isItemCapsule(inv.getStackInSlot(i)) || inv.getStackInSlot(i).getItem() instanceof ItemSpecialCapsule) {
 				capsule = inv.getStackInSlot(i).copy();
 			}
 		}
