@@ -12,6 +12,7 @@ import hmysjiang.potioncapsule.container.ContainerPendant;
 import hmysjiang.potioncapsule.init.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.entity.player.PlayerEntity;
 
 public class ClientProxy implements ISidedProxy {
 	
@@ -29,6 +30,11 @@ public class ClientProxy implements ISidedProxy {
 		ScreenManager.registerFactory(ContainerPendant.TYPE, ScreenPendant::new);
 		ScreenManager.registerFactory(ContainerGelatinExtractor.TYPE, ScreenGelatinExtractor::new);
 		ScreenManager.registerFactory(ContainerGelatinFormer.TYPE, ScreenGelatinFormer::new);
+	}
+	
+	@Override
+	public PlayerEntity getPlayer() {
+		return Minecraft.getInstance().player;
 	}
 	
 }

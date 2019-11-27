@@ -179,7 +179,6 @@ public class ItemCapsule extends Item {
 		return UseAction.EAT;
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	public boolean hasEffect(ItemStack stack) {
 		return stack.getOrCreateTag().getBoolean("CapsuleCreative");
 	}
@@ -244,7 +243,6 @@ public class ItemCapsule extends Item {
 	 * @param txtComponents
 	 * @param durationFactor
 	 */
-	@OnlyIn(Dist.CLIENT)
 	private List<ITextComponent> addPotionTooltipWithLimitedEffectsRendered(ItemStack stack, List<ITextComponent> txtComponents, float durationFactor) {
 		boolean limitReached = false;
 		List<EffectInstance> list = PotionUtils.getEffectsFromStack(stack);
@@ -318,7 +316,6 @@ public class ItemCapsule extends Item {
 	 * @param stack
 	 * @param txtComponents
 	 */
-	@OnlyIn(Dist.CLIENT)
 	private List<ITextComponent> addPotionTooltipWithoutDuration(ItemStack stack, List<ITextComponent> txtComponents) {
 		List<EffectInstance> list = PotionUtils.getEffectsFromStack(stack);
 		if (list.isEmpty()) {

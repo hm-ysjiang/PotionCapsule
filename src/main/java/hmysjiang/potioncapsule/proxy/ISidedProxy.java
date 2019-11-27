@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 
 import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.network.PacketHandler;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 
 public interface ISidedProxy {
@@ -29,6 +30,10 @@ public interface ISidedProxy {
 		} catch (Exception exp) {
 			PotionCapsule.Logger.error("Exception occured while executing sided work\n" + exp.getLocalizedMessage());
 		}
+		return null;
+	}
+	
+	default PlayerEntity getPlayer() {
 		return null;
 	}
 	
