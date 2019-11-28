@@ -1,6 +1,8 @@
 package hmysjiang.potioncapsule;
 
+import java.util.Arrays;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 
@@ -8,6 +10,7 @@ import hmysjiang.potioncapsule.compact.curio.DummyCurioProxy;
 import hmysjiang.potioncapsule.compact.curio.ICurioProxy;
 import hmysjiang.potioncapsule.configs.ConfigManager;
 import hmysjiang.potioncapsule.init.ModItems;
+import hmysjiang.potioncapsule.items.ItemSpecialCapsule;
 import hmysjiang.potioncapsule.proxy.ClientProxy;
 import hmysjiang.potioncapsule.proxy.ISidedProxy;
 import hmysjiang.potioncapsule.proxy.ServerProxy;
@@ -42,6 +45,7 @@ public class PotionCapsule {
 
 		ModLoadingContext.get().registerConfig(Type.COMMON, ConfigManager.SConfig);
         ConfigManager.loadCommonConfigFromPath(FMLPaths.CONFIGDIR.get().resolve("potioncapsule-common.toml").toString());
+        ItemSpecialCapsule.buildMaps();
         
         DistExecutor.runWhenOn(Dist.CLIENT, ()->()->{
         	ModLoadingContext.get().registerConfig(Type.CLIENT, ConfigManager.CConfig);
@@ -88,9 +92,10 @@ public class PotionCapsule {
 	
 	public static class Logger {
 		private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger(Reference.MOD_ID);
-		public static void info(Object obj) { LOGGER.info(obj == null ? "null" : obj.toString()); }
-		public static void warn(Object obj) { LOGGER.warn(obj == null ? "null" : obj.toString()); }
-		public static void error(Object obj) { LOGGER.error(obj == null ? "null" : obj.toString()); }
+		private static String flat(Object obj) { return obj == null ? "null" : obj.toString(); }
+		public static void info(Object... objs) { Arrays.stream(objs).map(Logger::flat).collect(Collectors.toList()).forEach(LOGGER::info); }
+		public static void warn(Object... objs) { Arrays.stream(objs).map(Logger::flat).forEach(LOGGER::warn); }
+		public static void error(Object... objs) { Arrays.stream(objs).map(Logger::flat).forEach(LOGGER::error); }
 	}
 	
 }

@@ -1,8 +1,12 @@
 package hmysjiang.potioncapsule.items;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.Reference.ItemRegs;
+import hmysjiang.potioncapsule.configs.CommonConfigs;
 import hmysjiang.potioncapsule.container.ContainerPendant;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.network.PacketHandler;
@@ -19,8 +23,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.stats.Stats;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -33,14 +39,19 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.registries.IForgeRegistry;
 
 @EventBusSubscriber(bus=EventBusSubscriber.Bus.FORGE)
 public class ItemSpecialCapsule extends Item {
+
+	private static Map<EnumSpecialType, Item> capsules = new HashMap<>();
+	private static Map<EnumSpecialType, Boolean> enable = new HashMap<>();
+	private static Map<EnumSpecialType, Integer> durab = new HashMap<>();
 	
 	public final EnumSpecialType type;
 	
 	public ItemSpecialCapsule(EnumSpecialType type) {
-		super(Defaults.itemProp.get());
+		super(Defaults.itemProp.get().maxStackSize(1));
 		this.type = type;
 		setRegistryName(Defaults.modPrefix.apply(ItemRegs.SPECIAL_CAPSULE + type.getPost()));
 	}
@@ -162,10 +173,44 @@ public class ItemSpecialCapsule extends Item {
 			return format;
 		}
 		
+		public ResourceLocation getRepairTag() {
+			return Defaults.modPrefix.apply(name + "_repair");
+		}
+		
 		@Override
 		public String getName() {
 			return this.name;
 		}
+	}
+	
+	@Override
+	public boolean isDamageable() {
+		return true;
+	}
+	
+	@Override
+	public boolean isEnchantable(ItemStack stack) {
+		return false;
+	}
+	
+	/**
+	 * To achieve the configurable durability, since the vanilla getMaxDamage is a final method
+	 * I could only find this way to simulate dynamic durability (method override + maxStackSize of 1)
+	 * If an weird behavior occurred while interacting with other mods, check if they called the deprecated vanilla getMaxDamage()
+	 * They should call the stack-sensitive version, i.e. this one. Blame on them.
+	 */
+	@Override
+	public int getMaxDamage(ItemStack stack) {
+		return durab.get(((ItemSpecialCapsule) stack.getItem()).type);
+	}
+	
+	@Override
+	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+		if (toRepair.getItem() instanceof ItemSpecialCapsule) {
+			ItemSpecialCapsule item = (ItemSpecialCapsule) toRepair.getItem();
+			return ItemTags.getCollection().get(item.type.getRepairTag()).contains(repair.getItem());
+		}
+		return super.getIsRepairable(toRepair, repair);
 	}
 	
 	@Override
@@ -196,6 +241,34 @@ public class ItemSpecialCapsule extends Item {
 			return new TranslationTextComponent("item.potioncapsule.item_creative_capsule_prefix").appendSibling(
 					new TranslationTextComponent(getTranslationKey(), new TranslationTextComponent(type.getDisplayKey()).applyTextStyles(type.getFormat()))).applyTextStyle(TextFormatting.GOLD);
 		return new TranslationTextComponent(getTranslationKey(), new TranslationTextComponent(type.getDisplayKey()).applyTextStyles(type.getFormat())).applyTextStyle(TextFormatting.GOLD);
+	}
+	
+	public static void buildMaps() {
+		PotionCapsule.Logger.info("Building Information map for Special Capsules");
+		for (EnumSpecialType type: EnumSpecialType.values()) {
+			switch (type) {
+			case BITEZDUST:
+				capsules.put(type, ModItems.S_CAPSULE_BITEZDUST);
+				enable.put(type, CommonConfigs.special_bzd_enable.get());
+				durab.put(type, CommonConfigs.special_bzd_uses.get());
+				break;
+			case LOST_CHRISTMAS:
+				capsules.put(type, ModItems.S_CAPSULE_LOSTXMAS);
+				enable.put(type, CommonConfigs.special_xmas_enable.get());
+				durab.put(type, CommonConfigs.special_xmas_uses.get());
+				break;
+			}
+		}
+	}
+	
+	public static void register(IForgeRegistry<Item> reg) {
+		PotionCapsule.Logger.info("Registering Special Capsules");
+		for (EnumSpecialType type: EnumSpecialType.values()) {
+			if (enable.get(type)) {
+				reg.register(capsules.get(type));
+				PotionCapsule.Logger.info("Type " + type.getName() + " is enabled, registering...");
+			}
+		}
 	}
 
 }

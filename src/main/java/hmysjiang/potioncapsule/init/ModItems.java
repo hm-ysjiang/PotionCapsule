@@ -70,9 +70,6 @@ public class ModItems {
 		reg.registerAll(CAPSULE,
 						CAPSULE_INSTANT
 						,
-						S_CAPSULE_BITEZDUST,
-						S_CAPSULE_LOSTXMAS
-						,
 						PENDANT
 						,
 						BLOCK_GELATIN_EXTRACTOR,
@@ -83,6 +80,7 @@ public class ModItems {
 						APPLE_JELLY,
 						CATALYST,
 						CREATIVE_CATALYST);
+		ItemSpecialCapsule.register(reg);
 	}
 	
 }

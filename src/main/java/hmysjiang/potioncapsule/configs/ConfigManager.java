@@ -5,6 +5,7 @@ import java.io.File;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 
+import hmysjiang.potioncapsule.PotionCapsule;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class ConfigManager {
@@ -27,6 +28,7 @@ public class ConfigManager {
 		CommentedFileConfig fileConfig = CommentedFileConfig.builder(new File(path)).autosave().sync().writingMode(WritingMode.REPLACE).build();
 		fileConfig.load();
 		config.setConfig(fileConfig);
+		PotionCapsule.Logger.info("Loading config from: " + path);
 	}
 	
 	static {

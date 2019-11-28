@@ -1,3 +1,13 @@
+1.1.4
+ - Introducing new Special Capsules! Only works in the pendant
+ -- Two kinds at this moment:
+ --- Bite the dust: revive the player if the player is dead
+ --- Lost Christmas: teleport the player back to the bottom of the world if player is about to die in the void
+ - Fix the bug that cause server to crash when using pendant (#8)
+ - Added Creative Catalyst, combining a capsule with it makes the capsule not consumed after used
+ - Remove the glowing effect on capsules, only creative capsules will glow
+ - Fix Instant Capsule not rendering potion color
+
 1.1.3
  - Add the attachment recipe of Instant Capsule, instant effects now can be attached onto Instant Capsules
  - Change the recipe format, may need user to re-configure the custom datapacks
