@@ -44,8 +44,8 @@ public class PotionCapsule {
 		MinecraftForge.EVENT_BUS.register(this);
 
 		ModLoadingContext.get().registerConfig(Type.COMMON, ConfigManager.SConfig);
-        ConfigManager.loadCommonConfigFromPath(FMLPaths.CONFIGDIR.get().resolve("potioncapsule-common.toml").toString());
-        ItemSpecialCapsule.buildMaps();
+		ConfigManager.loadCommonConfigFromPath(FMLPaths.CONFIGDIR.get().resolve("potioncapsule-common.toml").toString());
+        ItemSpecialCapsule.init();
         
         DistExecutor.runWhenOn(Dist.CLIENT, ()->()->{
         	ModLoadingContext.get().registerConfig(Type.CLIENT, ConfigManager.CConfig);

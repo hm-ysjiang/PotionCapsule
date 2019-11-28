@@ -10,6 +10,8 @@ import hmysjiang.potioncapsule.container.ContainerGelatinExtractor;
 import hmysjiang.potioncapsule.container.ContainerGelatinFormer;
 import hmysjiang.potioncapsule.container.ContainerPendant;
 import hmysjiang.potioncapsule.init.ModItems;
+import hmysjiang.potioncapsule.items.ItemSpecialCapsule;
+import hmysjiang.potioncapsule.items.ItemSpecialCapsule.EnumSpecialType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,8 +26,8 @@ public class ClientProxy implements ISidedProxy {
 		Minecraft.getInstance().getItemColors().register(CapsuleItemColor.INSTANCE, ModItems.CAPSULE);
 		Minecraft.getInstance().getItemColors().register(CapsuleItemColor.INSTANCE, ModItems.CAPSULE_INSTANT);
 
-		Minecraft.getInstance().getItemColors().register(SpecialCapsuleItemColor.INSTANCE, ModItems.S_CAPSULE_BITEZDUST);
-		Minecraft.getInstance().getItemColors().register(SpecialCapsuleItemColor.INSTANCE, ModItems.S_CAPSULE_LOSTXMAS);
+		Minecraft.getInstance().getItemColors().register(SpecialCapsuleItemColor.INSTANCE, ItemSpecialCapsule.getCapsuleInstance(EnumSpecialType.BITEZDUST));
+		Minecraft.getInstance().getItemColors().register(SpecialCapsuleItemColor.INSTANCE, ItemSpecialCapsule.getCapsuleInstance(EnumSpecialType.LOST_CHRISTMAS));
 		
 		ScreenManager.registerFactory(ContainerPendant.TYPE, ScreenPendant::new);
 		ScreenManager.registerFactory(ContainerGelatinExtractor.TYPE, ScreenGelatinExtractor::new);

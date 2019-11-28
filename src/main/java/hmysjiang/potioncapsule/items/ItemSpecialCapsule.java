@@ -45,13 +45,14 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class ItemSpecialCapsule extends Item {
 
 	private static Map<EnumSpecialType, Item> capsules = new HashMap<>();
+	public static Item getCapsuleInstance(EnumSpecialType type) { return capsules.get(type); }
 	private static Map<EnumSpecialType, Boolean> enable = new HashMap<>();
 	private static Map<EnumSpecialType, Integer> durab = new HashMap<>();
 	
 	public final EnumSpecialType type;
 	
 	public ItemSpecialCapsule(EnumSpecialType type) {
-		super(Defaults.itemProp.get().maxStackSize(1));
+		super(Defaults.itemProp.get().maxDamage(durab.get(type)));
 		this.type = type;
 		setRegistryName(Defaults.modPrefix.apply(ItemRegs.SPECIAL_CAPSULE + type.getPost()));
 	}
@@ -69,10 +70,10 @@ public class ItemSpecialCapsule extends Item {
 					
 					for (int i = 8 ; i<11 ; i++) {
 						ItemStack stack = handler.getStackInSlot(i);
-						if (stack.getItem() == ModItems.S_CAPSULE_LOSTXMAS) {
+						if (stack.getItem() == capsules.get(EnumSpecialType.LOST_CHRISTMAS)) {
 							xmas = i;
 						}
-						else if (stack.getItem() == ModItems.S_CAPSULE_BITEZDUST) {
+						else if (stack.getItem() == capsules.get(EnumSpecialType.BITEZDUST)) {
 							bzd = i;
 						}
 					}
@@ -101,7 +102,7 @@ public class ItemSpecialCapsule extends Item {
 		if (player instanceof ServerPlayerEntity) {
 			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, stack);
 		}
-		player.addStat(Stats.ITEM_USED.get(ModItems.S_CAPSULE_BITEZDUST));
+		player.addStat(Stats.ITEM_USED.get(capsules.get(EnumSpecialType.BITEZDUST)));
 		dusto.setCanceled(true);
 		return true;
 	}
@@ -126,7 +127,7 @@ public class ItemSpecialCapsule extends Item {
 		if (player instanceof ServerPlayerEntity) {
 			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, stack);
 		}
-		player.addStat(Stats.ITEM_USED.get(ModItems.S_CAPSULE_LOSTXMAS));
+		player.addStat(Stats.ITEM_USED.get(capsules.get(EnumSpecialType.LOST_CHRISTMAS)));
 		vergissmeinnicht.setCanceled(true);
 		return true;
 	}
@@ -184,24 +185,8 @@ public class ItemSpecialCapsule extends Item {
 	}
 	
 	@Override
-	public boolean isDamageable() {
-		return true;
-	}
-	
-	@Override
 	public boolean isEnchantable(ItemStack stack) {
 		return false;
-	}
-	
-	/**
-	 * To achieve the configurable durability, since the vanilla getMaxDamage is a final method
-	 * I could only find this way to simulate dynamic durability (method override + maxStackSize of 1)
-	 * If an weird behavior occurred while interacting with other mods, check if they called the deprecated vanilla getMaxDamage()
-	 * They should call the stack-sensitive version, i.e. this one. Blame on them.
-	 */
-	@Override
-	public int getMaxDamage(ItemStack stack) {
-		return durab.get(((ItemSpecialCapsule) stack.getItem()).type);
 	}
 	
 	@Override
@@ -243,17 +228,22 @@ public class ItemSpecialCapsule extends Item {
 		return new TranslationTextComponent(getTranslationKey(), new TranslationTextComponent(type.getDisplayKey()).applyTextStyles(type.getFormat())).applyTextStyle(TextFormatting.GOLD);
 	}
 	
-	public static void buildMaps() {
+	public static void init() {
+		buildMaps();
+		for (EnumSpecialType type: EnumSpecialType.values()) {
+			capsules.put(type, new ItemSpecialCapsule(type));
+		}
+	}
+	
+	private static void buildMaps() {
 		PotionCapsule.Logger.info("Building Information map for Special Capsules");
 		for (EnumSpecialType type: EnumSpecialType.values()) {
 			switch (type) {
 			case BITEZDUST:
-				capsules.put(type, ModItems.S_CAPSULE_BITEZDUST);
 				enable.put(type, CommonConfigs.special_bzd_enable.get());
 				durab.put(type, CommonConfigs.special_bzd_uses.get());
 				break;
 			case LOST_CHRISTMAS:
-				capsules.put(type, ModItems.S_CAPSULE_LOSTXMAS);
 				enable.put(type, CommonConfigs.special_xmas_enable.get());
 				durab.put(type, CommonConfigs.special_xmas_uses.get());
 				break;
