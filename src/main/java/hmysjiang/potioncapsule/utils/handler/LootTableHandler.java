@@ -36,6 +36,11 @@ public class LootTableHandler {
 													   .name(Defaults.modPrefix.apply("lootpool_wart").toString())
 													   .build());
 		}
+		else if (lootName.equals("minecraft:entities/wither_skeleton")) {
+			event.getTable().addPool(LootPool.builder().addEntry(TableLootEntry.builder(Defaults.modPrefix.apply("inject/wither_skeleton")).weight(1))
+													   .name(Defaults.modPrefix.apply("lootpool_wither").toString())
+													   .build());
+		}
 	}
 	
 }

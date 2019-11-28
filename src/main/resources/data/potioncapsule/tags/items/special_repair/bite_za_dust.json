@@ -1,0 +1,8 @@
+{
+	"replace": false,
+	"values": 
+	[
+		"potioncapsule:item_wither_dust",
+		"#forge:heads"
+	]
+}

@@ -17,6 +17,7 @@ public class Reference {
 		public static final String APPLE_JELLY = "item_apple_jelly";
 		public static final String CATALYST = "item_catalyst";
 		public static final String CREATIVE_CATALYST = "item_creative_catalyst";
+		public static final String WITHER_FRAG = "item_wither_dust";
 		
 	}
 	

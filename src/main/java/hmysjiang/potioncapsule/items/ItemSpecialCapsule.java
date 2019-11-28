@@ -19,6 +19,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -26,6 +27,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -91,7 +93,7 @@ public class ItemSpecialCapsule extends Item {
 	}
 	
 	public static boolean biteZaDust(ItemStack stack, PlayerEntity player, LivingDeathEvent dusto) {
-		if (stack.getDamage() == stack.getMaxDamage())
+		if (stack.getDamage() >= stack.getMaxDamage())
 			return false;
 		player.setHealth(player.getMaxHealth());
 		player.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 100, 2, false, false));
@@ -110,7 +112,7 @@ public class ItemSpecialCapsule extends Item {
 	}
 	
 	public static boolean saluteTheBirthOfKing(ItemStack stack, PlayerEntity player, LivingDeathEvent vergissmeinnicht) {
-		if (stack.getDamage() == stack.getMaxDamage())
+		if (stack.getDamage() >= stack.getMaxDamage())
 			return false;
 		if (!(vergissmeinnicht.getSource().equals(DamageSource.OUT_OF_WORLD) && player.posZ < -60))
 			return false;
@@ -179,7 +181,7 @@ public class ItemSpecialCapsule extends Item {
 		}
 		
 		public ResourceLocation getRepairTag() {
-			return Defaults.modPrefix.apply(name + "_repair");
+			return Defaults.modPrefix.apply("special_repair/" + name);
 		}
 		
 		@Override
@@ -209,6 +211,22 @@ public class ItemSpecialCapsule extends Item {
 		return stack.getOrCreateTag().getBoolean("CapsuleCreative");
 	}
 	
+	@Override
+	public void onCreated(ItemStack stack, World worldIn, PlayerEntity playerIn) {
+		if (!stack.getOrCreateTag().getBoolean("CapsuleCreative"))
+			stack.setDamage(getMaxDamage(stack));
+	}
+	
+	@Override
+	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
+		if (this.isInGroup(group)) {
+			items.add(new ItemStack(this));
+			ItemStack broken = new ItemStack(this);
+			broken.setDamage(getMaxDamage(broken));
+			items.add(broken);
+		}
+	}
+	
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
@@ -219,6 +237,8 @@ public class ItemSpecialCapsule extends Item {
 		tooltip.add(new TranslationTextComponent("potioncapsule.tooltip.special_capsule.pre.effect").appendSibling(
 				new TranslationTextComponent(type.getEffectKey()).applyTextStyle(TextFormatting.GRAY)
 				).applyTextStyle(TextFormatting.GREEN));
+		tooltip.add(new TranslationTextComponent("potioncapsule.tooltip.special_capsule.durability", String.valueOf(stack.getMaxDamage() - stack.getDamage()), String.valueOf(stack.getMaxDamage()))
+				.applyTextStyle(TextFormatting.WHITE));
 	}
 	
 	@Override

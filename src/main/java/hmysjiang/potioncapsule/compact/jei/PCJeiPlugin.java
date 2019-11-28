@@ -7,8 +7,10 @@ import hmysjiang.potioncapsule.client.gui.ScreenGelatinExtractor;
 import hmysjiang.potioncapsule.client.gui.ScreenGelatinFormer;
 import hmysjiang.potioncapsule.container.ContainerGelatinExtractor;
 import hmysjiang.potioncapsule.init.ModBlocks;
+import hmysjiang.potioncapsule.items.ItemSpecialCapsule.EnumSpecialType;
 import hmysjiang.potioncapsule.recipe.RecipeGelatinExtractor;
 import hmysjiang.potioncapsule.recipe.RecipeGelatinFormer;
+import hmysjiang.potioncapsule.recipe.RecipeSpecialRepair;
 import hmysjiang.potioncapsule.utils.Defaults;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -18,9 +20,11 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.ResourceLocation;
 
 @JeiPlugin
@@ -36,7 +40,8 @@ public class PCJeiPlugin implements IModPlugin {
 		IGuiHelper helper = registration.getJeiHelpers().getGuiHelper();
 		registration.addRecipeCategories(new GelExtractorJei.Category(helper),
 										 new GelFormerJei.Category(helper),
-										 new WartDropJei.Category(helper));
+										 new WartDropJei.Category(helper),
+										 new SpecialRepairJei.Category(helper));
 	}
 	
 	@Override
@@ -44,6 +49,8 @@ public class PCJeiPlugin implements IModPlugin {
 		registration.addRecipeCatalyst(new ItemStack(ModBlocks.GELATIN_EXTRACTOR), GelExtractorJei.UID);
 		registration.addRecipeCatalyst(new ItemStack(ModBlocks.GELATIN_FORMER), GelFormerJei.UID);
 		registration.addRecipeCatalyst(new ItemStack(Items.NETHER_WART), WartDropJei.UID);
+		for (Block block: BlockTags.ANVIL.getAllElements())
+			registration.addRecipeCatalyst(new ItemStack(block), SpecialRepairJei.UID);
 	}
 	
 	@Override
@@ -61,6 +68,8 @@ public class PCJeiPlugin implements IModPlugin {
 		Minecraft.getInstance().world.getRecipeManager().getRecipe(Defaults.modPrefix.apply("wart_dust")).ifPresent(r -> {
 			registration.addRecipes(Arrays.asList(r), WartDropJei.UID);
 		});
+		
+		registration.addRecipes(Arrays.asList(EnumSpecialType.values()).stream().map(type->new RecipeSpecialRepair(type)).collect(Collectors.toList()), SpecialRepairJei.UID);
 	}
 	
 	@Override
