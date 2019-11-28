@@ -44,8 +44,12 @@ public class RecipeCapsuleCreativeAttach extends SpecialRecipe {
 	public ItemStack getCraftingResult(CraftingInventory inv) {
 		ItemStack capsule = ItemStack.EMPTY;
 		for (int i = 0 ; i<inv.getSizeInventory() ; i++) {
-			if (ItemCapsule.isItemCapsule(inv.getStackInSlot(i)) || inv.getStackInSlot(i).getItem() instanceof ItemSpecialCapsule) {
+			if (ItemCapsule.isItemCapsule(inv.getStackInSlot(i))) {
 				capsule = inv.getStackInSlot(i).copy();
+			}
+			else if (inv.getStackInSlot(i).getItem() instanceof ItemSpecialCapsule) {
+				capsule = inv.getStackInSlot(i).copy();
+				capsule.setDamage(0);
 			}
 		}
 		capsule.getOrCreateTag().putBoolean("CapsuleCreative", true);

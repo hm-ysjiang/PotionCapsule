@@ -91,13 +91,15 @@ public class ItemSpecialCapsule extends Item {
 	}
 	
 	public static boolean biteZaDust(ItemStack stack, PlayerEntity player, LivingDeathEvent dusto) {
+		if (stack.getDamage() == stack.getMaxDamage())
+			return false;
 		player.setHealth(player.getMaxHealth());
 		player.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 100, 2, false, false));
 		player.sendStatusMessage(new TranslationTextComponent("potioncapsule.tooltip.capsule.used", stack.getDisplayName()), true);
 		PacketHandler.toPlayer(new SPacketVisualExplosion(), (ServerPlayerEntity) player);
 		
 		if (!player.isCreative() && !stack.getOrCreateTag().getBoolean("CapsuleCreative")) {
-			stack.shrink(1);
+			stack.setDamage(stack.getDamage() + 1);
 		}
 		if (player instanceof ServerPlayerEntity) {
 			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, stack);
@@ -108,6 +110,8 @@ public class ItemSpecialCapsule extends Item {
 	}
 	
 	public static boolean saluteTheBirthOfKing(ItemStack stack, PlayerEntity player, LivingDeathEvent vergissmeinnicht) {
+		if (stack.getDamage() == stack.getMaxDamage())
+			return false;
 		if (!(vergissmeinnicht.getSource().equals(DamageSource.OUT_OF_WORLD) && player.posZ < -60))
 			return false;
 		
@@ -122,7 +126,7 @@ public class ItemSpecialCapsule extends Item {
 		player.setPositionAndUpdate(player.posX, pos.getY() + 1.2, player.posZ);
 		
 		if (!player.isCreative() && !stack.getOrCreateTag().getBoolean("CapsuleCreative")) {
-			stack.shrink(1);
+			stack.setDamage(stack.getDamage() + 1);
 		}
 		if (player instanceof ServerPlayerEntity) {
 			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, stack);
@@ -192,6 +196,8 @@ public class ItemSpecialCapsule extends Item {
 	@Override
 	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
 		if (toRepair.getItem() instanceof ItemSpecialCapsule) {
+			if (toRepair.getOrCreateTag().getBoolean("CapsuleCreative"))
+				return false;
 			ItemSpecialCapsule item = (ItemSpecialCapsule) toRepair.getItem();
 			return ItemTags.getCollection().get(item.type.getRepairTag()).contains(repair.getItem());
 		}
