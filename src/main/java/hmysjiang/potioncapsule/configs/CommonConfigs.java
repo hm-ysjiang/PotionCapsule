@@ -12,6 +12,8 @@ public class CommonConfigs {
 	public static ForgeConfigSpec.IntValue special_bzd_uses;
 	public static ForgeConfigSpec.BooleanValue special_xmas_enable;
 	public static ForgeConfigSpec.IntValue special_xmas_uses;
+	public static ForgeConfigSpec.BooleanValue special_overdrive_enable;
+	public static ForgeConfigSpec.IntValue special_overdrive_uses;
 	
 	public static ForgeConfigSpec.BooleanValue recipe_allowCapsuleCombine;
 	public static ForgeConfigSpec.BooleanValue recipe_removeExcessDuration;
@@ -34,10 +36,14 @@ public class CommonConfigs {
 				.define("specialcap.bzd.enable", true);
 		special_xmas_enable = builder.comment(" Set this to false to disable the Lost Christmas capsule")
 				.define("specialcap.xmas.enable", true);
+		special_overdrive_enable = builder.comment(" Set this to false to disable the Sunlight Yellow Overdrive capsule")
+				.define("specialcap.overdrive.enable", true);
 		special_bzd_uses = builder.comment(" This specifies the max usages of Bite the dust capsule")
 				.defineInRange("specialcap.bzd.uses", 5, 1, 64);
 		special_xmas_uses = builder.comment(" This specifies the max usages of Lost Christmas capsule")
 				.defineInRange("specialcap.xmas.uses", 5, 1, 64);
+		special_overdrive_uses = builder.comment(" This specifies the max usages of Sunlight Yellow Overdrive capsule")
+				.defineInRange("specialcap.overdrive.uses", 256, 1, 1024);
 		
 		// recipe
 		recipe_allowCapsuleCombine = builder.comment(" Set this to true will allow Potion Capsules to be combined in crafting grids")

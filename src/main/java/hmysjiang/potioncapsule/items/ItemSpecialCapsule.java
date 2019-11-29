@@ -8,11 +8,14 @@ import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.Reference.ItemRegs;
 import hmysjiang.potioncapsule.configs.CommonConfigs;
 import hmysjiang.potioncapsule.container.ContainerPendant;
+import hmysjiang.potioncapsule.init.ModBlocks;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.network.PacketHandler;
 import hmysjiang.potioncapsule.network.packets.SPacketVisualExplosion;
 import hmysjiang.potioncapsule.utils.Defaults;
 import hmysjiang.potioncapsule.utils.helper.InventoryHelper;
+import hmysjiang.potioncapsule.utils.text.CapsuleUsedTextComponent;
+import hmysjiang.potioncapsule.utils.text.OverdriveTextComponent;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
@@ -92,12 +95,35 @@ public class ItemSpecialCapsule extends Item {
 		}
 	}
 	
+	public static void serverWorldTick(PlayerEntity player) {
+		ItemStack pendant = InventoryHelper.findStackFromPlayerInventory(player.inventory, new ItemStack(ModItems.PENDANT));
+		if (player.openContainer != null && player.openContainer instanceof ContainerPendant && ((ContainerPendant) player.openContainer).getStack() == pendant)
+			return;
+		if (!pendant.isEmpty()) {
+			pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
+				int drive = -1;
+				
+				for (int i = 8 ; i<11 ; i++) {
+					ItemStack stack = handler.getStackInSlot(i);
+					if (stack.getItem() == capsules.get(EnumSpecialType.YELLOW_OVERDRIVE)) {
+						drive = i;
+					}
+				}
+				
+				if (drive > 0) {
+					if (overdrive(handler.getStackInSlot(drive), player))
+						return;
+				}
+			});
+		}
+	}
+	
 	public static boolean biteZaDust(ItemStack stack, PlayerEntity player, LivingDeathEvent dusto) {
 		if (stack.getDamage() >= stack.getMaxDamage())
 			return false;
 		player.setHealth(player.getMaxHealth());
 		player.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 100, 2, false, false));
-		player.sendStatusMessage(new TranslationTextComponent("potioncapsule.tooltip.capsule.used", stack.getDisplayName()), true);
+		player.sendStatusMessage(new CapsuleUsedTextComponent("potioncapsule.tooltip.capsule.used", stack.getDisplayName()), true);
 		PacketHandler.toPlayer(new SPacketVisualExplosion(), (ServerPlayerEntity) player);
 		
 		if (!player.isCreative() && !stack.getOrCreateTag().getBoolean("CapsuleCreative")) {
@@ -118,7 +144,7 @@ public class ItemSpecialCapsule extends Item {
 			return false;
 		
 		player.setHealth(1);
-		player.sendStatusMessage(new TranslationTextComponent("potioncapsule.tooltip.capsule.used", stack.getDisplayName()), true);
+		player.sendStatusMessage(new CapsuleUsedTextComponent("potioncapsule.tooltip.capsule.used", stack.getDisplayName()), true);
 		BlockPos pos = player.getPosition();
 		for(pos = new BlockPos(pos.getX(), 0, pos.getZ()); !player.world.isAirBlock(pos.up()); pos = pos.up());
 		player.world.setBlockState(pos, Blocks.GLASS.getDefaultState());
@@ -138,9 +164,37 @@ public class ItemSpecialCapsule extends Item {
 		return true;
 	}
 	
+	public static boolean overdrive(ItemStack stack, PlayerEntity player) {
+		if (stack.getDamage() >= stack.getMaxDamage())
+			return false;
+		
+		if (player.world.getLight(player.getPosition()) <= 7) {
+			player.sendStatusMessage(new OverdriveTextComponent("potioncapsule.tooltip.capsule.used", stack.getDisplayName()), true);
+			
+			if (!player.isCreative() && !stack.getOrCreateTag().getBoolean("CapsuleCreative")) {
+				stack.setDamage(stack.getDamage() + 1);
+			}
+			if (player instanceof ServerPlayerEntity) {
+				CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, stack);
+			}
+			player.addStat(Stats.ITEM_USED.get(capsules.get(EnumSpecialType.YELLOW_OVERDRIVE)));
+			
+			BlockPos pos = player.getPosition();
+			for (int tries = 0 ; tries<=2 ; tries++) {
+				if (player.world.isAirBlock(pos) && !player.world.isAirBlock(pos.down())) {
+					player.world.setBlockState(pos, ModBlocks.LIGHT.getDefaultState(), 2);
+					break;
+				}
+				pos = pos.down();
+			}
+		}
+		return true;
+	}
+	
 	public static enum EnumSpecialType implements IStringSerializable {
 		BITEZDUST("bite_za_dust", 0xcf4afc, TextFormatting.LIGHT_PURPLE),
-		LOST_CHRISTMAS("lost_christmas", 0x2a7bcc, TextFormatting.DARK_GRAY);
+		LOST_CHRISTMAS("lost_christmas", 0x2a7bcc, TextFormatting.DARK_GRAY),
+		YELLOW_OVERDRIVE("yellow_overdrive", 0xffff17, TextFormatting.YELLOW);
 		
 		public String name;
 		public int capcolor;
@@ -272,6 +326,10 @@ public class ItemSpecialCapsule extends Item {
 			case LOST_CHRISTMAS:
 				enable.put(type, CommonConfigs.special_xmas_enable.get());
 				durab.put(type, CommonConfigs.special_xmas_uses.get());
+				break;
+			case YELLOW_OVERDRIVE:
+				enable.put(type, CommonConfigs.special_overdrive_enable.get());
+				durab.put(type, CommonConfigs.special_overdrive_uses.get());
 				break;
 			}
 		}

@@ -1,0 +1,34 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "potioncapsule_crafting_group",
+	"pattern": 
+	[
+		" E ",
+		"FPF",
+		" G "
+	],
+	"key": 
+	{
+		"E": 
+		{
+			"item": "minecraft:glowstone"
+		},
+		"F": 
+		{
+			"item": "minecraft:sunflower"
+		},
+		"P": 
+		{
+			"tag": "potioncapsule:capsules"
+		},
+		"G": 
+		{
+			"item": "minecraft:ender_eye"
+		}
+	},
+	"result": 
+	{
+		"item": "potioncapsule:item_special_capsule_yellow_overdrive",
+		"count": 1
+	}
+}

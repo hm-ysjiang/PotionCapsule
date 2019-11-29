@@ -25,6 +25,7 @@ public class Reference {
 
 		public static final String GELATIN_EXTRACTOR = "block_gelatin_extractor";
 		public static final String GELATIN_FORMER = "block_gelatin_former";
+		public static final String LIGHT = "block_light";
 		
 	}
 	

@@ -16,7 +16,7 @@ public class RecipeSpecialRepair {
 		this.repaired = new ItemStack(ItemSpecialCapsule.getCapsuleInstance(type));
 		this.repairs = type.getRepairTag();
 		toRepair.setDamage(toRepair.getMaxDamage());
-		repaired.setDamage(repaired.getMaxDamage() - 1);
+		repaired.setDamage(repaired.getMaxDamage() - repaired.getMaxDamage() / 4);
 	}
 	
 	public ResourceLocation getRepairs() {

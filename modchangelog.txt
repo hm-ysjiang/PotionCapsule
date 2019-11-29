@@ -1,3 +1,16 @@
+1.2.1
+ - New Special Capsule: Sunlight Yellow Overdrive
+ - Fix that special capsules not responding to the mute status config
+ - Fix the broken-written jei integration of special repairs
+ 
+
+1.2.0
+ - Change the behavior of special capsules
+ -- Special Capsules now uses durability to perform its effect
+ -- Can be recharged using their corresponding materials anvils, defined in data/potioncapsule/tags/item/special_repair/<type>
+ -- Can be turned off in the config
+ -- The max durability configurable in config
+
 1.1.4
  - Introducing new Special Capsules! Only works in the pendant
  -- Two kinds at this moment:
