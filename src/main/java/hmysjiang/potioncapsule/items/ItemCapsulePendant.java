@@ -108,9 +108,12 @@ public class ItemCapsulePendant extends Item {
 	@Override
 	public void readShareTag(ItemStack stack, CompoundNBT nbt) {
 		super.readShareTag(stack, nbt);
-		stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-			CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(handler, null, nbt.get("cap_sync"));
-		});
+		
+		// Fix #9
+		if (nbt != null)
+			stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
+				CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(handler, null, nbt.get("cap_sync"));
+			});
 	}
 
 	public static enum CapsuleSlots {

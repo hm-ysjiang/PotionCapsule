@@ -1,8 +1,8 @@
 1.2.1
  - New Special Capsule: Sunlight Yellow Overdrive
+ - Fix the bug that cause RefineStorage Grid not working (#9) and potential crash due to other mods putting nbt back using readSharedTag while getting nbt from getTag 
  - Fix that special capsules not responding to the mute status config
  - Fix the broken-written jei integration of special repairs
- 
 
 1.2.0
  - Change the behavior of special capsules
