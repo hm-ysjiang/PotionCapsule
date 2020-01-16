@@ -47,7 +47,10 @@
 	"potioncapsule.gui.pendant.tooltip.slotdescr_NIGHT": "Trigger when is in dark",
 	"potioncapsule.gui.pendant.tooltip.slotdescr_KEYBIND": "Triggered when keybind being pressed",
 	"potioncapsule.gui.pendant.tooltip.keyhint": "Keybind: %s",
-	"potioncapsule.gui.pendant.tooltip.specialslot": "Special Slots"
+	"potioncapsule.gui.pendant.tooltip.specialslot": "Special Slots",
+	"potioncapsule.gui.pendant.tooltip.status": "UsageMessage: ",
+	"potioncapsule.gui.pendant.tooltip.status_on": "On",
+	"potioncapsule.gui.pendant.tooltip.status_off": "Off"
 	,
 	"_Effects": "",
 	"effect.potioncapsule.effect_night_vision_nf": "Night Vision NF"
