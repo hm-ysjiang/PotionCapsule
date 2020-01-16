@@ -3,6 +3,7 @@ package hmysjiang.potioncapsule.container;
 import hmysjiang.potioncapsule.items.ItemCapsule;
 import hmysjiang.potioncapsule.items.ItemSpecialCapsule;
 import hmysjiang.potioncapsule.utils.Defaults;
+import hmysjiang.potioncapsule.utils.ICapsuleTriggerable;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ContainerType;
@@ -39,7 +40,12 @@ public class ContainerPendant extends BaseContainer {
 			addSlot(new SlotCapsule(handler, 4, 140, 69));
 			addSlot(new SlotCapsule(handler, 5, 40, 104));
 			addSlot(new SlotCapsule(handler, 6, 120, 104));
-			addSlot(new SlotCapsule(handler, 7, 80, 120));
+			addSlot(new SlotItemHandler(handler, 7, 80, 120) {
+				@Override
+				public boolean isItemValid(ItemStack stack) {
+					return stack.getItem() instanceof ICapsuleTriggerable && ((ICapsuleTriggerable) stack.getItem()).canBeTriggered(stack);
+				}
+			});
 
 			addSlot(new SlotSpecialCapsule(handler, 8, 116, 143));
 			addSlot(new SlotSpecialCapsule(handler, 9, 134, 143));

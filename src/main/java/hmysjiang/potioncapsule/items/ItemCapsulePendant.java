@@ -6,6 +6,7 @@ import hmysjiang.potioncapsule.container.ContainerPendant;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.utils.ContainerProvider;
 import hmysjiang.potioncapsule.utils.Defaults;
+import hmysjiang.potioncapsule.utils.ICapsuleTriggerable;
 import hmysjiang.potioncapsule.utils.helper.InventoryHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -67,6 +68,9 @@ public class ItemCapsulePendant extends Item {
 				if (InventoryHelper.findStackFromPlayerInventory(((PlayerEntity) entityIn).inventory, stack) == stack)
 					onTick(stack, (PlayerEntity) entityIn, worldIn);
 			}
+			if (!stack.getOrCreateTag().contains("StatusMask")) {
+				stack.getOrCreateTag().putInt("StatusMask", 0);
+			}
 		}
 	}
 
@@ -74,7 +78,11 @@ public class ItemCapsulePendant extends Item {
 	public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT nbt) {
 		return new ICapabilitySerializable<INBT>() {
 			private final IItemHandler handler = new ItemStackHandler(8 + 3) {
-				@Override public boolean isItemValid(int slot, ItemStack stack) { return slot < 8 ? stack.getItem() instanceof ItemCapsule : stack.getItem() instanceof ItemSpecialCapsule; };
+				@Override public boolean isItemValid(int slot, ItemStack stack) { 
+					return slot == 7
+							? stack.getItem() instanceof ICapsuleTriggerable && ((ICapsuleTriggerable) stack.getItem()).canBeTriggered(stack)
+							: slot < 8 ? stack.getItem() instanceof ItemCapsule : stack.getItem() instanceof ItemSpecialCapsule; 
+				};
 				@Override public int getSlotLimit(int slot) { return slot < 8 ? CommonConfigs.capsule_stackSize.get() : 64; }
 				@Override protected int getStackLimit(int slot, ItemStack stack) { return slot < 8 ? CommonConfigs.capsule_stackSize.get() : 64; }
 			};
@@ -154,7 +162,7 @@ public class ItemCapsulePendant extends Item {
 			return;
 		if (!pendant.isEmpty()) {
 			pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-				((ItemStackHandler) handler).setStackInSlot(0, ((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(handler.getStackInSlot(CapsuleSlots.ATTACK.index), player.world, player, 0));
+				((ItemStackHandler) handler).setStackInSlot(0, ((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(handler.getStackInSlot(CapsuleSlots.ATTACK.index), player.world, player, (pendant.getOrCreateTag().getInt("StatusMask") & (1 << 0)) > 0));
 			});
 		}
 	}
@@ -173,7 +181,7 @@ public class ItemCapsulePendant extends Item {
 			}
 			else
 				pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-					((ItemStackHandler) handler).setStackInSlot(1, ((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(handler.getStackInSlot(CapsuleSlots.DAMAGED.index), player.world, player, 1));
+					((ItemStackHandler) handler).setStackInSlot(1, ((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(handler.getStackInSlot(CapsuleSlots.DAMAGED.index), player.world, player, (pendant.getOrCreateTag().getInt("StatusMask") & (1 << 1)) > 0));
 				});
 		}
 	}
@@ -190,7 +198,7 @@ public class ItemCapsulePendant extends Item {
 			pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
 				((ItemStackHandler) handler).setStackInSlot(3,
 						((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(
-								handler.getStackInSlot(CapsuleSlots.WATER.index), world, player, 3));
+								handler.getStackInSlot(CapsuleSlots.WATER.index), world, player, (pendant.getOrCreateTag().getInt("StatusMask") & (1 << 3)) > 0));
 			});
 		
 		// SPRINT
@@ -198,7 +206,7 @@ public class ItemCapsulePendant extends Item {
 			pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
 				((ItemStackHandler) handler).setStackInSlot(4,
 						((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(
-								handler.getStackInSlot(CapsuleSlots.SPRINT.index), world, player, 4));
+								handler.getStackInSlot(CapsuleSlots.SPRINT.index), world, player, (pendant.getOrCreateTag().getInt("StatusMask") & (1 << 4)) > 0));
 			});
 		
 		// FALLING
@@ -206,7 +214,7 @@ public class ItemCapsulePendant extends Item {
 			pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
 				((ItemStackHandler) handler).setStackInSlot(5,
 						((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(
-								handler.getStackInSlot(CapsuleSlots.FALLING.index), world, player, 5));
+								handler.getStackInSlot(CapsuleSlots.FALLING.index), world, player, (pendant.getOrCreateTag().getInt("StatusMask") & (1 << 5)) > 0));
 			});
 		
 		// NIGHT
@@ -214,7 +222,7 @@ public class ItemCapsulePendant extends Item {
 			pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
 				((ItemStackHandler) handler).setStackInSlot(6,
 						((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(
-								handler.getStackInSlot(CapsuleSlots.NIGHT.index), world, player, 6));
+								handler.getStackInSlot(CapsuleSlots.NIGHT.index), world, player, (pendant.getOrCreateTag().getInt("StatusMask") & (1 << 6)) > 0));
 			});
 		
 	}
@@ -223,7 +231,7 @@ public class ItemCapsulePendant extends Item {
 		pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
 			((ItemStackHandler) handler).setStackInSlot(2,
 					((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(
-							handler.getStackInSlot(CapsuleSlots.FIRE.index), world, player, 2));
+							handler.getStackInSlot(CapsuleSlots.FIRE.index), world, player, (pendant.getOrCreateTag().getInt("StatusMask") & (1 << 2)) > 0));
 		});
 	}
 	
@@ -235,7 +243,7 @@ public class ItemCapsulePendant extends Item {
 			return;
 		if (!pendant.isEmpty()) {
 			pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-				((ItemStackHandler) handler).setStackInSlot(7, ((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(handler.getStackInSlot(CapsuleSlots.KEYBIND.index), player.world, player, 7));
+				((ItemStackHandler) handler).setStackInSlot(7, ((ICapsuleTriggerable) handler.getStackInSlot(7).getItem()).onTrigger(handler.getStackInSlot(CapsuleSlots.KEYBIND.index), player.world, player, (pendant.getOrCreateTag().getInt("StatusMask") & (1 << 7)) > 0));
 			});
 		}
 	}

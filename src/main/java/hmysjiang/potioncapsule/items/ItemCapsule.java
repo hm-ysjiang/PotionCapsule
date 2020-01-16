@@ -15,7 +15,7 @@ import hmysjiang.potioncapsule.configs.CommonConfigs;
 import hmysjiang.potioncapsule.effects.EffectNightVisionNF;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.utils.Defaults;
-import hmysjiang.potioncapsule.utils.text.CapsuleUsedTextComponent;
+import hmysjiang.potioncapsule.utils.ICapsuleTriggerable;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
@@ -50,7 +50,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class ItemCapsule extends Item {
+public class ItemCapsule extends Item implements ICapsuleTriggerable {
 	public static boolean isItemCapsule(ItemStack stack) {
 		return getCapsuleType(stack.getItem()) != null;
 	}
@@ -128,7 +128,7 @@ public class ItemCapsule extends Item {
 		return stack;
 	}
 	
-	public ItemStack onItemUseFinishRegardsActiveEffects(ItemStack stack, World world, LivingEntity entityLiving, int pendantSlot) {
+	public ItemStack onItemUseFinishRegardsActiveEffects(ItemStack stack, World world, LivingEntity entityLiving, boolean renderStatus) {
 		if (stack.isEmpty())
 			return stack;
 		
@@ -145,7 +145,8 @@ public class ItemCapsule extends Item {
 		if (shouldApply) {
 			PlayerEntity player = entityLiving instanceof PlayerEntity ? (PlayerEntity) entityLiving : null;
 			if (player == null || !player.abilities.isCreativeMode) {
-				player.sendStatusMessage(new CapsuleUsedTextComponent("potioncapsule.tooltip.capsule.used", stack.getDisplayName()), true);
+				if (renderStatus) 
+					player.sendStatusMessage(new TranslationTextComponent("potioncapsule.tooltip.capsule.used", stack.getDisplayName()), true);
 				if (!stack.getOrCreateTag().getBoolean("CapsuleCreative")) {
 					stack.shrink(1);
 				}
@@ -373,6 +374,16 @@ public class ItemCapsule extends Item {
 					items.add(PotionUtils.appendEffects(new ItemStack(this), Arrays.asList(effect)));
 			}
 		}
+	}
+	
+	@Override
+	public boolean canBeTriggered(ItemStack capsuleStack) {
+		return true;
+	}
+	
+	@Override
+	public ItemStack onTrigger(ItemStack stack, World world, LivingEntity entityLiving, boolean renderStatus) {
+		return onItemUseFinishRegardsActiveEffects(stack, world, entityLiving, renderStatus);
 	}
 	
 	public static enum EnumCapsuleType {

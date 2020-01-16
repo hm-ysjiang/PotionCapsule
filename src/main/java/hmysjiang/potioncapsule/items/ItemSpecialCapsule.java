@@ -13,12 +13,12 @@ import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.network.PacketHandler;
 import hmysjiang.potioncapsule.network.packets.SPacketVisualExplosion;
 import hmysjiang.potioncapsule.utils.Defaults;
+import hmysjiang.potioncapsule.utils.ICapsuleTriggerable;
 import hmysjiang.potioncapsule.utils.helper.InventoryHelper;
-import hmysjiang.potioncapsule.utils.text.CapsuleUsedTextComponent;
-import hmysjiang.potioncapsule.utils.text.OverdriveTextComponent;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
@@ -47,7 +47,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.registries.IForgeRegistry;
 
 @EventBusSubscriber(bus=EventBusSubscriber.Bus.FORGE)
-public class ItemSpecialCapsule extends Item {
+public class ItemSpecialCapsule extends Item implements ICapsuleTriggerable {
 
 	private static Map<EnumSpecialType, Item> capsules = new HashMap<>();
 	public static Item getCapsuleInstance(EnumSpecialType type) { return capsules.get(type); }
@@ -84,11 +84,11 @@ public class ItemSpecialCapsule extends Item {
 					}
 					
 					if (xmas > 0) {
-						if (saluteTheBirthOfKing(handler.getStackInSlot(xmas), player, event))
+						if (saluteTheBirthOfKing(handler.getStackInSlot(xmas), player, event, (pendant.getOrCreateTag().getInt("StatusMask") & (1 << xmas)) > 0))
 							return;
 					}
 					if (bzd > 0) {
-						biteZaDust(handler.getStackInSlot(bzd), player, event);
+						biteZaDust(handler.getStackInSlot(bzd), player, event, (pendant.getOrCreateTag().getInt("StatusMask") & (1 << bzd)) > 0);
 					}
 				});
 			}
@@ -111,19 +111,20 @@ public class ItemSpecialCapsule extends Item {
 				}
 				
 				if (drive > 0) {
-					if (overdrive(handler.getStackInSlot(drive), player))
+					if (overdrive(handler.getStackInSlot(drive), player, (pendant.getOrCreateTag().getInt("StatusMask") & (1 << drive)) > 0))
 						return;
 				}
 			});
 		}
 	}
 	
-	public static boolean biteZaDust(ItemStack stack, PlayerEntity player, LivingDeathEvent dusto) {
+	public static boolean biteZaDust(ItemStack stack, PlayerEntity player, LivingDeathEvent dusto, boolean renderStatus) {
 		if (stack.getDamage() >= stack.getMaxDamage())
 			return false;
 		player.setHealth(player.getMaxHealth());
 		player.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 100, 2, false, false));
-		player.sendStatusMessage(new CapsuleUsedTextComponent("potioncapsule.tooltip.capsule.used", stack.getDisplayName()), true);
+		if (renderStatus)
+			player.sendStatusMessage(new TranslationTextComponent("potioncapsule.tooltip.capsule.used", stack.getDisplayName()), true);
 		PacketHandler.toPlayer(new SPacketVisualExplosion(), (ServerPlayerEntity) player);
 		
 		if (!player.isCreative() && !stack.getOrCreateTag().getBoolean("CapsuleCreative")) {
@@ -137,14 +138,15 @@ public class ItemSpecialCapsule extends Item {
 		return true;
 	}
 	
-	public static boolean saluteTheBirthOfKing(ItemStack stack, PlayerEntity player, LivingDeathEvent vergissmeinnicht) {
+	public static boolean saluteTheBirthOfKing(ItemStack stack, PlayerEntity player, LivingDeathEvent vergissmeinnicht, boolean renderStatus) {
 		if (stack.getDamage() >= stack.getMaxDamage())
 			return false;
 		if (!(vergissmeinnicht.getSource().equals(DamageSource.OUT_OF_WORLD) && player.posZ < -60))
 			return false;
 		
 		player.setHealth(1);
-		player.sendStatusMessage(new CapsuleUsedTextComponent("potioncapsule.tooltip.capsule.used", stack.getDisplayName()), true);
+		if (renderStatus)
+			player.sendStatusMessage(new TranslationTextComponent("potioncapsule.tooltip.capsule.used", stack.getDisplayName()), true);
 		BlockPos pos = player.getPosition();
 		for(pos = new BlockPos(pos.getX(), 0, pos.getZ()); !player.world.isAirBlock(pos.up()); pos = pos.up());
 		player.world.setBlockState(pos, Blocks.GLASS.getDefaultState());
@@ -164,12 +166,13 @@ public class ItemSpecialCapsule extends Item {
 		return true;
 	}
 	
-	public static boolean overdrive(ItemStack stack, PlayerEntity player) {
+	public static boolean overdrive(ItemStack stack, PlayerEntity player, boolean renderStatus) {
 		if (stack.getDamage() >= stack.getMaxDamage())
 			return false;
 		
 		if (player.world.getLight(player.getPosition()) <= 7) {
-			player.sendStatusMessage(new OverdriveTextComponent("potioncapsule.tooltip.capsule.used", stack.getDisplayName()), true);
+			if (renderStatus)
+				player.sendStatusMessage(new TranslationTextComponent("potioncapsule.tooltip.capsule.used", stack.getDisplayName()), true);
 			
 			if (!player.isCreative() && !stack.getOrCreateTag().getBoolean("CapsuleCreative")) {
 				stack.setDamage(stack.getDamage() + 1);
@@ -191,19 +194,34 @@ public class ItemSpecialCapsule extends Item {
 		return true;
 	}
 	
+	@Override
+	public boolean canBeTriggered(ItemStack capsuleStack) {
+		if (capsuleStack.getItem() instanceof ItemSpecialCapsule) {
+			return ((ItemSpecialCapsule) capsuleStack.getItem()).type.canTrigger;
+		}
+		return false;
+	}
+	
+	@Override
+	public ItemStack onTrigger(ItemStack stack, World world, LivingEntity entityLiving, boolean renderStatus) {
+		return stack;
+	}
+	
 	public static enum EnumSpecialType implements IStringSerializable {
-		BITEZDUST("bite_za_dust", 0xcf4afc, TextFormatting.LIGHT_PURPLE),
-		LOST_CHRISTMAS("lost_christmas", 0x2a7bcc, TextFormatting.DARK_GRAY),
-		YELLOW_OVERDRIVE("yellow_overdrive", 0xffff17, TextFormatting.YELLOW);
+		BITEZDUST("bite_za_dust", 0xcf4afc, false, TextFormatting.LIGHT_PURPLE),
+		LOST_CHRISTMAS("lost_christmas", 0x2a7bcc, false, TextFormatting.DARK_GRAY),
+		YELLOW_OVERDRIVE("yellow_overdrive", 0xffff17, true, TextFormatting.YELLOW);
 		
 		public String name;
 		public int capcolor;
 		private TextFormatting[] format;
+		public boolean canTrigger;
 		
-		private EnumSpecialType(String name, int color, TextFormatting... formats) {
+		private EnumSpecialType(String name, int color, boolean canTrigger, TextFormatting... formats) {
 			this.name = name;
 			this.capcolor = color;
 			this.format = formats;
+			this.canTrigger = canTrigger;
 		}
 		
 		public String getPost() {

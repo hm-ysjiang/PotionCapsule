@@ -6,8 +6,11 @@ import java.util.List;
 import com.mojang.blaze3d.platform.GlStateManager;
 
 import hmysjiang.potioncapsule.client.KeyBindHandler;
+import hmysjiang.potioncapsule.client.gui.widgets.PairedImageButtonSwitch;
 import hmysjiang.potioncapsule.container.ContainerPendant;
 import hmysjiang.potioncapsule.items.ItemCapsulePendant;
+import hmysjiang.potioncapsule.network.PacketHandler;
+import hmysjiang.potioncapsule.network.packets.CPacketUpdatePendantStatus;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
@@ -19,9 +22,95 @@ import net.minecraft.util.text.TranslationTextComponent;
 public class ScreenPendant extends ContainerScreen<ContainerPendant> {
 	private static final ResourceLocation TEXTURE = Defaults.modPrefix.apply("textures/gui/container/pendant.png");
 	
+	private int mask; 
+	
 	public ScreenPendant(ContainerPendant screenContainer, PlayerInventory inv, ITextComponent titleIn) {
 		super(screenContainer, inv, titleIn);
 		ySize = 246;
+		mask = screenContainer.getStack().getOrCreateTag().getInt("StatusMask");
+	}
+	
+	@Override
+	protected void init() {
+		super.init();
+		addButton(new PairedImageButtonSwitch(guiLeft + 75, guiTop + 17, 4, 4, 180, 0, 176, 0, 5, TEXTURE, 
+				btn -> {
+					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 0));
+				}, 
+				btn -> {
+					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 0));
+				}, mask & (1 << 0)));
+		addButton(new PairedImageButtonSwitch(guiLeft + 35, guiTop + 33, 4, 4, 180, 0, 176, 0, 5, TEXTURE, 
+				btn -> {
+					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 1));
+				}, 
+				btn -> {
+					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 1));
+				}, mask & (1 << 1)));
+		addButton(new PairedImageButtonSwitch(guiLeft + 115, guiTop + 33, 4, 4, 180, 0, 176, 0, 5, TEXTURE, 
+				btn -> {
+					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 2));
+				}, 
+				btn -> {
+					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 2));
+				}, mask & (1 << 2)));
+		addButton(new PairedImageButtonSwitch(guiLeft + 15, guiTop + 68, 4, 4, 180, 0, 176, 0, 5, TEXTURE, 
+				btn -> {
+					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 3));
+				}, 
+				btn -> {
+					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 3));
+				}, mask & (1 << 3)));
+		addButton(new PairedImageButtonSwitch(guiLeft + 135, guiTop + 68, 4, 4, 180, 0, 176, 0, 5, TEXTURE, 
+				btn -> {
+					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 4));
+				}, 
+				btn -> {
+					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 4));
+				}, mask & (1 << 4)));
+		addButton(new PairedImageButtonSwitch(guiLeft + 35, guiTop + 103, 4, 4, 180, 0, 176, 0, 5, TEXTURE, 
+				btn -> {
+					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 5));
+				}, 
+				btn -> {
+					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 5));
+				}, mask & (1 << 5)));
+		addButton(new PairedImageButtonSwitch(guiLeft + 115, guiTop + 103, 4, 4, 180, 0, 176, 0, 5, TEXTURE, 
+				btn -> {
+					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 6));
+				}, 
+				btn -> {
+					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 6));
+				}, mask & (1 << 6)));
+		addButton(new PairedImageButtonSwitch(guiLeft + 75, guiTop + 119, 4, 4, 180, 0, 176, 0, 5, TEXTURE, 
+				btn -> {
+					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 7));
+				}, 
+				btn -> {
+					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 7));
+				}, mask & (1 << 7)));
+
+		addButton(new PairedImageButtonSwitch(guiLeft + 115, guiTop + 138, 4, 4, 180, 0, 176, 0, 5, TEXTURE, 
+				btn -> {
+					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 8));
+				}, 
+				btn -> {
+					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 8));
+				}, mask & (1 << 8)));
+		addButton(new PairedImageButtonSwitch(guiLeft + 133, guiTop + 138, 4, 4, 180, 0, 176, 0, 5, TEXTURE, 
+				btn -> {
+					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 9));
+				}, 
+				btn -> {
+					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 9));
+				}, mask & (1 << 9)));
+		addButton(new PairedImageButtonSwitch(guiLeft + 151, guiTop + 138, 4, 4, 180, 0, 176, 0, 5, TEXTURE, 
+				btn -> {
+					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 10));
+				}, 
+				btn -> {
+					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 10));
+				}, mask & (1 << 10)));
 	}
 	
 	@Override
@@ -36,7 +125,7 @@ public class ScreenPendant extends ContainerScreen<ContainerPendant> {
 		String formattedTitle = title.getFormattedText();
 		this.font.drawString(formattedTitle, (float) (this.xSize / 2 - this.font.getStringWidth(formattedTitle) / 2), 6.0F, 4210752);
 		this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8.0F, (float)(this.ySize - 96 + 2), 4210752);
-		this.font.drawString(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.specialslot").getFormattedText(), 106.0F, (float)(this.ySize - 117 + 2), 4210752);
+		this.font.drawString(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.specialslot").getFormattedText(), 106.0F, (float)(this.ySize - 120 + 2), 4210752);
 	}
 
 	@Override

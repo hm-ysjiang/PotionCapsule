@@ -1,7 +1,6 @@
 package hmysjiang.potioncapsule.network;
 
-import hmysjiang.potioncapsule.network.packets.CPacketKeyBinding;
-import hmysjiang.potioncapsule.network.packets.SPacketVisualExplosion;
+import hmysjiang.potioncapsule.network.packets.*;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.fml.network.NetworkDirection;
@@ -22,6 +21,8 @@ public class PacketHandler {
 		int disc = 0;
 		
 		INSTANCE.registerMessage(disc++, CPacketKeyBinding.class, CPacketKeyBinding::encode, CPacketKeyBinding::decode, CPacketKeyBinding::handle);
+		INSTANCE.registerMessage(disc++, CPacketUpdatePendantStatus.class, CPacketUpdatePendantStatus::encode, CPacketUpdatePendantStatus::decode, CPacketUpdatePendantStatus::handle);
+		
 		INSTANCE.registerMessage(disc++, SPacketVisualExplosion.class, SPacketVisualExplosion::encode, SPacketVisualExplosion::decode, SPacketVisualExplosion::handle);
 	}
 	
