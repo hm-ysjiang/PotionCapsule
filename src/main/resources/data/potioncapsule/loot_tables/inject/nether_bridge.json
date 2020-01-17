@@ -3,37 +3,35 @@
 	[
 		{
 			"name": "_pool",
-			"rolls": 3,
+			"rolls": 2,
 			"entries": 
 			[
 				{
 					"type": "item",
 					"name": "potioncapsule:item_capsule_pendant",
-					"weight": 20
+					"weight": 15
 				},
 				
 				{
 					"type": "item",
 					"name": "potioncapsule:item_special_capsule_bite_za_dust",
-					"weight": 10,
-					"functions": 
-					[
-						{
-							"function": "minecraft:set_count",
-							"count": 
-							{
-								"min": 1.0,
-								"max": 2.0,
-								"type": "minecraft:uniform"
-							}
-						}
-					]
+					"weight": 5
+				},
+				{
+					"type": "item",
+					"name": "potioncapsule:item_special_capsule_lost_christmas",
+					"weight": 5
+				},
+				{
+					"type": "item",
+					"name": "potioncapsule:item_special_capsule_yellow_overdrive",
+					"weight": 5
 				},
 
 				{
 					"type": "item",
 					"name": "potioncapsule:item_capsule",
-					"weight": 30,
+					"weight": 15,
 					"functions": 
 					[
 						{
@@ -41,7 +39,24 @@
 							"count": 
 							{
 								"min": 3.0,
-								"max": 9.0,
+								"max": 6.0,
+								"type": "minecraft:uniform"
+							}
+						}
+					]
+				},
+				{
+					"type": "item",
+					"name": "potioncapsule:item_capsule_instant",
+					"weight": 15,
+					"functions": 
+					[
+						{
+							"function": "minecraft:set_count",
+							"count": 
+							{
+								"min": 3.0,
+								"max": 6.0,
 								"type": "minecraft:uniform"
 							}
 						}

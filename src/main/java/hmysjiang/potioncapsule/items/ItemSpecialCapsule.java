@@ -11,10 +11,12 @@ import hmysjiang.potioncapsule.container.ContainerPendant;
 import hmysjiang.potioncapsule.init.ModBlocks;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.network.PacketHandler;
+import hmysjiang.potioncapsule.network.packets.SPacketPlayerSound;
 import hmysjiang.potioncapsule.network.packets.SPacketVisualExplosion;
 import hmysjiang.potioncapsule.utils.Defaults;
 import hmysjiang.potioncapsule.utils.ICapsuleTriggerable;
 import hmysjiang.potioncapsule.utils.helper.InventoryHelper;
+import hmysjiang.potioncapsule.utils.helper.WorldHelper;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
@@ -32,8 +34,14 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.RayTraceContext.FluidMode;
+import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -204,6 +212,34 @@ public class ItemSpecialCapsule extends Item implements ICapsuleTriggerable {
 	
 	@Override
 	public ItemStack onTrigger(ItemStack stack, World world, LivingEntity entityLiving, boolean renderStatus) {
+		EnumSpecialType type = ((ItemSpecialCapsule) stack.getItem()).type;
+		PlayerEntity player = (PlayerEntity) entityLiving;
+		if (type == EnumSpecialType.YELLOW_OVERDRIVE) {
+			if (stack.getDamage() >= stack.getMaxDamage())
+				return stack;
+			
+			BlockRayTraceResult ray = WorldHelper.rayTraceRange(world, player, FluidMode.SOURCE_ONLY, 32);
+			if (ray.getType() == Type.MISS)
+				return stack;
+			
+			BlockPos pos = ray.getPos().offset(ray.getFace());
+			
+			if (player.world.isAirBlock(pos)) {
+				if (renderStatus)
+					player.sendStatusMessage(new TranslationTextComponent("potioncapsule.tooltip.capsule.used", stack.getDisplayName()), true);
+				
+				if (!player.isCreative() && !stack.getOrCreateTag().getBoolean("CapsuleCreative")) {
+					stack.setDamage(stack.getDamage() + 1);
+				}
+				if (player instanceof ServerPlayerEntity) {
+					CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, stack);
+				}
+				player.addStat(Stats.ITEM_USED.get(capsules.get(EnumSpecialType.YELLOW_OVERDRIVE)));
+				player.world.setBlockState(pos, ModBlocks.LIGHT.getDefaultState(), 2);
+				PacketHandler.toPlayer(new SPacketPlayerSound(player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP.getRegistryName().toString(), SoundCategory.PLAYERS.name(), 1.0F, 1.0F), (ServerPlayerEntity) player);
+			}
+			return stack;
+		}
 		return stack;
 	}
 	
@@ -246,6 +282,10 @@ public class ItemSpecialCapsule extends Item implements ICapsuleTriggerable {
 		
 		public String getEffectKey() {
 			return "potioncapsule.tooltip.special_capsule." + this.name + ".effect";
+		}
+		
+		public String getManEffectKey() {
+			return "potioncapsule.tooltip.special_capsule." + this.name + ".maneffect";
 		}
 		
 		public TextFormatting[] getFormat() {
@@ -309,6 +349,13 @@ public class ItemSpecialCapsule extends Item implements ICapsuleTriggerable {
 		tooltip.add(new TranslationTextComponent("potioncapsule.tooltip.special_capsule.pre.effect").appendSibling(
 				new TranslationTextComponent(type.getEffectKey()).applyTextStyle(TextFormatting.GRAY)
 				).applyTextStyle(TextFormatting.GREEN));
+		if (((ItemSpecialCapsule) stack.getItem()).type.canTrigger) {
+			tooltip.add(new TranslationTextComponent("potioncapsule.tooltip.special_capsule.canTrigger").applyTextStyles(TextFormatting.ITALIC, TextFormatting.GOLD));
+			tooltip.add(new TranslationTextComponent("potioncapsule.tooltip.special_capsule.pre.maneffect").appendSibling(
+					new TranslationTextComponent(type.getManEffectKey()).applyTextStyle(TextFormatting.GRAY)
+					).applyTextStyle(TextFormatting.LIGHT_PURPLE));
+		}
+		tooltip.add(new StringTextComponent(""));
 		tooltip.add(new TranslationTextComponent("potioncapsule.tooltip.special_capsule.durability", String.valueOf(stack.getMaxDamage() - stack.getDamage()), String.valueOf(stack.getMaxDamage()))
 				.applyTextStyle(TextFormatting.WHITE));
 	}

@@ -24,7 +24,6 @@ public class LootTableHandler {
 			case "simple_dungeon":
 			case "spawn_bonus_chest":
 				event.getTable().addPool(LootPool.builder().addEntry(TableLootEntry.builder(Defaults.modPrefix.apply("inject/" + path)).weight(1))
-														   .bonusRolls(0, 1)
 														   .name(Defaults.modPrefix.apply("lootpool_chest").toString())
 														   .build());
 			default:

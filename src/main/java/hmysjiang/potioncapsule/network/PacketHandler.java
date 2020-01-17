@@ -24,6 +24,7 @@ public class PacketHandler {
 		INSTANCE.registerMessage(disc++, CPacketUpdatePendantStatus.class, CPacketUpdatePendantStatus::encode, CPacketUpdatePendantStatus::decode, CPacketUpdatePendantStatus::handle);
 		
 		INSTANCE.registerMessage(disc++, SPacketVisualExplosion.class, SPacketVisualExplosion::encode, SPacketVisualExplosion::decode, SPacketVisualExplosion::handle);
+		INSTANCE.registerMessage(disc++, SPacketPlayerSound.class, SPacketPlayerSound::encode, SPacketPlayerSound::decode, SPacketPlayerSound::handle);
 	}
 	
 	public static SimpleChannel getInstacne() {

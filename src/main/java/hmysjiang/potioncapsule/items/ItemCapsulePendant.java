@@ -243,7 +243,8 @@ public class ItemCapsulePendant extends Item {
 			return;
 		if (!pendant.isEmpty()) {
 			pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-				((ItemStackHandler) handler).setStackInSlot(7, ((ICapsuleTriggerable) handler.getStackInSlot(7).getItem()).onTrigger(handler.getStackInSlot(CapsuleSlots.KEYBIND.index), player.world, player, (pendant.getOrCreateTag().getInt("StatusMask") & (1 << 7)) > 0));
+				if (handler.getStackInSlot(7).getItem() instanceof ICapsuleTriggerable)
+					((ItemStackHandler) handler).setStackInSlot(7, ((ICapsuleTriggerable) handler.getStackInSlot(7).getItem()).onTrigger(handler.getStackInSlot(CapsuleSlots.KEYBIND.index), player.world, player, (pendant.getOrCreateTag().getInt("StatusMask") & (1 << 7)) > 0));
 			});
 		}
 	}

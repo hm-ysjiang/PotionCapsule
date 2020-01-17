@@ -58,6 +58,8 @@
 	"_Special Capsules": "",
 	"potioncapsule.tooltip.special_capsule.pre.trigger": "Trigger: ",
 	"potioncapsule.tooltip.special_capsule.pre.effect": "Effect: ",
+	"potioncapsule.tooltip.special_capsule.canTrigger": "Can be manually triggered",
+	"potioncapsule.tooltip.special_capsule.pre.maneffect": "ActiveEffect: ",
 	"potioncapsule.tooltip.special_capsule.durability": "Use left: %1$s/%2$s",
 	"item.potioncapsule.item_special_capsule.bite_za_dust": "Bite The Dust",
 	"potioncapsule.tooltip.special_capsule.bite_za_dust.desc": "Killer Queen the third bomb, \u00a7oBITE ZA DUSTO\u00a7r",
@@ -70,7 +72,8 @@
 	"item.potioncapsule.item_special_capsule.yellow_overdrive": "Sunlight Yellow Overdrive",
 	"potioncapsule.tooltip.special_capsule.yellow_overdrive.desc": "My heart resonates! The heat is enough to burn! The beat of my blood is razor-sharp!",
 	"potioncapsule.tooltip.special_capsule.yellow_overdrive.trigger": "When the block player in is too dark",
-	"potioncapsule.tooltip.special_capsule.yellow_overdrive.effect": "Spawn a light at the player's position"
+	"potioncapsule.tooltip.special_capsule.yellow_overdrive.effect": "Spawn a light at the player's position",
+	"potioncapsule.tooltip.special_capsule.yellow_overdrive.maneffect": "Spawn a light at where player is looking"
 	,
 	"_Miscellaneous": "",
 	"potioncapsule.misc.left_potion_display_name": "Partially Used Potion",

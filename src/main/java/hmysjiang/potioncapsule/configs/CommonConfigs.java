@@ -38,10 +38,11 @@ public class CommonConfigs {
 				.define("specialcap.xmas.enable", true);
 		special_overdrive_enable = builder.comment(" Set this to false to disable the Sunlight Yellow Overdrive capsule")
 				.define("specialcap.overdrive.enable", true);
+		
 		special_bzd_uses = builder.comment(" This specifies the max usages of Bite the dust capsule")
-				.defineInRange("specialcap.bzd.uses", 5, 1, 64);
+				.defineInRange("specialcap.bzd.uses", 3, 1, 64);
 		special_xmas_uses = builder.comment(" This specifies the max usages of Lost Christmas capsule")
-				.defineInRange("specialcap.xmas.uses", 5, 1, 64);
+				.defineInRange("specialcap.xmas.uses", 3, 1, 64);
 		special_overdrive_uses = builder.comment(" This specifies the max usages of Sunlight Yellow Overdrive capsule")
 				.defineInRange("specialcap.overdrive.uses", 256, 1, 1024);
 		
