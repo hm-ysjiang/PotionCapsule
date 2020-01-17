@@ -1,3 +1,11 @@
+1.2.2
+ - Add a option button to each slot in the Capsule Pendant, let player can toggle usage message of specific slot in-game
+ - Remove the mute status message config
+ - Make YellowOverdrive Special Capsule triggerable, player can now place it in the trigger slot in pendant and press the keybind to trigger its active effect
+ - Fix that special capsule repair not showing in jei in server
+ - Known issue: 
+ -- The special capsule repair still not showing every time, re-login to the server seems to be able to fix it
+
 1.2.1
  - New Special Capsule: Sunlight Yellow Overdrive
  - Fix the bug that cause RefineStorage Grid not working (#9) and potential crash due to other mods putting nbt back using readSharedTag while getting nbt from getTag 

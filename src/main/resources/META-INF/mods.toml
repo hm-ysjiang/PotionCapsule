@@ -5,7 +5,7 @@ loaderVersion="[28,)" #mandatory (26 is current forge version)
 displayName="Potion Capsule" #mandatory
 modId="potioncapsule" #mandatory
 
-version="1.2.2" #mandatory
+version="1.2.2a" #mandatory
 
 displayURL="https://www.curseforge.com/minecraft/mc-mods/potion-capsule/" #optional
 issueTrackerURL="https://github.com/hm-ysjiang/PotionCapsule/issues/" #optional
