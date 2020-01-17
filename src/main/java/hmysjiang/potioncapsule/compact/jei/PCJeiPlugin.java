@@ -7,7 +7,6 @@ import hmysjiang.potioncapsule.client.gui.ScreenGelatinExtractor;
 import hmysjiang.potioncapsule.client.gui.ScreenGelatinFormer;
 import hmysjiang.potioncapsule.container.ContainerGelatinExtractor;
 import hmysjiang.potioncapsule.init.ModBlocks;
-import hmysjiang.potioncapsule.items.ItemSpecialCapsule.EnumSpecialType;
 import hmysjiang.potioncapsule.recipe.RecipeGelatinExtractor;
 import hmysjiang.potioncapsule.recipe.RecipeGelatinFormer;
 import hmysjiang.potioncapsule.recipe.RecipeSpecialRepair;
@@ -69,7 +68,9 @@ public class PCJeiPlugin implements IModPlugin {
 			registration.addRecipes(Arrays.asList(r), WartDropJei.UID);
 		});
 		
-		registration.addRecipes(Arrays.asList(EnumSpecialType.values()).stream().map(type->new RecipeSpecialRepair(type)).collect(Collectors.toList()), SpecialRepairJei.UID);
+		registration.addRecipes(Minecraft.getInstance().world.getRecipeManager().getRecipes().stream().filter(
+			recipe -> { return recipe != null && recipe instanceof RecipeSpecialRepair; }
+		).collect(Collectors.toList()), SpecialRepairJei.UID);
 	}
 	
 	@Override
@@ -81,22 +82,6 @@ public class PCJeiPlugin implements IModPlugin {
 	@Override
 	public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
 		registration.addRecipeTransferHandler(ContainerGelatinExtractor.class, GelExtractorJei.UID, 0, 2, 2, 36);
-//		registration.addRecipeTransferHandler(ContainerGelatinFormer.class, GelFormerJei.UID, 0, 3, 3, 36);
-//		registration.addRecipeTransferHandler(new IRecipeTransferHandler<ContainerGelatinFormer>() {
-//
-//			@Override
-//			public Class<ContainerGelatinFormer> getContainerClass() {
-//				// TODO Auto-generated method stub
-//				return null;
-//			}
-//
-//			@Override
-//			public IRecipeTransferError transferRecipe(ContainerGelatinFormer container, IRecipeLayout recipeLayout,
-//					PlayerEntity player, boolean maxTransfer, boolean doTransfer) {
-//				// TODO Auto-generated method stub
-//				return null;
-//			}
-//		}, GelFormerJei.UID);
 	}
 	
 }
