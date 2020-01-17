@@ -62,7 +62,7 @@ public class GelFormerJei {
 		
 		@Override
 		public void draw(RecipeGelatinFormer recipe, double mouseX, double mouseY) {
-			arrow.draw(48, 16);
+			arrow.draw(49, 17);
 		}
 
 		@Override

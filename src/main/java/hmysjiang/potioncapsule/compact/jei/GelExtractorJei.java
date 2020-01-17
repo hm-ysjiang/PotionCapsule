@@ -59,7 +59,7 @@ public class GelExtractorJei {
 		
 		@Override
 		public void draw(RecipeGelatinExtractor recipe, double mouseX, double mouseY) {
-			arrow.draw(37, 16);
+			arrow.draw(38, 17);
 		}
 
 		@Override
