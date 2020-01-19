@@ -23,6 +23,8 @@ public class CommonConfigs {
 	public static ForgeConfigSpec.IntValue worldgen_cactiFragSpawnHeight;
 	public static ForgeConfigSpec.IntValue worldgen_cactiFragSpawnRate;
 	
+	public static ForgeConfigSpec.IntValue keybind_delayTicks;
+	
 	public static ForgeConfigSpec.BooleanValue misc_replaceNvWithNvnf;
 	
 	public static void init(ForgeConfigSpec.Builder builder) {
@@ -64,6 +66,10 @@ public class CommonConfigs {
 				  .defineInRange("worldgen.cactiFragSpawnHeight", 2, 2, 64);
 		worldgen_cactiFragSpawnRate = builder.comment(" This number defines the spawn rate (1/n) of Tiny Cactus. NOTE: a rate of 9 gives about 50% of chance when growing a cactus to the vanilla height limit of 3. Set to 0 to disable the spawn")
 				  .defineInRange("worldgen.cactiFragSpawnRate", 8, 0, 64);
+		
+		// keybind
+		keybind_delayTicks = builder.comment(" This number define how long the delay should be between two keybind inputs.")
+				.defineInRange("keybind.delayTicks", 10, 0, 200);
 		
 		// misc
 		misc_replaceNvWithNvnf = builder.comment(" Set this to true will automatically replace any NightVision with NightVisionNoFlicker, a wrapper effect just to solve the vanilla flickering NightVision")
