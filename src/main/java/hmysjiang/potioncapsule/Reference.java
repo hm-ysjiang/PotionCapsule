@@ -18,6 +18,7 @@ public class Reference {
 		public static final String CATALYST = "item_catalyst";
 		public static final String CREATIVE_CATALYST = "item_creative_catalyst";
 		public static final String WITHER_FRAG = "item_wither_dust";
+		public static final String CATCUS_FRAG = "item_cactus_frag";
 		
 	}
 	
@@ -26,6 +27,7 @@ public class Reference {
 		public static final String GELATIN_EXTRACTOR = "block_gelatin_extractor";
 		public static final String GELATIN_FORMER = "block_gelatin_former";
 		public static final String LIGHT = "block_light";
+		public static final String TINY_CACTI = "block_tiny_cactus";
 		
 	}
 	

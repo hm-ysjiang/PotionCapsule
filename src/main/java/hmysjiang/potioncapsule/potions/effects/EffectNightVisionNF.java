@@ -1,4 +1,4 @@
-package hmysjiang.potioncapsule.effects;
+package hmysjiang.potioncapsule.potions.effects;
 
 import hmysjiang.potioncapsule.configs.ClientConfigs;
 import hmysjiang.potioncapsule.utils.Defaults;

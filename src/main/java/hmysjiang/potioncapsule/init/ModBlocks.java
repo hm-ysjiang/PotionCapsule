@@ -7,6 +7,7 @@ import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.Reference.BlockRegs;
 import hmysjiang.potioncapsule.blocks.gelatin_extractor.BlockGelatinExtractor;
 import hmysjiang.potioncapsule.blocks.gelatin_former.BlockGelatinFormer;
+import hmysjiang.potioncapsule.blocks.tiny_cactus.BlockTinyCactus;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -51,6 +52,7 @@ public class ModBlocks {
 			}
 		};
 	}.setRegistryName(Defaults.modPrefix.apply(BlockRegs.LIGHT));
+	public static final Block TINY_CACTI = new BlockTinyCactus().setRegistryName(Defaults.modPrefix.apply(BlockRegs.TINY_CACTI));
 	
 	@SubscribeEvent
 	public static void onBlockRegistry(RegistryEvent.Register<Block> event) {
@@ -58,7 +60,8 @@ public class ModBlocks {
 		event.getRegistry().registerAll(GELATIN_EXTRACTOR,
 										GELATIN_FORMER
 										,
-										LIGHT);
+										LIGHT,
+										TINY_CACTI);
 	}
 	
 }

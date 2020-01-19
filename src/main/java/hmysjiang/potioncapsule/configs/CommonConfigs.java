@@ -20,6 +20,9 @@ public class CommonConfigs {
 	public static ForgeConfigSpec.BooleanValue recipe_enableWartDust;
 	public static ForgeConfigSpec.IntValue recipe_instantCatalystAllowed;
 	
+	public static ForgeConfigSpec.IntValue worldgen_cactiFragSpawnHeight;
+	public static ForgeConfigSpec.IntValue worldgen_cactiFragSpawnRate;
+	
 	public static ForgeConfigSpec.BooleanValue misc_replaceNvWithNvnf;
 	
 	public static void init(ForgeConfigSpec.Builder builder) {
@@ -55,6 +58,12 @@ public class CommonConfigs {
 											 .define("recipe.enableWartDust", false);
 		recipe_instantCatalystAllowed = builder.comment(" This defines the maximum amount of Instant Catalyst the player is allowed to placed in the crafting grid to dup output. Set to 0 to disable this feature")
 													 .defineInRange("recipe.instantCatalystAllowed", 7, 0, 63);
+		
+		// worldgen
+		worldgen_cactiFragSpawnHeight = builder.comment(" This number defines how tall a cactus should be to let a Tiny Cactus spawn on it")
+				  .defineInRange("worldgen.cactiFragSpawnHeight", 2, 2, 64);
+		worldgen_cactiFragSpawnRate = builder.comment(" This number defines the spawn rate (1/n) of Tiny Cactus. NOTE: a rate of 9 gives about 50% of chance when growing a cactus to the vanilla height limit of 3. Set to 0 to disable the spawn")
+				  .defineInRange("worldgen.cactiFragSpawnRate", 8, 0, 64);
 		
 		// misc
 		misc_replaceNvWithNvnf = builder.comment(" Set this to true will automatically replace any NightVision with NightVisionNoFlicker, a wrapper effect just to solve the vanilla flickering NightVision")

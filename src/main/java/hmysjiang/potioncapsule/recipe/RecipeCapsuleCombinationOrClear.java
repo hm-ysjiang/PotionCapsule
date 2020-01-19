@@ -5,9 +5,9 @@ import java.util.TreeSet;
 
 import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.configs.CommonConfigs;
-import hmysjiang.potioncapsule.effects.EffectNightVisionNF;
 import hmysjiang.potioncapsule.items.ItemCapsule;
 import hmysjiang.potioncapsule.items.ItemCapsule.EnumCapsuleType;
+import hmysjiang.potioncapsule.potions.effects.EffectNightVisionNF;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;

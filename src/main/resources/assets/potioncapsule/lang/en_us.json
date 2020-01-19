@@ -15,11 +15,13 @@
 	"item.potioncapsule.item_catalyst": "\u00a7bInstant Catalyst\u00a7r",
 	"item.potioncapsule.item_creative_catalyst": "\u00a76Creative Catalyst\u00a7r",
 	"item.potioncapsule.item_special_capsule": "Special Capsule (%s)",
-	"item.potioncapsule.item_wither_dust": "\u00a78Wither Dust\u00a7r"
+	"item.potioncapsule.item_wither_dust": "\u00a78Wither Dust\u00a7r",
+	"item.potioncapsule.item_cactus_frag": "A Tiny Piece of Cactus"
 	,
 	"_Blocks": "",
 	"block.potioncapsule.block_gelatin_extractor": "Gelatin Extractor",
-	"block.potioncapsule.block_gelatin_former": "Gelatin Former"
+	"block.potioncapsule.block_gelatin_former": "Gelatin Former",
+	"block.potioncapsule.block_tiny_cactus": "Tiny Cactus"
 	,
 	"_Tooltips": "",
 	"potioncapsule.tooltip.capsule.empty": "Empty",
@@ -53,7 +55,14 @@
 	"potioncapsule.gui.pendant.tooltip.status_off": "Off"
 	,
 	"_Effects": "",
-	"effect.potioncapsule.effect_night_vision_nf": "Night Vision NF"
+	"effect.potioncapsule.effect_night_vision_nf": "Night Vision NF",
+	"effect.potioncapsule.effect_thorn": "Thorn"
+	,
+	"_Potions": "",
+	"item.minecraft.potion.effect.potioncapsule_thorn": "Potion of the Thorns",
+	"item.minecraft.splash_potion.effect.potioncapsule_thorn": "Splash Potion of the Thorns",
+	"item.minecraft.lingering_potion.effect.potioncapsule_thorn": "Lingering Potion of the Thorns",
+	"item.minecraft.tipped_arrow.effect.potioncapsule_thorn": "Arrow of the Thorns"
 	,
 	"_Special Capsules": "",
 	"potioncapsule.tooltip.special_capsule.pre.trigger": "Trigger: ",
@@ -78,9 +87,13 @@
 	"_Miscellaneous": "",
 	"potioncapsule.misc.left_potion_display_name": "Partially Used Potion",
 	"potioncapsule.keybind.category": "Potion Capsule",
-	"potioncapsule.keybind.pendant_keybind.descr": "Use Capsule In Pendant",
+	"potioncapsule.keybind.pendant_keybind.descr": "Use Capsule In Pendant"
+	,
+	"_DeathMessage": "",
 	"death.attack.pc_void_lost": "%s lost his Void Power",
-	"death.attack.pc_void_lost.player": "%2$s stole the Void Power from %1$s"
+	"death.attack.pc_void_lost.player": "%2$s stole the Void Power from %1$s",
+	"death.attack.potioncapsule_thorn": "%s was counter attacked to death",
+	"death.attack.potioncapsule_thorn.player": "%2$s opened the trap card Mirror Force on %1$s"
 	,
 	"_Jei": "",
 	"potioncapsule.jei_desc.jelly": "Crafted in a Gelatin Former using apple and gelatin powder.",

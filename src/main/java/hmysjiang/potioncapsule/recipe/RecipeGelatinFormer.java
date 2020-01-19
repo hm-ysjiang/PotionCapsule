@@ -2,7 +2,6 @@ package hmysjiang.potioncapsule.recipe;
 
 import com.google.gson.JsonObject;
 
-import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.blocks.gelatin_former.InventoryGelatinFormer;
 import hmysjiang.potioncapsule.init.ModItems;
@@ -31,7 +30,7 @@ public class RecipeGelatinFormer implements IRecipe<InventoryGelatinFormer> {
 	private final ItemStack result;
 	
 	public RecipeGelatinFormer(ResourceLocation idIn, int gelatin_countIn, int tick_costIn, ItemStack catalystIn, ItemStack resultIn) {
-		PotionCapsule.Logger.info("Loading recipe of type gelatin_form, id: " + idIn);
+		//PotionCapsule.Logger.info("Loading recipe of type gelatin_form, id: " + idIn);
 		id = idIn;
 		gelatin_count = gelatin_countIn;
 		tick_cost = tick_costIn;

@@ -1,3 +1,6 @@
+1.2.2a
+ - Fix the wrongly named recipes in 1.2.2
+
 1.2.2
  - Add a option button to each slot in the Capsule Pendant, let player can toggle usage message of specific slot in-game
  - Remove the mute status message config

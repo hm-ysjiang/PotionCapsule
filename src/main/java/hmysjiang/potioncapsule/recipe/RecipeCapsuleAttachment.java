@@ -9,10 +9,10 @@ import com.google.gson.JsonObject;
 import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.configs.CommonConfigs;
-import hmysjiang.potioncapsule.effects.EffectNightVisionNF;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.items.ItemCapsule;
 import hmysjiang.potioncapsule.items.ItemCapsule.EnumCapsuleType;
+import hmysjiang.potioncapsule.potions.effects.EffectNightVisionNF;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
@@ -38,7 +38,7 @@ public class RecipeCapsuleAttachment extends SpecialRecipe {
 	
 	public RecipeCapsuleAttachment(ResourceLocation location, ItemStack potionIn, ItemStack retriveIn, boolean doColor) {
 		super(location);
-		PotionCapsule.Logger.info("Registering recipe " + location);
+		//PotionCapsule.Logger.info("Registering recipe " + location);
 		potion_item = potionIn.copy();
 		retrive_item = retriveIn.copy();
 		this.doColor = doColor;

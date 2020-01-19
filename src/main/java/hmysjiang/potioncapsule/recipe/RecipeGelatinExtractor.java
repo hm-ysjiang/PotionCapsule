@@ -2,7 +2,6 @@ package hmysjiang.potioncapsule.recipe;
 
 import com.google.gson.JsonObject;
 
-import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.blocks.gelatin_extractor.InventoryGelatinExtractor;
 import hmysjiang.potioncapsule.init.ModItems;
@@ -31,7 +30,7 @@ public class RecipeGelatinExtractor implements IRecipe<InventoryGelatinExtractor
 	public boolean active = true;
 	
 	public RecipeGelatinExtractor(ResourceLocation idIn, ItemStack inputIn, int outputCountIn, int tickCostIn, boolean setActive) {
-		PotionCapsule.Logger.info("Loading recipe of type gelatin_ex, id: " + idIn);
+		//PotionCapsule.Logger.info("Loading recipe of type gelatin_ex, id: " + idIn);
 		id = idIn;
 		input = inputIn;
 		outputCount = outputCountIn;
