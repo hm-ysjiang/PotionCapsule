@@ -16,8 +16,9 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.block.material.PushReaction;
+import net.minecraft.entity.Entity;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.pathfinding.PathType;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -42,7 +43,6 @@ public class ModBlocks {
 																.sound(SoundType.CLOTH)) {
 		@Override public boolean canSpawnInBlock() { return true; }
 		@Override public VoxelShape getShape(BlockState p1, IBlockReader p2, BlockPos p3, ISelectionContext p4) { return VoxelShapes.empty(); }
-		@Override public boolean allowsMovement(BlockState p1, IBlockReader p2, BlockPos p3, PathType p4) { return true; }
 		@Override @OnlyIn(Dist.CLIENT) 
 		public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
 			if (rand.nextInt(3) == 0) {
@@ -55,6 +55,17 @@ public class ModBlocks {
 	}.setRegistryName(Defaults.modPrefix.apply(BlockRegs.LIGHT));
 	public static final Block TINY_CACTI = new BlockTinyCactus().setRegistryName(Defaults.modPrefix.apply(BlockRegs.TINY_CACTI));
 	public static final Block FIERY_LILY = new BlockFieryLilypad().setRegistryName(Defaults.modPrefix.apply(BlockRegs.FIERY_LILY));
+	public static final Block SPIKY_OBI = new Block(Block.Properties.create(Material.ROCK, MaterialColor.BLACK).hardnessAndResistance(20.0F)) {
+		@Override 
+		public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) { 
+			entity.attackEntityFrom(DamageSource.CACTUS, 1.0F); 
+		};
+		@Override
+		public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+			float err = .015625F;
+			return VoxelShapes.create(err, err, err, 1-err, 1-err, 1-err);
+		};
+	}.setRegistryName(Defaults.modPrefix.apply(BlockRegs.SPIKY_OBI));
 	
 	@SubscribeEvent
 	public static void onBlockRegistry(RegistryEvent.Register<Block> event) {
@@ -65,7 +76,8 @@ public class ModBlocks {
 										LIGHT
 										,
 										TINY_CACTI,
-										FIERY_LILY);
+										FIERY_LILY,
+										SPIKY_OBI);
 	}
 	
 }

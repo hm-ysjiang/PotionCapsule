@@ -1,0 +1,24 @@
+{
+	"type": "minecraft:block",
+	"pools": 
+	[
+		{
+			"name": "pool",
+			"rolls": 1,
+			"entries": 
+			[
+				{
+					"type": "minecraft:item",
+					"name": "potioncapsule:block_spiky_obsidian"
+				}
+			],
+
+			"conditions": 
+			[
+				{
+					"condition": "minecraft:survives_explosion"
+				}
+			]
+		}
+	]
+}

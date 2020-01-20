@@ -30,6 +30,7 @@ public class ModItems {
 	public static final Item BLOCK_GELATIN_FORMER = new BlockItem(ModBlocks.GELATIN_FORMER, Defaults.itemProp.get()).setRegistryName(BlockRegs.GELATIN_FORMER);
 	public static final Item BLOCK_TINY_CACTUS = new BlockItem(ModBlocks.TINY_CACTI, Defaults.itemProp.get()).setRegistryName(BlockRegs.TINY_CACTI);
 	public static final Item BLOCK_FIERY_LILY = new ItemFieryLilypad().setRegistryName(BlockRegs.FIERY_LILY);
+	public static final Item BLOCK_SPIKY_OBI = new BlockItem(ModBlocks.SPIKY_OBI, Defaults.itemProp.get()).setRegistryName(BlockRegs.SPIKY_OBI);
 
 	public static final Item CAPSULE = new ItemCapsule(EnumCapsuleType.NORMAL).setRegistryName(Defaults.modPrefix.apply(ItemRegs.CAPSULE));
 	public static final Item CAPSULE_INSTANT = new ItemCapsule(EnumCapsuleType.INSTANT).setRegistryName(Defaults.modPrefix.apply(ItemRegs.CAPSULE + "_instant"));
@@ -77,7 +78,8 @@ public class ModItems {
 		reg.registerAll(BLOCK_GELATIN_EXTRACTOR,
 						BLOCK_GELATIN_FORMER,
 						BLOCK_TINY_CACTUS,
-						BLOCK_FIERY_LILY
+						BLOCK_FIERY_LILY,
+						BLOCK_SPIKY_OBI
 						,
 						CAPSULE,
 						CAPSULE_INSTANT

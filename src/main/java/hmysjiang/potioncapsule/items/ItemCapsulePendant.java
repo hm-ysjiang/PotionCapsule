@@ -8,6 +8,7 @@ import hmysjiang.potioncapsule.utils.ContainerProvider;
 import hmysjiang.potioncapsule.utils.Defaults;
 import hmysjiang.potioncapsule.utils.ICapsuleTriggerable;
 import hmysjiang.potioncapsule.utils.helper.InventoryHelper;
+import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -20,6 +21,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -128,7 +130,7 @@ public class ItemCapsulePendant extends Item {
 		ATTACK(0),
 		DAMAGED(1),
 		FIRE(2),
-		WATER(3),
+		FLUID(3),
 		SPRINT(4),
 		FALLING(5),
 		NIGHT(6),
@@ -193,12 +195,12 @@ public class ItemCapsulePendant extends Item {
 		if (player.isBurning() || player.isInLava())
 			playerInFire(pendant, player, world);
 		
-		// WATER
-		if (player.isInWater())
+		// FLUID
+		if (player.isInWater() || player.isInLava() || isInFluidBlock(world, player.getPosition()))
 			pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
 				((ItemStackHandler) handler).setStackInSlot(3,
 						((ItemCapsule) ModItems.CAPSULE).onItemUseFinishRegardsActiveEffects(
-								handler.getStackInSlot(CapsuleSlots.WATER.index), world, player, (pendant.getOrCreateTag().getInt("StatusMask") & (1 << 3)) > 0));
+								handler.getStackInSlot(CapsuleSlots.FLUID.index), world, player, (pendant.getOrCreateTag().getInt("StatusMask") & (1 << 3)) > 0));
 			});
 		
 		// SPRINT
@@ -247,6 +249,12 @@ public class ItemCapsulePendant extends Item {
 					((ItemStackHandler) handler).setStackInSlot(7, ((ICapsuleTriggerable) handler.getStackInSlot(7).getItem()).onTrigger(handler.getStackInSlot(CapsuleSlots.KEYBIND.index), player.world, player, (pendant.getOrCreateTag().getInt("StatusMask") & (1 << 7)) > 0));
 			});
 		}
+	}
+	
+	protected boolean isInFluidBlock(World world, BlockPos pos) {
+		return world.getBlockState(pos.down()).getMaterial().isLiquid() || world.getBlockState(pos.down()).getBlock() instanceof FlowingFluidBlock
+				|| world.getBlockState(pos).getMaterial().isLiquid() || world.getBlockState(pos).getBlock() instanceof FlowingFluidBlock
+				|| world.getBlockState(pos.up()).getMaterial().isLiquid() || world.getBlockState(pos.up()).getBlock() instanceof FlowingFluidBlock;
 	}
 
 }

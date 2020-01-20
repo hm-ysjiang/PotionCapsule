@@ -11,8 +11,8 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 public class PotionFieryLily extends Potion {
 	
-	public static final Potion FLILY = new PotionFieryLily("potioncapsule_fierylily", new EffectInstance(EffectLilypad.INSTANCE, 180 * 20), new EffectInstance(Effects.FIRE_RESISTANCE, 180 * 20)).setRegistryName(Defaults.modPrefix.apply("potion_fierylily"));	
-	public static final Potion FLILY_LONG = new PotionFieryLily("potioncapsule_fierylily", new EffectInstance(EffectLilypad.INSTANCE, 400 * 20), new EffectInstance(Effects.FIRE_RESISTANCE, 400 * 20)).setRegistryName(Defaults.modPrefix.apply("potion_fierylily_long"));	
+	private static final Potion FLILY = new PotionFieryLily("potioncapsule_fierylily", new EffectInstance(EffectLilypad.INSTANCE, 180 * 20), new EffectInstance(Effects.FIRE_RESISTANCE, 180 * 20)).setRegistryName(Defaults.modPrefix.apply("potion_fierylily"));	
+	private static final Potion FLILY_LONG = new PotionFieryLily("potioncapsule_fierylily", new EffectInstance(EffectLilypad.INSTANCE, 400 * 20), new EffectInstance(Effects.FIRE_RESISTANCE, 400 * 20)).setRegistryName(Defaults.modPrefix.apply("potion_fierylily_long"));	
 	
 	protected PotionFieryLily(String basename, EffectInstance... effects) {
 		super(basename, effects);

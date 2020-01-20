@@ -22,7 +22,8 @@
 	"block.potioncapsule.block_gelatin_extractor": "Gelatin Extractor",
 	"block.potioncapsule.block_gelatin_former": "Gelatin Former",
 	"block.potioncapsule.block_tiny_cactus": "Tiny Cactus",
-	"block.potioncapsule.block_fiery_lily": "Fiery Lilypad"
+	"block.potioncapsule.block_fiery_lily": "Fiery Lilypad",
+	"block.potioncapsule.block_spiky_obsidian": "Spiky Obsidian"
 	,
 	"_Tooltips": "",
 	"potioncapsule.tooltip.capsule.empty": "Empty",
@@ -44,7 +45,7 @@
 	"potioncapsule.gui.pendant.tooltip.slotdescr_ATTACK": "Triggered when attacking",
 	"potioncapsule.gui.pendant.tooltip.slotdescr_DAMAGED": "Triggered when being damaged",
 	"potioncapsule.gui.pendant.tooltip.slotdescr_FIRE": "Triggered when is on fire",
-	"potioncapsule.gui.pendant.tooltip.slotdescr_WATER": "Triggered when is in water",
+	"potioncapsule.gui.pendant.tooltip.slotdescr_FLUID": "Triggered when is in fluid",
 	"potioncapsule.gui.pendant.tooltip.slotdescr_SPRINT": "Triggered when sprinting",
 	"potioncapsule.gui.pendant.tooltip.slotdescr_FALLING": "Triggered when falling",
 	"potioncapsule.gui.pendant.tooltip.slotdescr_NIGHT": "Trigger when is in dark",
@@ -74,7 +75,12 @@
 	"item.minecraft.potion.effect.potioncapsule_fierylily": "Potion of Fiery Lilypad",
 	"item.minecraft.splash_potion.effect.potioncapsule_fierylily": "Splash Potion of Fiery Lilypad",
 	"item.minecraft.lingering_potion.effect.potioncapsule_fierylily": "Lingering Potion of Fiery Lilypad",
-	"item.minecraft.tipped_arrow.effect.potioncapsule_fierylily": "Arrow of Fiery Lilypad"
+	"item.minecraft.tipped_arrow.effect.potioncapsule_fierylily": "Arrow of Fiery Lilypad",
+	
+	"item.minecraft.potion.effect.potioncapsule_spikyobi": "Potion of Spiky-Obi",
+	"item.minecraft.splash_potion.effect.potioncapsule_spikyobi": "Splash Potion of Spiky-Obi",
+	"item.minecraft.lingering_potion.effect.potioncapsule_spikyobi": "Lingering Potion of Spiky-Obi",
+	"item.minecraft.tipped_arrow.effect.potioncapsule_spikyobi": "Arrow of Spiky-Obi"
 	,
 	"_Special Capsules": "",
 	"potioncapsule.tooltip.special_capsule.pre.trigger": "Trigger: ",

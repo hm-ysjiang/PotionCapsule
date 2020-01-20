@@ -10,9 +10,9 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 public class PotionLilypad extends Potion {
 	
-	public static final Potion LILY = new PotionLilypad("potioncapsule_lilypad", new EffectInstance(EffectLilypad.INSTANCE, 180 * 20)).setRegistryName(Defaults.modPrefix.apply("potion_lilypad"));	
-	public static final Potion LILY_LONG = new PotionLilypad("potioncapsule_lilypad", new EffectInstance(EffectLilypad.INSTANCE, 300 * 20)).setRegistryName(Defaults.modPrefix.apply("potion_lilypad_long"));	
-	public static final Potion LILY_VERY_LONG = new PotionLilypad("potioncapsule_lilypad", new EffectInstance(EffectLilypad.INSTANCE, 480 * 20)).setRegistryName(Defaults.modPrefix.apply("potion_lilypad_very_long"));	
+	private static final Potion LILY = new PotionLilypad("potioncapsule_lilypad", new EffectInstance(EffectLilypad.INSTANCE, 180 * 20)).setRegistryName(Defaults.modPrefix.apply("potion_lilypad"));	
+	private static final Potion LILY_LONG = new PotionLilypad("potioncapsule_lilypad", new EffectInstance(EffectLilypad.INSTANCE, 300 * 20)).setRegistryName(Defaults.modPrefix.apply("potion_lilypad_long"));	
+	private static final Potion LILY_VERY_LONG = new PotionLilypad("potioncapsule_lilypad", new EffectInstance(EffectLilypad.INSTANCE, 480 * 20)).setRegistryName(Defaults.modPrefix.apply("potion_lilypad_very_long"));	
 	
 	protected PotionLilypad(String basename, EffectInstance... effects) {
 		super(basename, effects);

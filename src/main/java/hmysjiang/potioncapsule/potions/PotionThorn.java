@@ -10,11 +10,11 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 public class PotionThorn extends Potion {
 	
-	public static final Potion THORN = new PotionThorn("potioncapsule_thorn", new EffectInstance(EffectThorn.INSTANCE, 180 * 20)).setRegistryName(Defaults.modPrefix.apply("potion_thorn"));	
-	public static final Potion THORN_STRONG = new PotionThorn("potioncapsule_thorn", new EffectInstance(EffectThorn.INSTANCE, 80 * 20, 1)).setRegistryName(Defaults.modPrefix.apply("potion_thorn_strong"));	
-	public static final Potion THORN_VERY_STRONG = new PotionThorn("potioncapsule_thorn", new EffectInstance(EffectThorn.INSTANCE, 40 * 20, 2)).setRegistryName(Defaults.modPrefix.apply("potion_thorn_very_strong"));
-	public static final Potion THORN_LONG = new PotionThorn("potioncapsule_thorn", new EffectInstance(EffectThorn.INSTANCE, 300 * 20)).setRegistryName(Defaults.modPrefix.apply("potion_thorn_long"));	
-	public static final Potion THORN_STRONG_LONG = new PotionThorn("potioncapsule_thorn", new EffectInstance(EffectThorn.INSTANCE, 140 * 20, 1)).setRegistryName(Defaults.modPrefix.apply("potion_thorn_strong_long"));	
+	private static final Potion THORN = new PotionThorn("potioncapsule_thorn", new EffectInstance(EffectThorn.INSTANCE, 180 * 20)).setRegistryName(Defaults.modPrefix.apply("potion_thorn"));	
+	private static final Potion THORN_STRONG = new PotionThorn("potioncapsule_thorn", new EffectInstance(EffectThorn.INSTANCE, 80 * 20, 1)).setRegistryName(Defaults.modPrefix.apply("potion_thorn_strong"));	
+	private static final Potion THORN_VERY_STRONG = new PotionThorn("potioncapsule_thorn", new EffectInstance(EffectThorn.INSTANCE, 40 * 20, 2)).setRegistryName(Defaults.modPrefix.apply("potion_thorn_very_strong"));
+	private static final Potion THORN_LONG = new PotionThorn("potioncapsule_thorn", new EffectInstance(EffectThorn.INSTANCE, 300 * 20)).setRegistryName(Defaults.modPrefix.apply("potion_thorn_long"));	
+	private static final Potion THORN_STRONG_LONG = new PotionThorn("potioncapsule_thorn", new EffectInstance(EffectThorn.INSTANCE, 140 * 20, 1)).setRegistryName(Defaults.modPrefix.apply("potion_thorn_strong_long"));	
 	
 	protected PotionThorn(String basename, EffectInstance... effects) {
 		super(basename, effects);

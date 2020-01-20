@@ -1,0 +1,29 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "potioncapsule_crafting_group",
+	"pattern": 
+	[
+		"$#$",
+		"#$#",
+		"$#$"
+	],
+
+	"key": 
+	{
+		"#": 
+		{
+			"item": "minecraft:obsidian"
+		},
+		
+		"$": 
+		{
+			"item": "potioncapsule:item_cactus_frag"
+		}
+	},
+
+	"result": 
+	{
+		"item": "potioncapsule:block_spiky_obsidian",
+		"count": 2
+	}
+}

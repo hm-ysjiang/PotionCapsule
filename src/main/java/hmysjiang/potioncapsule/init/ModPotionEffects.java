@@ -4,6 +4,7 @@ import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.potions.PotionFieryLily;
 import hmysjiang.potioncapsule.potions.PotionLilypad;
+import hmysjiang.potioncapsule.potions.PotionSpikyObi;
 import hmysjiang.potioncapsule.potions.PotionThorn;
 import hmysjiang.potioncapsule.potions.effects.EffectLilypad;
 import hmysjiang.potioncapsule.potions.effects.EffectNightVisionNF;
@@ -31,10 +32,12 @@ public class ModPotionEffects {
 		PotionCapsule.Logger.info("Potions Registering");
 		IForgeRegistry<Potion> reg = event.getRegistry();
 		PotionThorn.register(reg);
+		PotionSpikyObi.register(reg);
 		PotionLilypad.register(reg);
 		PotionFieryLily.register(reg);
 		
 		PotionThorn.registerRecipes();
+		PotionSpikyObi.registerRecipes();
 		PotionLilypad.registerRecipes();
 		PotionFieryLily.registerRecipes();
 	}

@@ -1,0 +1,18 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": 
+	[
+		{
+			"item": "minecraft:magma_cream"
+		},
+		
+		{
+			"item": "minecraft:lily_pad"
+		}
+	],
+
+	"result": 
+	{
+		"item": "potioncapsule:block_fiery_lily"
+	}
+}

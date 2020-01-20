@@ -158,8 +158,6 @@ public class ItemCapsule extends Item implements ICapsuleTriggerable {
 		if (shouldApply) {
 			PlayerEntity player = entityLiving instanceof PlayerEntity ? (PlayerEntity) entityLiving : null;
 			if (player == null || !player.abilities.isCreativeMode) {
-				if (renderStatus) 
-					player.sendStatusMessage(new TranslationTextComponent("potioncapsule.tooltip.capsule.used", stack.getDisplayName()), true);
 				if (!stack.getOrCreateTag().getBoolean("CapsuleCreative")) {
 					stack.shrink(1);
 				}
@@ -171,12 +169,14 @@ public class ItemCapsule extends Item implements ICapsuleTriggerable {
 
 			if (!world.isRemote) {
 				for (EffectInstance effect: PotionUtils.getEffectsFromStack(stack)) {
-					entityLiving.addPotionEffect(new EffectInstance(effect));
+					entityLiving.addPotionEffect(type == EnumCapsuleType.INSTANT ? new EffectInstance(effect.getPotion(), effect.getDuration(), effect.getAmplifier(), effect.isAmbient(), false) : new EffectInstance(effect));
 				}
 			}
 
 			if (player != null) {
 				player.addStat(Stats.ITEM_USED.get(this));
+				if (renderStatus) 
+					player.sendStatusMessage(new TranslationTextComponent("potioncapsule.tooltip.capsule.used", stack.getDisplayName()), true);
 			}
 			return stack;
 		}
