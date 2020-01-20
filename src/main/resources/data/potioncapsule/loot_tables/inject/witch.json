@@ -1,0 +1,76 @@
+{
+	"type": "minecraft:entity",
+	"pools": 
+	[
+		{
+			"rolls": 1,
+			"entries": 
+			[
+				{
+					"type": "minecraft:item",
+					"weight": 80,
+					"functions": 
+					[
+						{
+							"function": "minecraft:set_count",
+							"count": 
+							{
+								"min": 1.0,
+								"max": 3.0,
+								"type": "minecraft:uniform"
+							}
+						},
+
+						{
+							"function": "minecraft:looting_enchant",
+							"count": 
+							{
+								"min": 0.0,
+								"max": 1.0
+							}
+						},
+
+						{
+							"function": "potioncapsule:random_capsule_effect",
+							"drops": [1, 0.5, 0.2]
+						}
+					],
+
+					"name": "potioncapsule:item_capsule"
+				},
+				
+				{
+					"type": "minecraft:item",
+					"weight": 20,
+					"functions": 
+					[
+						{
+							"function": "minecraft:set_count",
+							"count": 
+							{
+								"min": 1.0,
+								"max": 3.0,
+								"type": "minecraft:uniform"
+							}
+						},
+
+						{
+							"function": "minecraft:looting_enchant",
+							"count": 
+							{
+								"min": 0.0,
+								"max": 1.0
+							}
+						},
+
+						{
+							"function": "potioncapsule:random_capsule_effect"
+						}
+					],
+
+					"name": "potioncapsule:item_capsule_instant"
+				}
+			]
+		}
+	]
+}

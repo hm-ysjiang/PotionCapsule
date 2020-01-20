@@ -9,6 +9,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.annotation.Nonnull;
+
 import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.configs.ClientConfigs;
 import hmysjiang.potioncapsule.configs.CommonConfigs;
@@ -30,6 +32,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.EffectType;
 import net.minecraft.potion.EffectUtils;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.Potion;
@@ -51,6 +54,15 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ItemCapsule extends Item implements ICapsuleTriggerable {
+	public static final Comparator<EffectInstance> EFFECT_CMP = new Comparator<EffectInstance>() {
+		@Override
+		public int compare(EffectInstance o1, EffectInstance o2) {
+			String name1 = o1.getEffectName(), name2 = o2.getEffectName();
+			if (name1.equals(name2))
+				return o1.getAmplifier() < o2.getAmplifier() ? -1 : (o1.getAmplifier() > o2.getAmplifier() ? 1 : 0);
+			return name1.compareTo(name2);
+		}
+	};
 	public static boolean isItemCapsule(ItemStack stack) {
 		return getCapsuleType(stack.getItem()) != null;
 	}
@@ -84,6 +96,7 @@ public class ItemCapsule extends Item implements ICapsuleTriggerable {
 
 	private final EnumCapsuleType TYPE;
 	private static Set<EffectInstance> effects;
+	private static List<EffectInstance> effectsPool;
 
 	public ItemCapsule(EnumCapsuleType type) {
 		super(Defaults.itemProp.get().maxStackSize(CommonConfigs.capsule_stackSize.get()));
@@ -345,15 +358,8 @@ public class ItemCapsule extends Item implements ICapsuleTriggerable {
 			
 			if (effects == null) {
 				PotionCapsule.Logger.info("Start querying effect instances from existing potion");
-				effects = new TreeSet<>(new Comparator<EffectInstance>() {
-					@Override
-					public int compare(EffectInstance o1, EffectInstance o2) {
-						String name1 = o1.getEffectName(), name2 = o2.getEffectName();
-						if (name1.equals(name2))
-							return o1.getAmplifier() < o2.getAmplifier() ? -1 : (o1.getAmplifier() > o2.getAmplifier() ? 1 : 0);
-						return name1.compareTo(name2);
-					}
-				});
+				effects = new TreeSet<>(EFFECT_CMP);
+				effectsPool = new ArrayList<>();
 				for (Potion potion: Registry.POTION) {
 					for (EffectInstance effect: potion.getEffects()) {
 						EffectInstance toadd = new EffectInstance(effect);
@@ -363,6 +369,8 @@ public class ItemCapsule extends Item implements ICapsuleTriggerable {
 							toadd = new EffectInstance(EffectNightVisionNF.INSTANCE, toadd.getDuration(), toadd.getAmplifier(), toadd.isAmbient(), toadd.doesShowParticles(), toadd.isShowIcon());
 						if (effects.add(toadd)) {
 							PotionCapsule.Logger.info(toadd.getAmplifier() > 0 ? new TranslationTextComponent(toadd.getEffectName()).getFormattedText() + " x " + (toadd.getAmplifier() + 1) : new TranslationTextComponent(toadd.getEffectName()).getFormattedText());
+							if (toadd.getPotion().getEffectType() != EffectType.HARMFUL)
+								effectsPool.add(toadd);
 						}
 					}
 				}
@@ -374,6 +382,32 @@ public class ItemCapsule extends Item implements ICapsuleTriggerable {
 					items.add(PotionUtils.appendEffects(new ItemStack(this), Arrays.asList(effect)));
 			}
 		}
+	}
+	
+	public static ItemStack applyRandomEffectFromPool(@Nonnull ItemStack capsule, int amount) {
+		if (amount > 5)
+			amount = 5;
+		Set<EffectInstance> effectList = new TreeSet<EffectInstance>(EFFECT_CMP) {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public boolean contains(Object o) {
+				if (super.contains(o))
+					return true;
+				EffectInstance obj = (EffectInstance) o;
+				for (EffectInstance ins: this)
+					if (ins.getPotion() == obj.getPotion())
+						return true;
+				return false;
+			}
+		};
+		for (int i = 0 ; i<amount ; i++) {
+			EffectInstance e;
+			do {
+				e = effectsPool.get(random.nextInt(effectsPool.size()));
+			} while (effectList.contains(e) || !canApplyEffectOnCapsule(capsule, e.getPotion()));
+			effectList.add(e);
+		}
+		return PotionUtils.appendEffects(capsule, effectList);
 	}
 	
 	@Override

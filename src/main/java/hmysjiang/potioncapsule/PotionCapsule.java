@@ -2,7 +2,6 @@ package hmysjiang.potioncapsule;
 
 import java.util.Arrays;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 
@@ -93,7 +92,7 @@ public class PotionCapsule {
 	public static class Logger {
 		private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger(Reference.MOD_ID);
 		private static String flat(Object obj) { return obj == null ? "null" : obj.toString(); }
-		public static void info(Object... objs) { Arrays.stream(objs).map(Logger::flat).collect(Collectors.toList()).forEach(LOGGER::info); }
+		public static void info(Object... objs) { Arrays.stream(objs).map(Logger::flat).forEach(LOGGER::info); }
 		public static void warn(Object... objs) { Arrays.stream(objs).map(Logger::flat).forEach(LOGGER::warn); }
 		public static void error(Object... objs) { Arrays.stream(objs).map(Logger::flat).forEach(LOGGER::error); }
 	}

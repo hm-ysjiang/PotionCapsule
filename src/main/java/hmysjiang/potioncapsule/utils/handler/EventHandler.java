@@ -59,6 +59,8 @@ public class EventHandler {
 		if (event.getState().getBlock() == Blocks.CACTUS) {
 			World world = (World) event.getWorld();
 			BlockPos pos = event.getPos();
+			if (!world.getBlockState(pos.up()).isAir(world, pos.up()) || !world.getBlockState(pos.up(2)).isAir(world, pos.up(2)))
+				return;
 			int tall = 1;
 			for (BlockPos p = pos.down() ; world.getBlockState(p).getBlock() == Blocks.CACTUS ; tall++, p = p.down());
 			if (tall <= CommonConfigs.worldgen_cactiFragSpawnHeight.get() && event.getState().get(CactusBlock.AGE) >= 12 && rand.nextInt(CommonConfigs.worldgen_cactiFragSpawnRate.get()) == 0) {

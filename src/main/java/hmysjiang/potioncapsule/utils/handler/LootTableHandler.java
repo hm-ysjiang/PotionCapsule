@@ -40,6 +40,11 @@ public class LootTableHandler {
 													   .name(Defaults.modPrefix.apply("lootpool_wither").toString())
 													   .build());
 		}
+		else if (lootName.equals("minecraft:entities/witch")) {
+			event.getTable().addPool(LootPool.builder().addEntry(TableLootEntry.builder(Defaults.modPrefix.apply("inject/witch")).weight(1))
+					   								   .name(Defaults.modPrefix.apply("lootpool_witch").toString())
+					   								   .build());
+		}
 	}
 	
 }

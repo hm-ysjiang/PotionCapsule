@@ -55,7 +55,7 @@ public class RecipeCapsuleCombinationOrClear extends SpecialRecipe {
 	@Override
 	public ItemStack getCraftingResult(CraftingInventory inv) {
 		int capsule_count = 0;
-		Set<EffectInstance> effects = new TreeSet<>();
+		Set<EffectInstance> effects = new TreeSet<>(ItemCapsule.EFFECT_CMP);
 		EnumCapsuleType type = null;
 		for (int i = 0 ; i<inv.getSizeInventory() ; i++) {
 			if (!PotionUtils.getEffectsFromStack(inv.getStackInSlot(i)).isEmpty()) {
