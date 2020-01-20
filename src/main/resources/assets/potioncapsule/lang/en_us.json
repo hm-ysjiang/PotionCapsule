@@ -56,13 +56,18 @@
 	,
 	"_Effects": "",
 	"effect.potioncapsule.effect_night_vision_nf": "Night Vision NF",
-	"effect.potioncapsule.effect_thorn": "Thorn"
+	"effect.potioncapsule.effect_thorn": "Thorn",
+	"effect.potioncapsule.effect_lilypad": "Floating Lilypad"
 	,
 	"_Potions": "",
 	"item.minecraft.potion.effect.potioncapsule_thorn": "Potion of the Thorns",
 	"item.minecraft.splash_potion.effect.potioncapsule_thorn": "Splash Potion of the Thorns",
 	"item.minecraft.lingering_potion.effect.potioncapsule_thorn": "Lingering Potion of the Thorns",
-	"item.minecraft.tipped_arrow.effect.potioncapsule_thorn": "Arrow of the Thorns"
+	"item.minecraft.tipped_arrow.effect.potioncapsule_thorn": "Arrow of the Thorns",
+	"item.minecraft.potion.effect.potioncapsule_lilypad": "Potion of Floating Lilypad",
+	"item.minecraft.splash_potion.effect.potioncapsule_lilypad": "Splash Potion of Floating Lilypad",
+	"item.minecraft.lingering_potion.effect.potioncapsule_lilypad": "Lingering Potion of Floating Lilypad",
+	"item.minecraft.tipped_arrow.effect.potioncapsule_lilypad": "Arrow of Floating Lilypad"
 	,
 	"_Special Capsules": "",
 	"potioncapsule.tooltip.special_capsule.pre.trigger": "Trigger: ",

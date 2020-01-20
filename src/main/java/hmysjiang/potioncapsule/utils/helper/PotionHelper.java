@@ -55,22 +55,56 @@ public class PotionHelper {
 		return Ingredient.fromStacks(potionLinger(p));
 	}
 	
+	public static <T extends Potion> void register2StageRecipe(IItemProvider initMaterial, T NORMAL, T LONG) {
+		register2StageRecipe(Potions.AWKWARD, initMaterial, NORMAL, LONG);
+	}
+	
+	public static <T extends Potion> void register2StageRecipe(Potion origin, IItemProvider initMaterial, T NORMAL, T LONG) {
+		registerSplashLinger(NORMAL);
+		registerSplashLinger(LONG);
+		
+		BrewingRecipeRegistry.addRecipe(ipotion(origin),	Ingredient.fromItems(initMaterial), potion(NORMAL));
+		BrewingRecipeRegistry.addRecipe(ipotion(NORMAL),	redstone(),							potion(LONG));
+		
+		BrewingRecipeRegistry.addRecipe(ipotionSplash(origin),	Ingredient.fromItems(initMaterial), potionSplash(NORMAL));
+		BrewingRecipeRegistry.addRecipe(ipotionSplash(NORMAL),	redstone(),							potionSplash(LONG));
+		
+		BrewingRecipeRegistry.addRecipe(ipotionLinger(origin),	Ingredient.fromItems(initMaterial), potionLinger(NORMAL));
+		BrewingRecipeRegistry.addRecipe(ipotionLinger(NORMAL),	redstone(),							potionLinger(LONG));
+	}
+	
+	public static <T extends Potion> void register3StageRecipe(IItemProvider initMaterial, T NORMAL, T LONG, T VERY_LONG) {
+		register3StageRecipe(Potions.AWKWARD, initMaterial, NORMAL, LONG, VERY_LONG);
+	}
+	
+	public static <T extends Potion> void register3StageRecipe(Potion origin, IItemProvider initMaterial, T NORMAL, T LONG, T VERY_LONG) {
+		registerSplashLinger(NORMAL);
+		registerSplashLinger(LONG);
+		registerSplashLinger(VERY_LONG);
+		
+		BrewingRecipeRegistry.addRecipe(ipotion(origin),	Ingredient.fromItems(initMaterial), potion(NORMAL));
+		BrewingRecipeRegistry.addRecipe(ipotion(NORMAL),	redstone(),							potion(LONG));
+		BrewingRecipeRegistry.addRecipe(ipotion(LONG),		redstone(),							potion(VERY_LONG));
+		
+		BrewingRecipeRegistry.addRecipe(ipotionSplash(origin),	Ingredient.fromItems(initMaterial), potionSplash(NORMAL));
+		BrewingRecipeRegistry.addRecipe(ipotionSplash(NORMAL),	redstone(),							potionSplash(LONG));
+		BrewingRecipeRegistry.addRecipe(ipotionSplash(LONG),	redstone(),							potionSplash(VERY_LONG));
+		
+		BrewingRecipeRegistry.addRecipe(ipotionLinger(origin),	Ingredient.fromItems(initMaterial), potionLinger(NORMAL));
+		BrewingRecipeRegistry.addRecipe(ipotionLinger(NORMAL),	redstone(),							potionLinger(LONG));
+		BrewingRecipeRegistry.addRecipe(ipotionLinger(LONG),	redstone(),							potionLinger(VERY_LONG));
+	}
+	
 	public static <T extends Potion> void register5StageRecipe(IItemProvider initMaterial, T NORMAL, T STRONG, T VERY_STRONG, T LONG, T STRONG_LONG) {
 		register5StageRecipe(Potions.AWKWARD, initMaterial, NORMAL, STRONG, VERY_STRONG, LONG, STRONG_LONG);
 	}
 	
 	public static <T extends Potion> void register5StageRecipe(Potion origin, IItemProvider initMaterial, T NORMAL, T STRONG, T VERY_STRONG, T LONG, T STRONG_LONG) {
-		BrewingRecipeRegistry.addRecipe(ipotion(NORMAL),		gunpowder(), potionSplash(NORMAL));
-		BrewingRecipeRegistry.addRecipe(ipotion(STRONG),		gunpowder(), potionSplash(STRONG));
-		BrewingRecipeRegistry.addRecipe(ipotion(VERY_STRONG),	gunpowder(), potionSplash(VERY_STRONG));
-		BrewingRecipeRegistry.addRecipe(ipotion(LONG),			gunpowder(), potionSplash(LONG));
-		BrewingRecipeRegistry.addRecipe(ipotion(STRONG_LONG),	gunpowder(), potionSplash(STRONG_LONG));
-
-		BrewingRecipeRegistry.addRecipe(ipotion(NORMAL),		breath(), potionLinger(NORMAL));
-		BrewingRecipeRegistry.addRecipe(ipotion(STRONG),		breath(), potionLinger(STRONG));
-		BrewingRecipeRegistry.addRecipe(ipotion(VERY_STRONG),	breath(), potionLinger(VERY_STRONG));
-		BrewingRecipeRegistry.addRecipe(ipotion(LONG),			breath(), potionLinger(LONG));
-		BrewingRecipeRegistry.addRecipe(ipotion(STRONG_LONG),	breath(), potionLinger(STRONG_LONG));
+		registerSplashLinger(NORMAL);
+		registerSplashLinger(STRONG);
+		registerSplashLinger(VERY_STRONG);
+		registerSplashLinger(LONG);
+		registerSplashLinger(STRONG_LONG);
 		
 		BrewingRecipeRegistry.addRecipe(ipotion(origin),	Ingredient.fromItems(initMaterial), potion(NORMAL));
 		BrewingRecipeRegistry.addRecipe(ipotion(NORMAL),	glowstone(),						potion(STRONG));
@@ -92,6 +126,11 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(ipotionLinger(NORMAL),	redstone(),							potionLinger(LONG));
 		BrewingRecipeRegistry.addRecipe(ipotionLinger(STRONG),	redstone(),							potionLinger(STRONG_LONG));
 		BrewingRecipeRegistry.addRecipe(ipotionLinger(LONG),	glowstone(),						potionLinger(STRONG_LONG));
+	}
+	
+	public static void registerSplashLinger(Potion p) {
+		BrewingRecipeRegistry.addRecipe(ipotion(p),	gunpowder(),	potionSplash(p));
+		BrewingRecipeRegistry.addRecipe(ipotion(p),	breath(),		potionLinger(p));
 	}
 	
 }
