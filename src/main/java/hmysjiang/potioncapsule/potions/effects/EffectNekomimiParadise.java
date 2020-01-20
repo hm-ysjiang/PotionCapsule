@@ -11,7 +11,7 @@ public class EffectNekomimiParadise extends Effect {
 	public static final EffectNekomimiParadise INSTANCE = (EffectNekomimiParadise) new EffectNekomimiParadise().setRegistryName(Defaults.modPrefix.apply("effect_nekomimiparadise"));
 
 	protected EffectNekomimiParadise() {
-		super(EffectType.NEUTRAL, 0xd692c3);
+		super(EffectType.NEUTRAL, 0xffb3ea);
 	}
 	
 	@Override

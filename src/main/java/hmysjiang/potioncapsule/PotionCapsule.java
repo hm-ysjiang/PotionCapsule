@@ -72,7 +72,7 @@ public class PotionCapsule {
 		curioOpt = ModList.get().getModContainerById("curios");
 		try {
 			curioProxy = ICurioProxy.isCurioLoaded() ? 
-							Class.forName("hmysjiang.potioncapsule.compact.curio.CurioProxy").asSubclass(ICurioProxy.class).newInstance() :
+							Class.forName("hmysjiang.potioncapsule.compat.curio.CurioProxy").asSubclass(ICurioProxy.class).newInstance() :
 							new DummyCurioProxy();
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 			Logger.error("Wierd thing happened while trying to instantiate proxy for Curios, report this to the issue tracker.");

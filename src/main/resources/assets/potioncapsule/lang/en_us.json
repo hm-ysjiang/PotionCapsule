@@ -81,7 +81,12 @@
 	"item.minecraft.potion.effect.potioncapsule_spikyobi": "Potion of Spiky-Obi",
 	"item.minecraft.splash_potion.effect.potioncapsule_spikyobi": "Splash Potion of Spiky-Obi",
 	"item.minecraft.lingering_potion.effect.potioncapsule_spikyobi": "Lingering Potion of Spiky-Obi",
-	"item.minecraft.tipped_arrow.effect.potioncapsule_spikyobi": "Arrow of Spiky-Obi"
+	"item.minecraft.tipped_arrow.effect.potioncapsule_spikyobi": "Arrow of Spiky-Obi",
+	
+	"item.minecraft.potion.effect.potioncapsule_nekomimi": "Potion of Nekomimi Paradise",
+	"item.minecraft.splash_potion.effect.potioncapsule_nekomimi": "Splash Potion of Nekomimi Paradise",
+	"item.minecraft.lingering_potion.effect.potioncapsule_nekomimi": "Lingering Potion of Nekomimi Paradise",
+	"item.minecraft.tipped_arrow.effect.potioncapsule_nekomimi": "Arrow of Nekomimi Paradise"
 	,
 	"_Special Capsules": "",
 	"potioncapsule.tooltip.special_capsule.pre.trigger": "Trigger: ",
