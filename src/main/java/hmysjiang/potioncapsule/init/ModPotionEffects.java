@@ -2,6 +2,7 @@ package hmysjiang.potioncapsule.init;
 
 import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.Reference;
+import hmysjiang.potioncapsule.potions.PotionFieryLily;
 import hmysjiang.potioncapsule.potions.PotionLilypad;
 import hmysjiang.potioncapsule.potions.PotionThorn;
 import hmysjiang.potioncapsule.potions.effects.EffectLilypad;
@@ -31,9 +32,11 @@ public class ModPotionEffects {
 		IForgeRegistry<Potion> reg = event.getRegistry();
 		PotionThorn.register(reg);
 		PotionLilypad.register(reg);
+		PotionFieryLily.register(reg);
 		
 		PotionThorn.registerRecipes();
 		PotionLilypad.registerRecipes();
+		PotionFieryLily.registerRecipes();
 	}
 	
 }

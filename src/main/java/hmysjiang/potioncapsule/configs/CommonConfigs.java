@@ -22,6 +22,7 @@ public class CommonConfigs {
 	
 	public static ForgeConfigSpec.IntValue worldgen_cactiFragSpawnHeight;
 	public static ForgeConfigSpec.IntValue worldgen_cactiFragSpawnRate;
+	public static ForgeConfigSpec.IntValue worldgen_fieryLilySpawnRate;
 	
 	public static ForgeConfigSpec.IntValue keybind_delayTicks;
 	
@@ -66,6 +67,8 @@ public class CommonConfigs {
 				  .defineInRange("worldgen.cactiFragSpawnHeight", 2, 2, 64);
 		worldgen_cactiFragSpawnRate = builder.comment(" This number defines the spawn rate (1/n) of Tiny Cactus. NOTE: a rate of 9 gives about 50% of chance when growing a cactus to the vanilla height limit of 3. Set to 0 to disable the spawn")
 				  .defineInRange("worldgen.cactiFragSpawnRate", 8, 0, 64);
+		worldgen_fieryLilySpawnRate = builder.comment(" This number defines the spawn rate (1/n) of a group of Fiery Lilypads. Set to 0 to disable the spawn")
+				  .defineInRange("worldgen.fieryLilySpawnRate", 50, 0, 512);
 		
 		// keybind
 		keybind_delayTicks = builder.comment(" This number define how long the delay should be between two keybind inputs.")

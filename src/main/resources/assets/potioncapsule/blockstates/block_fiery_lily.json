@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "": [
+            { "model": "potioncapsule:block/fiery_lily" },
+            { "model": "potioncapsule:block/fiery_lily", "y": 90 },
+            { "model": "potioncapsule:block/fiery_lily", "y": 180 },
+            { "model": "potioncapsule:block/fiery_lily", "y": 270 }
+        ]
+    }
+}

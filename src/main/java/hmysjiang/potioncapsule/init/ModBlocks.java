@@ -5,6 +5,7 @@ import java.util.Random;
 import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.Reference.BlockRegs;
+import hmysjiang.potioncapsule.blocks.fiery_lily.BlockFieryLilypad;
 import hmysjiang.potioncapsule.blocks.gelatin_extractor.BlockGelatinExtractor;
 import hmysjiang.potioncapsule.blocks.gelatin_former.BlockGelatinFormer;
 import hmysjiang.potioncapsule.blocks.tiny_cactus.BlockTinyCactus;
@@ -53,6 +54,7 @@ public class ModBlocks {
 		};
 	}.setRegistryName(Defaults.modPrefix.apply(BlockRegs.LIGHT));
 	public static final Block TINY_CACTI = new BlockTinyCactus().setRegistryName(Defaults.modPrefix.apply(BlockRegs.TINY_CACTI));
+	public static final Block FIERY_LILY = new BlockFieryLilypad().setRegistryName(Defaults.modPrefix.apply(BlockRegs.FIERY_LILY));
 	
 	@SubscribeEvent
 	public static void onBlockRegistry(RegistryEvent.Register<Block> event) {
@@ -60,8 +62,10 @@ public class ModBlocks {
 		event.getRegistry().registerAll(GELATIN_EXTRACTOR,
 										GELATIN_FORMER
 										,
-										LIGHT,
-										TINY_CACTI);
+										LIGHT
+										,
+										TINY_CACTI,
+										FIERY_LILY);
 	}
 	
 }

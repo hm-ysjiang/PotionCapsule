@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import hmysjiang.potioncapsule.compact.curio.DummyCurioProxy;
 import hmysjiang.potioncapsule.compact.curio.ICurioProxy;
 import hmysjiang.potioncapsule.configs.ConfigManager;
+import hmysjiang.potioncapsule.init.ModFeatures;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.items.ItemSpecialCapsule;
 import hmysjiang.potioncapsule.proxy.ClientProxy;
@@ -78,6 +79,8 @@ public class PotionCapsule {
 			e.printStackTrace();
 			curioProxy = new DummyCurioProxy();
 		}
+		
+		ModFeatures.addFeatureToBiomes();
 	}
 	
 	private void onEnqueueIMC(final InterModEnqueueEvent event) {

@@ -28,6 +28,7 @@ public class Reference {
 		public static final String GELATIN_FORMER = "block_gelatin_former";
 		public static final String LIGHT = "block_light";
 		public static final String TINY_CACTI = "block_tiny_cactus";
+		public static final String FIERY_LILY = "block_fiery_lily";
 		
 	}
 	

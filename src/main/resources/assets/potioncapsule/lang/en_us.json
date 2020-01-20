@@ -21,7 +21,8 @@
 	"_Blocks": "",
 	"block.potioncapsule.block_gelatin_extractor": "Gelatin Extractor",
 	"block.potioncapsule.block_gelatin_former": "Gelatin Former",
-	"block.potioncapsule.block_tiny_cactus": "Tiny Cactus"
+	"block.potioncapsule.block_tiny_cactus": "Tiny Cactus",
+	"block.potioncapsule.block_fiery_lily": "Fiery Lilypad"
 	,
 	"_Tooltips": "",
 	"potioncapsule.tooltip.capsule.empty": "Empty",
@@ -64,10 +65,16 @@
 	"item.minecraft.splash_potion.effect.potioncapsule_thorn": "Splash Potion of the Thorns",
 	"item.minecraft.lingering_potion.effect.potioncapsule_thorn": "Lingering Potion of the Thorns",
 	"item.minecraft.tipped_arrow.effect.potioncapsule_thorn": "Arrow of the Thorns",
+	
 	"item.minecraft.potion.effect.potioncapsule_lilypad": "Potion of Floating Lilypad",
 	"item.minecraft.splash_potion.effect.potioncapsule_lilypad": "Splash Potion of Floating Lilypad",
 	"item.minecraft.lingering_potion.effect.potioncapsule_lilypad": "Lingering Potion of Floating Lilypad",
-	"item.minecraft.tipped_arrow.effect.potioncapsule_lilypad": "Arrow of Floating Lilypad"
+	"item.minecraft.tipped_arrow.effect.potioncapsule_lilypad": "Arrow of Floating Lilypad",
+	
+	"item.minecraft.potion.effect.potioncapsule_fierylily": "Potion of Fiery Lilypad",
+	"item.minecraft.splash_potion.effect.potioncapsule_fierylily": "Splash Potion of Fiery Lilypad",
+	"item.minecraft.lingering_potion.effect.potioncapsule_fierylily": "Lingering Potion of Fiery Lilypad",
+	"item.minecraft.tipped_arrow.effect.potioncapsule_fierylily": "Arrow of Fiery Lilypad"
 	,
 	"_Special Capsules": "",
 	"potioncapsule.tooltip.special_capsule.pre.trigger": "Trigger: ",
