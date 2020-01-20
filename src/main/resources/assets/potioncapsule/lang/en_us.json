@@ -59,7 +59,8 @@
 	"_Effects": "",
 	"effect.potioncapsule.effect_night_vision_nf": "Night Vision NF",
 	"effect.potioncapsule.effect_thorn": "Thorn",
-	"effect.potioncapsule.effect_lilypad": "Floating Lilypad"
+	"effect.potioncapsule.effect_lilypad": "Floating Lilypad",
+	"effect.potioncapsule.effect_nekomimiparadise": "Nekomimi Paradise"
 	,
 	"_Potions": "",
 	"item.minecraft.potion.effect.potioncapsule_thorn": "Potion of the Thorns",

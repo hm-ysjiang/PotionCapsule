@@ -1,6 +1,6 @@
-package hmysjiang.potioncapsule.compact.jei;
+package hmysjiang.potioncapsule.compat.jei;
 
-import hmysjiang.potioncapsule.compact.curio.ICurioProxy;
+import hmysjiang.potioncapsule.compat.curio.ICurioProxy;
 import hmysjiang.potioncapsule.configs.CommonConfigs;
 import hmysjiang.potioncapsule.init.ModBlocks;
 import hmysjiang.potioncapsule.init.ModItems;

@@ -5,8 +5,8 @@ import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 
-import hmysjiang.potioncapsule.compact.curio.DummyCurioProxy;
-import hmysjiang.potioncapsule.compact.curio.ICurioProxy;
+import hmysjiang.potioncapsule.compat.curio.DummyCurioProxy;
+import hmysjiang.potioncapsule.compat.curio.ICurioProxy;
 import hmysjiang.potioncapsule.configs.ConfigManager;
 import hmysjiang.potioncapsule.init.ModFeatures;
 import hmysjiang.potioncapsule.init.ModItems;

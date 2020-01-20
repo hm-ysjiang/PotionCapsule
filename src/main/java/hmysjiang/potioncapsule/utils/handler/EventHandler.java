@@ -8,15 +8,22 @@ import hmysjiang.potioncapsule.init.ModBlocks;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.items.ItemSpecialCapsule;
 import hmysjiang.potioncapsule.items.ItemSpecialCapsule.EnumSpecialType;
+import hmysjiang.potioncapsule.potions.effects.EffectNekomimiParadise;
 import hmysjiang.potioncapsule.utils.helper.InventoryHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CactusBlock;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.AvoidEntityGoal;
+import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.world.BlockEvent.CropGrowEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -70,6 +77,17 @@ public class EventHandler {
                 blockstate.neighborChanged(world, pos.up(), Blocks.CACTUS, pos, false);
                 world.setBlockState(pos.up(2), ModBlocks.TINY_CACTI.getDefaultState());
 			}
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onEntityJoin(EntityJoinWorldEvent event) {
+		Entity ent = event.getEntity();
+		if (ent instanceof CreeperEntity) {
+			CreeperEntity creeper = (CreeperEntity) ent;
+			creeper.goalSelector.addGoal(3, new AvoidEntityGoal<>(creeper, LivingEntity.class, living -> { 
+				return living.getActivePotionEffect(EffectNekomimiParadise.INSTANCE) != null; 
+			}, 8.0F, 1.0D, 1.2D, EntityPredicates.CAN_AI_TARGET::test));
 		}
 	}
 	

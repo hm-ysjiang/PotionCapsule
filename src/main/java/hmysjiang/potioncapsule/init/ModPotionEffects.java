@@ -7,6 +7,7 @@ import hmysjiang.potioncapsule.potions.PotionLilypad;
 import hmysjiang.potioncapsule.potions.PotionSpikyObi;
 import hmysjiang.potioncapsule.potions.PotionThorn;
 import hmysjiang.potioncapsule.potions.effects.EffectLilypad;
+import hmysjiang.potioncapsule.potions.effects.EffectNekomimiParadise;
 import hmysjiang.potioncapsule.potions.effects.EffectNightVisionNF;
 import hmysjiang.potioncapsule.potions.effects.EffectThorn;
 import net.minecraft.potion.Effect;
@@ -24,7 +25,8 @@ public class ModPotionEffects {
 		PotionCapsule.Logger.info("Effects Registering");
 		event.getRegistry().registerAll(EffectNightVisionNF.INSTANCE,
 										EffectThorn.INSTANCE,
-										EffectLilypad.INSTANCE);
+										EffectLilypad.INSTANCE,
+										EffectNekomimiParadise.INSTANCE);
 	}
 	
 	@SubscribeEvent

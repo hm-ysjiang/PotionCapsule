@@ -1,4 +1,4 @@
-package hmysjiang.potioncapsule.compact.jei;
+package hmysjiang.potioncapsule.compat.jei;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;

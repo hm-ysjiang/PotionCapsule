@@ -1,4 +1,4 @@
-package hmysjiang.potioncapsule.compact.curio;
+package hmysjiang.potioncapsule.compat.curio;
 
 import hmysjiang.potioncapsule.PotionCapsule;
 import net.minecraft.entity.player.PlayerEntity;
