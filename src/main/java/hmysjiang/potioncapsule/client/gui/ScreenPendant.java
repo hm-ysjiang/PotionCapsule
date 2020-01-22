@@ -12,6 +12,7 @@ import hmysjiang.potioncapsule.items.ItemCapsulePendant;
 import hmysjiang.potioncapsule.network.PacketHandler;
 import hmysjiang.potioncapsule.network.packets.CPacketUpdatePendantStatus;
 import hmysjiang.potioncapsule.utils.Defaults;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.entity.player.PlayerInventory;
@@ -35,105 +36,272 @@ public class ScreenPendant extends ContainerScreen<ContainerPendant> {
 	protected void init() {
 		super.init();
 		addButton(new PairedImageButtonSwitch(guiLeft + 75, guiTop + 17, 4, 4, 180, 0, 176, 0, 5, TEXTURE, 
-				btn -> {
-					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 0));
+				(btn, chain) -> {
+					if (chain) {
+						if (Screen.hasShiftDown()) {
+							toggleAll(true, 0);
+						}
+						else {
+							PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 0));
+						}
+					}
 				}, 
-				btn -> {
-					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 0));
+				(btn, chain) -> {
+					if (chain) {
+						if (Screen.hasShiftDown()) {
+							toggleAll(false, 0);
+						}
+						else {
+							PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 0));
+						}
+					}
 				}, mask & (1 << 0), 
 				new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status").appendSibling(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status_off").applyTextStyle(TextFormatting.RED)),
 				new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status").appendSibling(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status_on").applyTextStyle(TextFormatting.GREEN))));
 		addButton(new PairedImageButtonSwitch(guiLeft + 35, guiTop + 33, 4, 4, 180, 0, 176, 0, 5, TEXTURE, 
-				btn -> {
-					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 1));
+				(btn, chain) -> {
+					if (chain) {
+						if (Screen.hasShiftDown()) {
+							toggleAll(true, 1);
+						}
+						else {
+							PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 1));
+						}
+					}
 				}, 
-				btn -> {
-					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 1));
+				(btn, chain) -> {
+					if (chain) {
+						if (Screen.hasShiftDown()) {
+							toggleAll(false, 1);
+						}
+						else {
+							PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 1));
+						}
+					}
 				}, mask & (1 << 1), 
 				new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status").appendSibling(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status_off").applyTextStyle(TextFormatting.RED)),
 				new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status").appendSibling(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status_on").applyTextStyle(TextFormatting.GREEN))));
 		addButton(new PairedImageButtonSwitch(guiLeft + 115, guiTop + 33, 4, 4, 180, 0, 176, 0, 5, TEXTURE, 
-				btn -> {
-					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 2));
+				(btn, chain) -> {
+					if (chain) {
+						if (Screen.hasShiftDown()) {
+							toggleAll(true, 2);
+						}
+						else {
+							PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 2));
+						}
+					}
 				}, 
-				btn -> {
-					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 2));
+				(btn, chain) -> {
+					if (chain) {
+						if (Screen.hasShiftDown()) {
+							toggleAll(false, 2);
+						}
+						else {
+							PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 2));
+						}
+					}
 				}, mask & (1 << 2), 
 				new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status").appendSibling(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status_off").applyTextStyle(TextFormatting.RED)),
 				new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status").appendSibling(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status_on").applyTextStyle(TextFormatting.GREEN))));
 		addButton(new PairedImageButtonSwitch(guiLeft + 15, guiTop + 68, 4, 4, 180, 0, 176, 0, 5, TEXTURE, 
-				btn -> {
-					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 3));
+				(btn, chain) -> {
+					if (chain) {
+						if (Screen.hasShiftDown()) {
+							toggleAll(true, 3);
+						}
+						else {
+							PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 3));
+						}
+					}
 				}, 
-				btn -> {
-					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 3));
+				(btn, chain) -> {
+					if (chain) {
+						if (Screen.hasShiftDown()) {
+							toggleAll(false, 3);
+						}
+						else {
+							PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 3));
+						}
+					}
 				}, mask & (1 << 3), 
 				new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status").appendSibling(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status_off").applyTextStyle(TextFormatting.RED)),
 				new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status").appendSibling(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status_on").applyTextStyle(TextFormatting.GREEN))));
 		addButton(new PairedImageButtonSwitch(guiLeft + 135, guiTop + 68, 4, 4, 180, 0, 176, 0, 5, TEXTURE, 
-				btn -> {
-					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 4));
+				(btn, chain) -> {
+					if (chain) {
+						if (Screen.hasShiftDown()) {
+							toggleAll(true, 4);
+						}
+						else {
+							PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 4));
+						}
+					}
 				}, 
-				btn -> {
-					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 4));
+				(btn, chain) -> {
+					if (chain) {
+						if (Screen.hasShiftDown()) {
+							toggleAll(false, 4);
+						}
+						else {
+							PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 4));
+						}
+					}
 				}, mask & (1 << 4), 
 				new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status").appendSibling(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status_off").applyTextStyle(TextFormatting.RED)),
 				new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status").appendSibling(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status_on").applyTextStyle(TextFormatting.GREEN))));
 		addButton(new PairedImageButtonSwitch(guiLeft + 35, guiTop + 103, 4, 4, 180, 0, 176, 0, 5, TEXTURE, 
-				btn -> {
-					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 5));
+				(btn, chain) -> {
+					if (chain) {
+						if (Screen.hasShiftDown()) {
+							toggleAll(true, 5);
+						}
+						else {
+							PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 5));
+						}
+					}
 				}, 
-				btn -> {
-					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 5));
+				(btn, chain) -> {
+					if (chain) {
+						if (Screen.hasShiftDown()) {
+							toggleAll(false, 5);
+						}
+						else {
+							PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 5));
+						}
+					}
 				}, mask & (1 << 5), 
 				new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status").appendSibling(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status_off").applyTextStyle(TextFormatting.RED)),
 				new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status").appendSibling(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status_on").applyTextStyle(TextFormatting.GREEN))));
 		addButton(new PairedImageButtonSwitch(guiLeft + 115, guiTop + 103, 4, 4, 180, 0, 176, 0, 5, TEXTURE, 
-				btn -> {
-					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 6));
+				(btn, chain) -> {
+					if (chain) {
+						if (Screen.hasShiftDown()) {
+							toggleAll(true, 6);
+						}
+						else {
+							PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 6));
+						}
+					}
 				}, 
-				btn -> {
-					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 6));
+				(btn, chain) -> {
+					if (chain) {
+						if (Screen.hasShiftDown()) {
+							toggleAll(false, 6);
+						}
+						else {
+							PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 6));
+						}
+					}
 				}, mask & (1 << 6), 
 				new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status").appendSibling(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status_off").applyTextStyle(TextFormatting.RED)),
 				new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status").appendSibling(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status_on").applyTextStyle(TextFormatting.GREEN))));
 		addButton(new PairedImageButtonSwitch(guiLeft + 75, guiTop + 119, 4, 4, 180, 0, 176, 0, 5, TEXTURE, 
-				btn -> {
-					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 7));
+				(btn, chain) -> {
+					if (chain) {
+						if (Screen.hasShiftDown()) {
+							toggleAll(true, 7);
+						}
+						else {
+							PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 7));
+						}
+					}
 				}, 
-				btn -> {
-					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 7));
+				(btn, chain) -> {
+					if (chain) {
+						if (Screen.hasShiftDown()) {
+							toggleAll(false, 7);
+						}
+						else {
+							PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 7));
+						}
+					}
 				}, mask & (1 << 7), 
 				new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status").appendSibling(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status_off").applyTextStyle(TextFormatting.RED)),
 				new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status").appendSibling(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status_on").applyTextStyle(TextFormatting.GREEN))));
 
 		addButton(new PairedImageButtonSwitch(guiLeft + 115, guiTop + 138, 4, 4, 180, 0, 176, 0, 5, TEXTURE, 
-				btn -> {
-					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 8));
+				(btn, chain) -> {
+					if (chain) {
+						if (Screen.hasShiftDown()) {
+							toggleAll(true, 8);
+						}
+						else {
+							PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 8));
+						}
+					}
 				}, 
-				btn -> {
-					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 8));
+				(btn, chain) -> {
+					if (chain) {
+						if (Screen.hasShiftDown()) {
+							toggleAll(false, 8);
+						}
+						else {
+							PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 8));
+						}
+					}
 				}, mask & (1 << 8), 
 				new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status").appendSibling(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status_off").applyTextStyle(TextFormatting.RED)),
 				new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status").appendSibling(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status_on").applyTextStyle(TextFormatting.GREEN))));
 		addButton(new PairedImageButtonSwitch(guiLeft + 133, guiTop + 138, 4, 4, 180, 0, 176, 0, 5, TEXTURE, 
-				btn -> {
-					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 9));
+				(btn, chain) -> {
+					if (chain) {
+						if (Screen.hasShiftDown()) {
+							toggleAll(true, 9);
+						}
+						else {
+							PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 9));
+						}
+					}
 				}, 
-				btn -> {
-					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 9));
+				(btn, chain) -> {
+					if (chain) {
+						if (Screen.hasShiftDown()) {
+							toggleAll(false, 9);
+						}
+						else {
+							PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 9));
+						}
+					}
 				}, mask & (1 << 9), 
 				new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status").appendSibling(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status_off").applyTextStyle(TextFormatting.RED)),
 				new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status").appendSibling(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status_on").applyTextStyle(TextFormatting.GREEN))));
 		addButton(new PairedImageButtonSwitch(guiLeft + 151, guiTop + 138, 4, 4, 180, 0, 176, 0, 5, TEXTURE, 
-				btn -> {
-					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 10));
+				(btn, chain) -> {
+					if (chain) {
+						if (Screen.hasShiftDown()) {
+							toggleAll(true, 10);
+						}
+						else {
+							PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 10));
+						}
+					}
 				}, 
-				btn -> {
-					PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 10));
+				(btn, chain) -> {
+					if (chain) {
+						if (Screen.hasShiftDown()) {
+							toggleAll(false, 10);
+						}
+						else {
+							PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(1 << 10));
+						}
+					}
 				}, mask & (1 << 10), 
 				new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status").appendSibling(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status_off").applyTextStyle(TextFormatting.RED)),
 				new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status").appendSibling(new TranslationTextComponent("potioncapsule.gui.pendant.tooltip.status_on").applyTextStyle(TextFormatting.GREEN))));
+	}
+	
+	protected void toggleAll(boolean active, int id) {
+		int mask = 0;
+		for (int i = 0 ; i<buttons.size() ; i++) {
+			if (i == id)
+				continue;
+			if (((PairedImageButtonSwitch) buttons.get(i)).isFlag() ^ active) {
+				mask |= (1 << i);
+				((PairedImageButtonSwitch) buttons.get(i)).onPress(false);
+			}
+		}
+		PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(mask));
 	}
 	
 	@Override

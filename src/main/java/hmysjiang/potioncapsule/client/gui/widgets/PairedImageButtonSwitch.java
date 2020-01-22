@@ -3,6 +3,7 @@ package hmysjiang.potioncapsule.client.gui.widgets;
 import com.mojang.blaze3d.platform.GlStateManager;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.widget.button.ImageButton;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -14,28 +15,28 @@ public class PairedImageButtonSwitch extends ImageButton {
 	
 	private final int imgPosX_F, imgPosY_F, imgPosX_T, imgPosY_T, yDiff;
 	private final ResourceLocation TEXTURE;
-	private final IPressable action_F, action_T;
+	private final IChainPressable action_F, action_T;
 	private boolean flag;
 	private ITextComponent hover_F, hover_T;
 	
-	public PairedImageButtonSwitch(int xIn, int yIn, int widthIn, int heightIn, int imgPosX_F, int imgPosY_F, int imgPosX_T, int imgPosY_T, int yDiff, ResourceLocation texture, IPressable action_F, IPressable action_T) {
+	public PairedImageButtonSwitch(int xIn, int yIn, int widthIn, int heightIn, int imgPosX_F, int imgPosY_F, int imgPosX_T, int imgPosY_T, int yDiff, ResourceLocation texture, IChainPressable action_F, IChainPressable action_T) {
 		this(xIn, yIn, widthIn, heightIn, imgPosX_F, imgPosY_F, imgPosX_T, imgPosY_T, yDiff, texture, action_F, action_T, false);
 	}
 	
-	public PairedImageButtonSwitch(int xIn, int yIn, int widthIn, int heightIn, int imgPosX_F, int imgPosY_F, int imgPosX_T, int imgPosY_T, int yDiff, ResourceLocation texture, IPressable action_F, IPressable action_T, int flagmask) {
+	public PairedImageButtonSwitch(int xIn, int yIn, int widthIn, int heightIn, int imgPosX_F, int imgPosY_F, int imgPosX_T, int imgPosY_T, int yDiff, ResourceLocation texture, IChainPressable action_F, IChainPressable action_T, int flagmask) {
 		this(xIn, yIn, widthIn, heightIn, imgPosX_F, imgPosY_F, imgPosX_T, imgPosY_T, yDiff, texture, action_F, action_T, flagmask > 0);
 	}
 	
-	public PairedImageButtonSwitch(int xIn, int yIn, int widthIn, int heightIn, int imgPosX_F, int imgPosY_F, int imgPosX_T, int imgPosY_T, int yDiff, ResourceLocation texture, IPressable action_F, IPressable action_T, int flagmask, ITextComponent hoverText_F, ITextComponent hoverText_T) {
+	public PairedImageButtonSwitch(int xIn, int yIn, int widthIn, int heightIn, int imgPosX_F, int imgPosY_F, int imgPosX_T, int imgPosY_T, int yDiff, ResourceLocation texture, IChainPressable action_F, IChainPressable action_T, int flagmask, ITextComponent hoverText_F, ITextComponent hoverText_T) {
 		this(xIn, yIn, widthIn, heightIn, imgPosX_F, imgPosY_F, imgPosX_T, imgPosY_T, yDiff, texture, action_F, action_T, flagmask > 0, hoverText_F, hoverText_T);
 	}
 	
-	public PairedImageButtonSwitch(int xIn, int yIn, int widthIn, int heightIn, int imgPosX_F, int imgPosY_F, int imgPosX_T, int imgPosY_T, int yDiff, ResourceLocation texture, IPressable action_F, IPressable action_T, boolean flag) {
+	public PairedImageButtonSwitch(int xIn, int yIn, int widthIn, int heightIn, int imgPosX_F, int imgPosY_F, int imgPosX_T, int imgPosY_T, int yDiff, ResourceLocation texture, IChainPressable action_F, IChainPressable action_T, boolean flag) {
 		this(xIn, yIn, widthIn, heightIn, imgPosX_F, imgPosY_F, imgPosX_T, imgPosY_T, yDiff, texture, action_F, action_T, flag, null, null);
 	}
 	
-	public PairedImageButtonSwitch(int xIn, int yIn, int widthIn, int heightIn, int imgPosX_F, int imgPosY_F, int imgPosX_T, int imgPosY_T, int yDiff, ResourceLocation texture, IPressable action_F, IPressable action_T, boolean flag, ITextComponent hoverText_F, ITextComponent hoverText_T) {
-		super(xIn, yIn, widthIn, heightIn, imgPosX_F, imgPosY_F, yDiff, texture, action_F);
+	public PairedImageButtonSwitch(int xIn, int yIn, int widthIn, int heightIn, int imgPosX_F, int imgPosY_F, int imgPosX_T, int imgPosY_T, int yDiff, ResourceLocation texture, IChainPressable action_F, IChainPressable action_T, boolean flag, ITextComponent hoverText_F, ITextComponent hoverText_T) {
+		super(xIn, yIn, widthIn, heightIn, imgPosX_F, imgPosY_F, yDiff, texture, btn -> {});
 		this.imgPosX_F = imgPosX_F;
 		this.imgPosX_T = imgPosX_T;
 		this.imgPosY_F = imgPosY_F;
@@ -51,10 +52,14 @@ public class PairedImageButtonSwitch extends ImageButton {
 	
 	@Override
 	public void onPress() {
+		onPress(true);
+	}
+	
+	public void onPress(boolean chain) {
 		if (flag)
-			this.action_T.onPress(this);
+			this.action_T.onPress(this, chain);
 		else
-			this.action_F.onPress(this);
+			this.action_F.onPress(this, chain);
 		
 		flag = !flag;
 	}
@@ -75,6 +80,14 @@ public class PairedImageButtonSwitch extends ImageButton {
 	
 	public ITextComponent getTooltip() {
 		return flag ? hover_T : hover_F;
+	}
+	
+	public boolean isFlag() {
+		return flag;
+	}
+
+	public interface IChainPressable {
+		void onPress(Button btn, boolean chain);
 	}
 	
 }

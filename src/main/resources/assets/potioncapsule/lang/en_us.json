@@ -121,6 +121,7 @@
 	"death.attack.potioncapsule_thorn.player": "%2$s opened the trap card Mirror Force on %1$s"
 	,
 	"_Jei": "",
+	"potioncapsule.jei_desc.emptyline": "",
 	"potioncapsule.jei_desc.jelly": "Crafted in a Gelatin Former using apple and gelatin powder.",
 	"potioncapsule.jei_desc.capsule": "Store a portion of potion, either consume one or put it into a Capsule Pendant to acquire the effect.",
 	"potioncapsule.jei_desc.capsule_instant": "Store a portion of instant potion, either consume one or put it into a Capsule Pendant to acquire the effect.",
@@ -138,5 +139,13 @@
 	"potioncapsule.jei_category.gel_former": "Gelatin Former",
 	"potioncapsule.jei_category.wart_drop": "Nether Wart Dust",
 	"potioncapsule.jei_category.special_repair": "Special Capsule Recharge",
-	"potioncapsule.jei_addi.wart_drop": "60%s chance to drop 1-3"
+	"potioncapsule.jei_addi.wart_drop": "60%s chance to drop 1-3",
+	"potioncapsule.jei_desc.special": "Only works in a Capsule Pendant.",
+	"potioncapsule.jei_desc.special_repair": "Can be repaired using corresponding materials in anvil.",
+	"potioncapsule.jei_desc.special.man": "This type can be manually triggered.",
+	"potioncapsule.jei_desc.wither_frag": "Dropped by killing Wither Skeletons.",
+	"potioncapsule.jei_desc.tiny_cactus": "Spawns on top of cacti when growing them.",
+	"potioncapsule.jei_desc.cactus_frag": "Dropped by breaking Tiny Cactus.",
+	"potioncapsule.jei_desc.fiery_lily": "Randomly spawned on lava lakes in the nether.",
+	"potioncapsule.jei_desc.cat_fur": "Dropped by cats naturally. (DONT KILL THEM)"
 }
