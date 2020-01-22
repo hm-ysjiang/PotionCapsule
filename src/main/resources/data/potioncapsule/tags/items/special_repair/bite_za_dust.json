@@ -2,7 +2,7 @@
 	"replace": false,
 	"values": 
 	[
-		"potioncapsule:item_wither_dust",
+		"#forge:dusts/wither",
 		"#forge:heads"
 	]
 }

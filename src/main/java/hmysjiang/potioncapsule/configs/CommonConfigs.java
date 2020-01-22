@@ -25,8 +25,9 @@ public class CommonConfigs {
 	public static ForgeConfigSpec.IntValue worldgen_fieryLilySpawnRate;
 	
 	public static ForgeConfigSpec.IntValue keybind_delayTicks;
-	
+
 	public static ForgeConfigSpec.BooleanValue misc_replaceNvWithNvnf;
+	public static ForgeConfigSpec.BooleanValue misc_catDropFur;
 	
 	public static void init(ForgeConfigSpec.Builder builder) {
 		// capsule
@@ -77,6 +78,8 @@ public class CommonConfigs {
 		// misc
 		misc_replaceNvWithNvnf = builder.comment(" Set this to true will automatically replace any NightVision with NightVisionNoFlicker, a wrapper effect just to solve the vanilla flickering NightVision")
 											  .define("misc.replaceNvWithNvnf", true);
+		misc_catDropFur = builder.comment(" Does cats drop fur?")
+											  .define("misc.catDropFur", true);
 	}
 	
 }

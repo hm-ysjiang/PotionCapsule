@@ -17,6 +17,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.entity.monster.CreeperEntity;
+import net.minecraft.entity.passive.CatEntity;
+import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -25,6 +27,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.world.BlockEvent.CropGrowEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -88,6 +91,24 @@ public class EventHandler {
 			creeper.goalSelector.addGoal(3, new AvoidEntityGoal<>(creeper, LivingEntity.class, living -> { 
 				return living.getActivePotionEffect(EffectNekomimiParadise.INSTANCE) != null; 
 			}, 8.0F, 1.0D, 1.2D, EntityPredicates.CAN_AI_TARGET::test));
+		}
+		else if (ent instanceof CatEntity) {
+			((CatEntity) ent).goalSelector.addGoal(2, new EffectNekomimiParadise.CatNekomimiGoal((CatEntity) ent));
+		}
+		else if (ent instanceof OcelotEntity) {
+			((OcelotEntity) ent).goalSelector.addGoal(2, new EffectNekomimiParadise.OcelotNekomimiGoal((OcelotEntity) ent));
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onEntityUpdate(LivingUpdateEvent event) {
+		if (CommonConfigs.misc_catDropFur.get() && !event.getEntityLiving().world.isRemote) {
+			if (event.getEntityLiving() instanceof CatEntity || event.getEntityLiving() instanceof OcelotEntity) {
+				LivingEntity living = event.getEntityLiving();
+				if (rand.nextInt((living.isSprinting() ? 5 : 8) * 60 * 20) == 0) {
+					living.entityDropItem(ModItems.CAT_FUR);
+				}
+			}
 		}
 	}
 	

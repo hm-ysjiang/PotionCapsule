@@ -2,13 +2,13 @@
 	"_comment0": "// the type of this recipe",
 	"type":"potioncapsule:capsule_attachment",
 	
-	"_comment1": "// this specify which item should be granted as a potion item",
+	"_comment1": "// this specify which item should be treated as a potion item",
 	"potionitem": {
 		"item": "minecraft:potion",
 		"count": 1
 	},
 	
-	"_comment2": "// this specify the origin container that should be returned of the potion item",
+	"_comment2": "// this specify the original container that should be returned of the potion item",
 	"retriveitem": {
 		"_comment3": "// if the potion item has no return container, set this to false and ignore the two entries below",
 		"hasRetriveItem": true,

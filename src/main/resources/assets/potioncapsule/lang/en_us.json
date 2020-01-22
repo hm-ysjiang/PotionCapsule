@@ -16,7 +16,8 @@
 	"item.potioncapsule.item_creative_catalyst": "\u00a76Creative Catalyst\u00a7r",
 	"item.potioncapsule.item_special_capsule": "Special Capsule (%s)",
 	"item.potioncapsule.item_wither_dust": "\u00a78Wither Dust\u00a7r",
-	"item.potioncapsule.item_cactus_frag": "A Tiny Piece of Cactus"
+	"item.potioncapsule.item_cactus_frag": "A Tiny Piece of Cactus",
+	"item.potioncapsule.item_cat_fur": "Cat Fur"
 	,
 	"_Blocks": "",
 	"block.potioncapsule.block_gelatin_extractor": "Gelatin Extractor",

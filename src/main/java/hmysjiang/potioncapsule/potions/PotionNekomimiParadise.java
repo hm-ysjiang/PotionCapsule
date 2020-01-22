@@ -1,7 +1,9 @@
 package hmysjiang.potioncapsule.potions;
 
+import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.potions.effects.EffectNekomimiParadise;
 import hmysjiang.potioncapsule.utils.Defaults;
+import hmysjiang.potioncapsule.utils.helper.PotionHelper;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -21,7 +23,7 @@ public class PotionNekomimiParadise extends Potion {
 	}
 	
 	public static void registerRecipes() {
-		// PotionHelper.register2StageRecipe(ModItems.BLOCK_FIERY_LILY, PARA, PARA_LONG);
+		PotionHelper.register2StageRecipe(ModItems.CAT_FUR, PARA, PARA_LONG);
 	}
 	
 }

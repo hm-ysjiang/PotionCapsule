@@ -55,7 +55,7 @@ public class ModBlocks {
 	}.setRegistryName(Defaults.modPrefix.apply(BlockRegs.LIGHT));
 	public static final Block TINY_CACTI = new BlockTinyCactus().setRegistryName(Defaults.modPrefix.apply(BlockRegs.TINY_CACTI));
 	public static final Block FIERY_LILY = new BlockFieryLilypad().setRegistryName(Defaults.modPrefix.apply(BlockRegs.FIERY_LILY));
-	public static final Block SPIKY_OBI = new Block(Block.Properties.create(Material.ROCK, MaterialColor.BLACK).hardnessAndResistance(20.0F)) {
+	public static final Block SPIKY_OBI = new Block(Block.Properties.create(Material.ROCK, MaterialColor.BLACK).hardnessAndResistance(20.0F, 1200.0F)) {
 		@Override 
 		public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) { 
 			entity.attackEntityFrom(DamageSource.CACTUS, 1.0F); 

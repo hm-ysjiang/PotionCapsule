@@ -19,6 +19,7 @@ public class Reference {
 		public static final String CREATIVE_CATALYST = "item_creative_catalyst";
 		public static final String WITHER_FRAG = "item_wither_dust";
 		public static final String CATCUS_FRAG = "item_cactus_frag";
+		public static final String CAT_FUR = "item_cat_fur";
 		
 	}
 	
