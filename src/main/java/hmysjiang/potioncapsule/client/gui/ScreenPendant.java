@@ -294,11 +294,10 @@ public class ScreenPendant extends ContainerScreen<ContainerPendant> {
 	protected void toggleAll(boolean active, int id) {
 		int mask = 0;
 		for (int i = 0 ; i<buttons.size() ; i++) {
-			if (i == id)
-				continue;
 			if (((PairedImageButtonSwitch) buttons.get(i)).isFlag() ^ active) {
 				mask |= (1 << i);
-				((PairedImageButtonSwitch) buttons.get(i)).onPress(false);
+				if (i != id)
+					((PairedImageButtonSwitch) buttons.get(i)).onPress(false);
 			}
 		}
 		PacketHandler.getInstacne().sendToServer(new CPacketUpdatePendantStatus(mask));

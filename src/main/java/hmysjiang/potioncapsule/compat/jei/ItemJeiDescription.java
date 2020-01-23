@@ -13,7 +13,8 @@ import net.minecraft.item.ItemStack;
 public class ItemJeiDescription {
 	
 	public static void registerInfo(IRecipeRegistration registration) {
-		registration.addIngredientInfo(new ItemStack(ModItems.APPLE_JELLY), VanillaTypes.ITEM, "potioncapsule.jei_desc.jelly");
+		registration.addIngredientInfo(new ItemStack(ModItems.APPLE_JELLY), VanillaTypes.ITEM, "potioncapsule.jei_desc.jelly_apple");
+		registration.addIngredientInfo(new ItemStack(ModItems.CACTUS_JELLY), VanillaTypes.ITEM, "potioncapsule.jei_desc.jelly_cactus");
 		registration.addIngredientInfo(new ItemStack(ModItems.CAPSULE), VanillaTypes.ITEM, "potioncapsule.jei_desc.capsule");
 		registration.addIngredientInfo(new ItemStack(ModItems.CAPSULE_INSTANT), VanillaTypes.ITEM, "potioncapsule.jei_desc.capsule_instant");
 		registration.addIngredientInfo(new ItemStack(ModItems.GELATIN_POWDER), VanillaTypes.ITEM, "potioncapsule.jei_desc.gelatin_powder");

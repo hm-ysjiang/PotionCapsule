@@ -46,6 +46,7 @@ public class ModItems {
 		};
 	}.setRegistryName(Defaults.modPrefix.apply(ItemRegs.WART_DUST));
 	public static final Item APPLE_JELLY = new Item(Defaults.itemProp.get().food((new Food.Builder()).setAlwaysEdible().fastToEat().hunger(2).saturation(0.3F).build())).setRegistryName(Defaults.modPrefix.apply(ItemRegs.APPLE_JELLY));
+	public static final Item CACTUS_JELLY = new Item(Defaults.itemProp.get().food((new Food.Builder()).setAlwaysEdible().fastToEat().hunger(2).saturation(0.3F).build())).setRegistryName(Defaults.modPrefix.apply(ItemRegs.CACTUS_JELLY));
 	public static final Item CATALYST = new Item(Defaults.itemProp.get()) {
 		@OnlyIn(Dist.CLIENT)
 		@Override
@@ -90,6 +91,7 @@ public class ModItems {
 						GELATIN_POWDER,
 						WART_DUST,
 						APPLE_JELLY,
+						CACTUS_JELLY,
 						CATALYST,
 						CREATIVE_CATALYST,
 						WITHER_FRAG,
