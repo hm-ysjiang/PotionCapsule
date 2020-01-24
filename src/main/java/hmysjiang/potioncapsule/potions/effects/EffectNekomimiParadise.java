@@ -45,6 +45,18 @@ public class EffectNekomimiParadise extends Effect {
 				return false;
 			return closestPlayer.getActivePotionEffect(EffectNekomimiParadise.INSTANCE) != null;
 		}
+		
+		@Override
+		public void tick() {
+			super.tick();
+			cat.setSitting(creature.getDistanceSq(this.closestPlayer) < 6.25D);
+		}
+		
+		@Override
+		public void resetTask() {
+			super.resetTask();
+			cat.setSitting(false);
+		}
 	}
 	
 	public static class OcelotNekomimiGoal extends TemptGoal {

@@ -2,7 +2,6 @@ package hmysjiang.potioncapsule.world;
 
 import java.util.Random;
 
-import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.configs.CommonConfigs;
 import hmysjiang.potioncapsule.init.ModBlocks;
 import hmysjiang.potioncapsule.utils.Defaults;
@@ -34,7 +33,6 @@ public class FeatureFieryLilypad extends Feature<NoFeatureConfig> {
 		if (rand.nextInt(CommonConfigs.worldgen_fieryLilySpawnRate.get()) == 0) {
 			BlockPos surface = WorldHelper.getFirstAirBlock(worldIn, pos, 35).down();
 			if (worldIn.getBlockState(surface).getBlock() == Blocks.LAVA) {
-				PotionCapsule.Logger.info(surface);
 				worldIn.setBlockState(surface.up(1), Blocks.NETHER_BRICK_FENCE.getDefaultState(), 2);
 				worldIn.setBlockState(surface.up(2), Blocks.NETHER_BRICK_FENCE.getDefaultState(), 2);
 				worldIn.setBlockState(surface.up(3), Blocks.GLOWSTONE.getDefaultState(), 2);

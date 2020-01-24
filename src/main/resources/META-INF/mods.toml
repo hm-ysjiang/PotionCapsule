@@ -3,6 +3,7 @@ loaderVersion="[28,)" #mandatory (26 is current forge version)
 
 [[mods]] #mandatory
 displayName="Potion Capsule" #mandatory
+logoFile="logo.png"
 modId="potioncapsule" #mandatory
 
 version="1.2.3" #mandatory

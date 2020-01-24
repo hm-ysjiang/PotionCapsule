@@ -93,10 +93,10 @@ public class EventHandler {
 			}, 8.0F, 1.0D, 1.2D, EntityPredicates.CAN_AI_TARGET::test));
 		}
 		else if (ent instanceof CatEntity) {
-			((CatEntity) ent).goalSelector.addGoal(2, new EffectNekomimiParadise.CatNekomimiGoal((CatEntity) ent));
+			((CatEntity) ent).goalSelector.addGoal(3, new EffectNekomimiParadise.CatNekomimiGoal((CatEntity) ent));
 		}
 		else if (ent instanceof OcelotEntity) {
-			((OcelotEntity) ent).goalSelector.addGoal(2, new EffectNekomimiParadise.OcelotNekomimiGoal((OcelotEntity) ent));
+			((OcelotEntity) ent).goalSelector.addGoal(3, new EffectNekomimiParadise.OcelotNekomimiGoal((OcelotEntity) ent));
 		}
 	}
 	

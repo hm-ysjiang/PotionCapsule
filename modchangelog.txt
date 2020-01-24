@@ -1,3 +1,21 @@
+1.2.3
+ - Change the trigger WATER(in water) to FLUID(in fluids)
+ - Fix the bug that cause recipe of special_repair not synced to client sometimes
+ - Witches now drops capsules filled wih some potion when killed
+ - New Potion Effects, with different potions
+ --- Floating Lilypad: Make entity float above fluids
+ --- Thorn: Hurt enemies when being attacked
+ --- Nekomimi Paradise: Ocelots and untamed cats will approach you, and the creepers will run away
+ - New World Gen
+ --- Tiny Cactus: Has a chance to spawn on top of a growing cactus
+ --- Fiery Lilypad: Has a chance to spawn a little platform woth some fiery lilypads on lava lakes in the nether
+ - Add a client-side delay for using the keybind trigger, by default 10 ticks
+ - Allow player to shift-click the toggle button in pendant gui to toggle all
+ - Fix that when a instant capsule is used, there will be a flicker on the HUD
+ - Tweaked the recipe of Wither Dust to prevent recipe conflict
+ - Add Wither Dust to item tag forge:dusts/wither
+ - Add mod logo
+
 1.2.2a
  - Fix the wrongly named recipes in 1.2.2
 
