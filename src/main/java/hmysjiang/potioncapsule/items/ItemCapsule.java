@@ -359,7 +359,6 @@ public class ItemCapsule extends Item implements ICapsuleTriggerable {
 			if (effects == null) {
 				PotionCapsule.Logger.info("Start querying effect instances from existing potion");
 				effects = new TreeSet<>(EFFECT_CMP);
-				effectsPool = new ArrayList<>();
 				for (Potion potion: Registry.POTION) {
 					for (EffectInstance effect: potion.getEffects()) {
 						EffectInstance toadd = new EffectInstance(effect);
@@ -369,8 +368,6 @@ public class ItemCapsule extends Item implements ICapsuleTriggerable {
 							toadd = new EffectInstance(EffectNightVisionNF.INSTANCE, toadd.getDuration(), toadd.getAmplifier(), toadd.isAmbient(), toadd.doesShowParticles(), toadd.isShowIcon());
 						if (effects.add(toadd)) {
 							PotionCapsule.Logger.info(toadd.getAmplifier() > 0 ? new TranslationTextComponent(toadd.getEffectName()).getFormattedText() + " x " + (toadd.getAmplifier() + 1) : new TranslationTextComponent(toadd.getEffectName()).getFormattedText());
-							if (toadd.getPotion().getEffectType() != EffectType.HARMFUL)
-								effectsPool.add(toadd);
 						}
 					}
 				}
@@ -385,6 +382,8 @@ public class ItemCapsule extends Item implements ICapsuleTriggerable {
 	}
 	
 	public static ItemStack applyRandomEffectFromPool(@Nonnull ItemStack capsule, int amount) {
+		if (effectsPool == null)
+			queryEffectsPool();
 		if (amount > 5)
 			amount = 5;
 		Set<EffectInstance> effectList = new TreeSet<EffectInstance>(EFFECT_CMP) {
@@ -408,6 +407,26 @@ public class ItemCapsule extends Item implements ICapsuleTriggerable {
 			effectList.add(e);
 		}
 		return PotionUtils.appendEffects(capsule, effectList);
+	}
+	
+	@SuppressWarnings("deprecation")
+	private static void queryEffectsPool() {
+		PotionCapsule.Logger.info("Querying effects for pool...");
+		effectsPool = new ArrayList<>();
+		Set<EffectInstance> effectSet = new TreeSet<>(EFFECT_CMP);
+		for (Potion potion: Registry.POTION) {
+			for (EffectInstance effect: potion.getEffects()) {
+				EffectInstance toadd = new EffectInstance(effect);
+				if (toadd.getPotion().getEffectType() == EffectType.HARMFUL)
+					continue;
+				if (!toadd.getPotion().isInstant())
+					toadd.duration = CommonConfigs.capsule_capacity.get();
+				if (toadd.getPotion() == Effects.NIGHT_VISION && CommonConfigs.misc_replaceNvWithNvnf.get())
+					toadd = new EffectInstance(EffectNightVisionNF.INSTANCE, toadd.getDuration(), toadd.getAmplifier(), toadd.isAmbient(), toadd.doesShowParticles(), toadd.isShowIcon());
+				if (effectSet.add(toadd))
+					effectsPool.add(toadd);
+			}
+		}
 	}
 	
 	@Override

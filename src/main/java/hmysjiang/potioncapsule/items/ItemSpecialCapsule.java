@@ -20,6 +20,7 @@ import hmysjiang.potioncapsule.utils.helper.WorldHelper;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -208,6 +209,13 @@ public class ItemSpecialCapsule extends Item implements ICapsuleTriggerable {
 			return ((ItemSpecialCapsule) capsuleStack.getItem()).type.canTrigger;
 		}
 		return false;
+	}
+	
+	@Override
+	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+		if (stack.getOrCreateTag().getBoolean("CapsuleCreative") && stack.isDamaged()) {
+			stack.setDamage(0);
+		}
 	}
 	
 	@Override
