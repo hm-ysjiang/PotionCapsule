@@ -1,0 +1,14 @@
+{
+	"type": "potioncapsule:special_capsule_repair",
+	"specialtype": "YELLOW_OVERDRIVE",
+	"items": [
+		{
+			"item": "minecraft:glowstone",
+			"amount": 64
+		},
+		{
+			"tag": "forge:dusts/glowstone",
+			"amount": 16
+		}
+	]
+}

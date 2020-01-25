@@ -1,0 +1,33 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "potioncapsule_crafting_group",
+	"pattern": 
+	[
+		"SDS",
+		"CAC",
+		"SDS"
+	],
+	"key": 
+	{
+		"A": 
+		{
+			"item": "minecraft:anvil"
+		},
+		"C": 
+		{
+			"tag": "potioncapsule:capsules"
+		},
+		"S": 
+		{
+			"item": "minecraft:stone"
+		},
+		"D": 
+		{
+			"tag": "forge:gems/diamond"
+		}
+	},
+	"result": 
+	{
+		"item": "potioncapsule:block_special_capsule_repairer"
+	}
+}

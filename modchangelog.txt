@@ -16,8 +16,10 @@
  - Add Wither Dust to item tag forge:dusts/wither
  - Add mod logo
 
+
 1.2.2a
  - Fix the wrongly named recipes in 1.2.2
+
 
 1.2.2
  - Add a option button to each slot in the Capsule Pendant, let player can toggle usage message of specific slot in-game
@@ -27,11 +29,13 @@
  - Known issue: 
  -- The special capsule repair still not showing every time, re-login to the server seems to be able to fix it
 
+
 1.2.1
  - New Special Capsule: Sunlight Yellow Overdrive
  - Fix the bug that cause RefineStorage Grid not working (#9) and potential crash due to other mods putting nbt back using readSharedTag while getting nbt from getTag 
  - Fix that special capsules not responding to the mute status config
  - Fix the broken-written jei integration of special repairs
+
 
 1.2.0
  - Change the behavior of special capsules
@@ -39,6 +43,7 @@
  -- Can be recharged using their corresponding materials anvils, defined in data/potioncapsule/tags/item/special_repair/<type>
  -- Can be turned off in the config
  -- The max durability configurable in config
+
 
 1.1.4
  - Introducing new Special Capsules! Only works in the pendant
@@ -50,36 +55,46 @@
  - Remove the glowing effect on capsules, only creative capsules will glow
  - Fix Instant Capsule not rendering potion color
 
+
 1.1.3
  - Add the attachment recipe of Instant Capsule, instant effects now can be attached onto Instant Capsules
  - Change the recipe format, may need user to re-configure the custom datapacks
 
+
 1.1.2
  - JEI Support
 
+
 1.1.1
  - Fix #7 (pool injection with null name bring the loottable event down)
+
 
 1.1.0
  - Curios API support (optional dependency)
  - Capsule pendant can now be equipped on necklace slot if Curios API is installed (#5)
 
+
 1.0.6
  - Resolve #3 by change the server config to common config, may need user side config reset
  - Fix #6
 
+
 1.0.5
  - Change the night-time trigger into in-dark
+
 
 1.0.4
  - Fix #2
  - Capsules now render their potion color in the transparent part
 
+
 1.0.3
  - Fix #1
+
 
 1.0.2
  - Add item spawn into vanilla loot table
  - Wart Dust is no longer craftable by default(still can be enabled in config), it can be obtained by harvesting mature nether wart
+
 
 1.0.1

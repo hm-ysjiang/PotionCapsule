@@ -8,9 +8,11 @@ import hmysjiang.potioncapsule.client.SpecialCapsuleItemColor;
 import hmysjiang.potioncapsule.client.gui.ScreenGelatinExtractor;
 import hmysjiang.potioncapsule.client.gui.ScreenGelatinFormer;
 import hmysjiang.potioncapsule.client.gui.ScreenPendant;
+import hmysjiang.potioncapsule.client.gui.ScreenSpecialCapsuleRepairer;
 import hmysjiang.potioncapsule.container.ContainerGelatinExtractor;
 import hmysjiang.potioncapsule.container.ContainerGelatinFormer;
 import hmysjiang.potioncapsule.container.ContainerPendant;
+import hmysjiang.potioncapsule.container.ContainerSpecialCapsuleRepairer;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.items.ItemSpecialCapsule;
 import hmysjiang.potioncapsule.items.ItemSpecialCapsule.EnumSpecialType;
@@ -34,6 +36,7 @@ public class ClientProxy implements ISidedProxy {
 		ScreenManager.registerFactory(ContainerPendant.TYPE, ScreenPendant::new);
 		ScreenManager.registerFactory(ContainerGelatinExtractor.TYPE, ScreenGelatinExtractor::new);
 		ScreenManager.registerFactory(ContainerGelatinFormer.TYPE, ScreenGelatinFormer::new);
+		ScreenManager.registerFactory(ContainerSpecialCapsuleRepairer.TYPE, ScreenSpecialCapsuleRepairer::new);
 	}
 	
 	@Override

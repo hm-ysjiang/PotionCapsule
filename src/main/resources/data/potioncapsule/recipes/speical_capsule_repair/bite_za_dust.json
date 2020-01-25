@@ -1,0 +1,14 @@
+{
+	"type": "potioncapsule:special_capsule_repair",
+	"specialtype": "BITEZDUST",
+	"items": [
+		{
+			"tag": "forge:dusts/wither",
+			"amount": 1
+		},
+		{
+			"tag": "forge:heads",
+			"amount": 2
+		}
+	]
+}

@@ -1,0 +1,10 @@
+{
+    "parent": "block/orientable_with_bottom",
+    "textures": {
+        "bottom": "potioncapsule:block/dark_machine_base",
+        "front": "potioncapsule:block/capsule_repairer",
+        "side": "potioncapsule:block/dark_machine_base",
+        "top": "potioncapsule:block/dark_machine_base",
+        "south": "potioncapsule:block/dark_machine_base"
+    }
+}

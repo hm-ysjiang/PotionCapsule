@@ -7,7 +7,7 @@ import hmysjiang.potioncapsule.recipe.RecipeCapsuleCombinationOrClear;
 import hmysjiang.potioncapsule.recipe.RecipeCapsuleCreativeAttach;
 import hmysjiang.potioncapsule.recipe.RecipeGelatinExtractor;
 import hmysjiang.potioncapsule.recipe.RecipeGelatinFormer;
-import hmysjiang.potioncapsule.recipe.RecipeSpecialRepair;
+import hmysjiang.potioncapsule.recipe.RecipeSpecialCapsuleRepairer;
 import hmysjiang.potioncapsule.recipe.RecipeWartDust;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraftforge.event.RegistryEvent;
@@ -29,7 +29,7 @@ public class ModRecipes {
 										,
 										RecipeWartDust.SERIALIZER
 										,
-										RecipeSpecialRepair.SERIALIZER);
+										RecipeSpecialCapsuleRepairer.SERIALIZER);
 	}
 	
 }

@@ -8,6 +8,7 @@ import hmysjiang.potioncapsule.Reference.BlockRegs;
 import hmysjiang.potioncapsule.blocks.fiery_lily.BlockFieryLilypad;
 import hmysjiang.potioncapsule.blocks.gelatin_extractor.BlockGelatinExtractor;
 import hmysjiang.potioncapsule.blocks.gelatin_former.BlockGelatinFormer;
+import hmysjiang.potioncapsule.blocks.special_capsule_repairer.BlockSpecialCapsuleRepairer;
 import hmysjiang.potioncapsule.blocks.tiny_cactus.BlockTinyCactus;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.block.Block;
@@ -66,12 +67,14 @@ public class ModBlocks {
 			return VoxelShapes.create(err, err, err, 1-err, 1-err, 1-err);
 		};
 	}.setRegistryName(Defaults.modPrefix.apply(BlockRegs.SPIKY_OBI));
+	public static final Block CAPSULE_REPAIR = new BlockSpecialCapsuleRepairer().setRegistryName(Defaults.modPrefix.apply(BlockRegs.SPECIAL_CAPSULE_REPAIRER));
 	
 	@SubscribeEvent
 	public static void onBlockRegistry(RegistryEvent.Register<Block> event) {
 		PotionCapsule.Logger.info("Blocks Registering");
 		event.getRegistry().registerAll(GELATIN_EXTRACTOR,
-										GELATIN_FORMER
+										GELATIN_FORMER,
+										CAPSULE_REPAIR
 										,
 										LIGHT
 										,

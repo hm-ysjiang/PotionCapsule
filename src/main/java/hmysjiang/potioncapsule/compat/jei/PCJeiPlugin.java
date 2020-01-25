@@ -1,15 +1,21 @@
 package hmysjiang.potioncapsule.compat.jei;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import hmysjiang.potioncapsule.client.gui.ScreenGelatinExtractor;
 import hmysjiang.potioncapsule.client.gui.ScreenGelatinFormer;
+import hmysjiang.potioncapsule.client.gui.ScreenSpecialCapsuleRepairer;
+import hmysjiang.potioncapsule.compat.jei.recipe.RecipeSpecialRepairJei;
 import hmysjiang.potioncapsule.container.ContainerGelatinExtractor;
 import hmysjiang.potioncapsule.init.ModBlocks;
+import hmysjiang.potioncapsule.items.ItemSpecialCapsule;
 import hmysjiang.potioncapsule.recipe.RecipeGelatinExtractor;
 import hmysjiang.potioncapsule.recipe.RecipeGelatinFormer;
-import hmysjiang.potioncapsule.recipe.RecipeSpecialRepair;
+import hmysjiang.potioncapsule.recipe.RecipeSpecialCapsuleRepairer;
 import hmysjiang.potioncapsule.utils.Defaults;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -19,11 +25,11 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.tags.BlockTags;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 
 @JeiPlugin
@@ -48,8 +54,7 @@ public class PCJeiPlugin implements IModPlugin {
 		registration.addRecipeCatalyst(new ItemStack(ModBlocks.GELATIN_EXTRACTOR), GelExtractorJei.UID);
 		registration.addRecipeCatalyst(new ItemStack(ModBlocks.GELATIN_FORMER), GelFormerJei.UID);
 		registration.addRecipeCatalyst(new ItemStack(Items.NETHER_WART), WartDropJei.UID);
-		for (Block block: BlockTags.ANVIL.getAllElements())
-			registration.addRecipeCatalyst(new ItemStack(block), SpecialRepairJei.UID);
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.CAPSULE_REPAIR), SpecialRepairJei.UID);
 	}
 	
 	@Override
@@ -68,15 +73,23 @@ public class PCJeiPlugin implements IModPlugin {
 			registration.addRecipes(Arrays.asList(r), WartDropJei.UID);
 		});
 		
-		registration.addRecipes(Minecraft.getInstance().world.getRecipeManager().getRecipes().stream().filter(
-			recipe -> { return recipe != null && recipe instanceof RecipeSpecialRepair; }
-		).collect(Collectors.toList()), SpecialRepairJei.UID);
+		List<RecipeSpecialRepairJei> splitRecipes = new ArrayList<>();
+		for (IRecipe<?> r: Minecraft.getInstance().world.getRecipeManager().getRecipes().stream().filter(
+				recipe -> { return recipe != null && recipe instanceof RecipeSpecialCapsuleRepairer; }
+					).collect(Collectors.toList())) {
+			RecipeSpecialCapsuleRepairer recipe = (RecipeSpecialCapsuleRepairer) r;
+			for (Entry<Ingredient, Integer> entry: recipe.getMaterials().entrySet()) {
+				splitRecipes.add(new RecipeSpecialRepairJei(ItemSpecialCapsule.getCapsuleInstance(recipe.getCapsuleType()), entry.getKey(), entry.getValue()));
+			}
+		}
+		registration.addRecipes(splitRecipes, SpecialRepairJei.UID);
 	}
 	
 	@Override
 	public void registerGuiHandlers(IGuiHandlerRegistration registration) {
 		registration.addRecipeClickArea(ScreenGelatinExtractor.class, 76, 35, 24, 16, GelExtractorJei.UID);
 		registration.addRecipeClickArea(ScreenGelatinFormer.class, 76, 35, 24, 16, GelFormerJei.UID);
+		registration.addRecipeClickArea(ScreenSpecialCapsuleRepairer.class, 107, 37, 24, 19, SpecialRepairJei.UID);
 	}
 	
 	@Override

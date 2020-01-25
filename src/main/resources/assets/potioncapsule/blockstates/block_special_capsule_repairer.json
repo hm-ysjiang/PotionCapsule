@@ -1,0 +1,8 @@
+{
+    "variants": {
+		"facing=north": { "model": "potioncapsule:block/special_capsule_repairer" },
+		"facing=south": { "model": "potioncapsule:block/special_capsule_repairer", "y": 180 },
+		"facing=west": { "model": "potioncapsule:block/special_capsule_repairer", "y": 270 },
+		"facing=east": { "model": "potioncapsule:block/special_capsule_repairer", "y": 90 }
+    }
+}

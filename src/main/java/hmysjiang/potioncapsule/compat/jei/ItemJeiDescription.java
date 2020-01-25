@@ -73,6 +73,9 @@ public class ItemJeiDescription {
 		
 		// Cat Fur
 		registration.addIngredientInfo(new ItemStack(ModItems.CAT_FUR), VanillaTypes.ITEM, "potioncapsule.jei_desc.cat_fur");
+		
+		// Special Repairer
+		registration.addIngredientInfo(new ItemStack(ModBlocks.CAPSULE_REPAIR), VanillaTypes.ITEM, "potioncapsule.jei_desc.special_repairer");
 	}
 	
 }

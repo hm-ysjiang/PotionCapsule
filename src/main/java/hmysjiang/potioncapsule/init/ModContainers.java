@@ -5,6 +5,7 @@ import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.container.ContainerGelatinExtractor;
 import hmysjiang.potioncapsule.container.ContainerGelatinFormer;
 import hmysjiang.potioncapsule.container.ContainerPendant;
+import hmysjiang.potioncapsule.container.ContainerSpecialCapsuleRepairer;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -18,7 +19,8 @@ public class ModContainers {
 		PotionCapsule.Logger.info("Containers Registering");
 		event.getRegistry().registerAll(ContainerPendant.TYPE,
 										ContainerGelatinExtractor.TYPE,
-										ContainerGelatinFormer.TYPE);
+										ContainerGelatinFormer.TYPE,
+										ContainerSpecialCapsuleRepairer.TYPE);
 	}
 	
 }
