@@ -1,3 +1,8 @@
+1.2.4
+ - Fix(#10) the bug that causes server crash when trying to load witch's loot table
+ - Add Special Capsule Repairer, the special capsules are no longer repaired in an anvil
+ - Remove all special_repair tags for anvil repairing, as they now go into the recipe of Special Capsule Repairer
+
 1.2.3
  - Change the trigger WATER(in water) to FLUID(in fluids)
  - Fix the bug that cause recipe of special_repair not synced to client sometimes
