@@ -5,6 +5,7 @@ import java.util.Random;
 import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.Reference.BlockRegs;
+import hmysjiang.potioncapsule.blocks.auto_brewer.BlockAutoBrewer;
 import hmysjiang.potioncapsule.blocks.fiery_lily.BlockFieryLilypad;
 import hmysjiang.potioncapsule.blocks.gelatin_extractor.BlockGelatinExtractor;
 import hmysjiang.potioncapsule.blocks.gelatin_former.BlockGelatinFormer;
@@ -68,14 +69,16 @@ public class ModBlocks {
 		};
 	}.setRegistryName(Defaults.modPrefix.apply(BlockRegs.SPIKY_OBI));
 	public static final Block CAPSULE_REPAIR = new BlockSpecialCapsuleRepairer().setRegistryName(Defaults.modPrefix.apply(BlockRegs.SPECIAL_CAPSULE_REPAIRER));
+	public static final Block AUTO_BREWER = new BlockAutoBrewer().setRegistryName(Defaults.modPrefix.apply(BlockRegs.AUTO_BREWER));
 	
 	@SubscribeEvent
 	public static void onBlockRegistry(RegistryEvent.Register<Block> event) {
 		PotionCapsule.Logger.info("Blocks Registering");
 		event.getRegistry().registerAll(GELATIN_EXTRACTOR,
 										GELATIN_FORMER,
-										CAPSULE_REPAIR
-										,
+										CAPSULE_REPAIR,
+//										AUTO_BREWER
+//										,
 										LIGHT
 										,
 										TINY_CACTI,

@@ -6,7 +6,7 @@ displayName="Potion Capsule" #mandatory
 logoFile="logo.png"
 modId="potioncapsule" #mandatory
 
-version="1.2.4" #mandatory
+version="1.2.4a" #mandatory
 
 displayURL="https://www.curseforge.com/minecraft/mc-mods/potion-capsule/" #optional
 issueTrackerURL="https://github.com/hm-ysjiang/PotionCapsule/issues/" #optional

@@ -8,6 +8,7 @@ public class CommonConfigs {
 	public static ForgeConfigSpec.IntValue capsule_stackSize;
 	public static ForgeConfigSpec.IntValue capsule_preUsage;
 
+	public static ForgeConfigSpec.BooleanValue special_clearOnCraft;
 	public static ForgeConfigSpec.BooleanValue special_bzd_enable;
 	public static ForgeConfigSpec.IntValue special_bzd_uses;
 	public static ForgeConfigSpec.BooleanValue special_xmas_enable;
@@ -39,6 +40,8 @@ public class CommonConfigs {
 				.defineInRange("capsule.preUsage", 2, 0, 99);
 		
 		// special capsules
+		special_clearOnCraft = builder.comment(" Should a special capsule be cleared when crafted?")
+				.define("specialcap.clearOnCraft", true);
 		special_bzd_enable = builder.comment(" Set this to false to disable the Bite the dust capsule")
 				.define("specialcap.bzd.enable", true);
 		special_xmas_enable = builder.comment(" Set this to false to disable the Lost Christmas capsule")

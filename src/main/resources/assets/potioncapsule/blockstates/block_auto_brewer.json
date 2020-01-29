@@ -1,0 +1,8 @@
+{
+    "variants": {
+		"facing=north": { "model": "potioncapsule:block/auto_brewer" },
+		"facing=south": { "model": "potioncapsule:block/auto_brewer", "y": 180 },
+		"facing=west": { "model": "potioncapsule:block/auto_brewer", "y": 270 },
+		"facing=east": { "model": "potioncapsule:block/auto_brewer", "y": 90 }
+    }
+}

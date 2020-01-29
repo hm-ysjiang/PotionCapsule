@@ -26,7 +26,8 @@
 	"block.potioncapsule.block_tiny_cactus": "Tiny Cactus",
 	"block.potioncapsule.block_fiery_lily": "Fiery Lilypad",
 	"block.potioncapsule.block_spiky_obsidian": "Spiky Obsidian",
-	"block.potioncapsule.block_special_capsule_repairer": "Special Capsule Repairer"
+	"block.potioncapsule.block_special_capsule_repairer": "Special Capsule Recharger",
+	"block.potioncapsule.block_auto_brewer": "Auto Brewer"
 	,
 	"_Tooltips": "",
 	"potioncapsule.tooltip.capsule.empty": "Empty",
@@ -128,7 +129,7 @@
 	"potioncapsule.jei_category.gel_extractor": "Gelatin Extractor",
 	"potioncapsule.jei_category.gel_former": "Gelatin Former",
 	"potioncapsule.jei_category.wart_drop": "Nether Wart Dust",
-	"potioncapsule.jei_category.special_repair": "Special Capsule Repairer"
+	"potioncapsule.jei_category.special_repair": "Special Capsule Recharger"
 	,
 	"potioncapsule.jei_desc.jelly_apple": "Crafted in a Gelatin Former using apple and gelatin powder.",
 	"potioncapsule.jei_desc.jelly_cactus": "Crafted in a Gelatin Former using Tiny Cactus and gelatin powder.",
@@ -145,14 +146,14 @@
 	"potioncapsule.jei_desc.gel_extractor": "Extract Gelatin Powder from items.",
 	"potioncapsule.jei_desc.gel_former": "Craft Gelatin Powder with other catalysts into items.",
 	"potioncapsule.jei_desc.special": "Only works in a Capsule Pendant.",
-	"potioncapsule.jei_desc.special_repair": "Can be repaired using corresponding materials in Special Capsule Repairer.",
+	"potioncapsule.jei_desc.special_repair": "Can be recharged using corresponding materials in Special Capsule Recharger.",
 	"potioncapsule.jei_desc.special.man": "This type can be manually triggered.",
 	"potioncapsule.jei_desc.wither_frag": "Dropped by killing Wither Skeletons.",
 	"potioncapsule.jei_desc.tiny_cactus": "Spawns on top of cacti when growing them.",
 	"potioncapsule.jei_desc.cactus_frag": "Dropped by breaking Tiny Cactus.",
 	"potioncapsule.jei_desc.fiery_lily": "Randomly spawned on lava lakes in the nether.",
 	"potioncapsule.jei_desc.cat_fur": "Dropped by cats naturally. (DONT KILL THEM)",
-	"potioncapsule.jei_desc.special_repairer": "Repairs Special Capsule using corresponding materials."
+	"potioncapsule.jei_desc.special_repairer": "Recharges Special Capsule using corresponding materials."
 	,
 	"potioncapsule.jei_addi.wart_drop": "60%s chance to drop 1-3"
 }

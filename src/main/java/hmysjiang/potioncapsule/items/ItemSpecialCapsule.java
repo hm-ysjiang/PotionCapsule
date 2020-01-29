@@ -49,13 +49,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.registries.IForgeRegistry;
 
-@EventBusSubscriber(bus=EventBusSubscriber.Bus.FORGE)
+@EventBusSubscriber
 public class ItemSpecialCapsule extends Item implements ICapsuleTriggerable {
 
 	private static Map<EnumSpecialType, Item> capsules = new HashMap<>();
@@ -101,6 +102,13 @@ public class ItemSpecialCapsule extends Item implements ICapsuleTriggerable {
 					}
 				});
 			}
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onCraft(ItemCraftedEvent event) {
+		if (CommonConfigs.special_clearOnCraft.get() && event.getCrafting().getItem() instanceof ItemSpecialCapsule) {
+			event.getCrafting().setDamage(event.getCrafting().getMaxDamage());
 		}
 	}
 	

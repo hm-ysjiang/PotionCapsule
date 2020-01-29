@@ -33,6 +33,7 @@ public class Reference {
 		public static final String FIERY_LILY = "block_fiery_lily";
 		public static final String SPIKY_OBI = "block_spiky_obsidian";
 		public static final String SPECIAL_CAPSULE_REPAIRER = "block_special_capsule_repairer";
+		public static final String AUTO_BREWER = "block_auto_brewer";
 		
 	}
 	

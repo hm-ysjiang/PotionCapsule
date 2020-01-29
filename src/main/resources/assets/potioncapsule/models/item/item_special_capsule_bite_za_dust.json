@@ -1,3 +1,11 @@
 {
-    "parent": "potioncapsule:item/item_special_capsule_base"
+    "parent": "potioncapsule:item/item_special_capsule_4",
+    "overrides": [
+    	{ "predicate": {"damaged": 0}, "model": "potioncapsule:item/item_special_capsule_0"},
+    	{ "predicate": {"damaged": 1, "damage": 0.2}, "model": "potioncapsule:item/item_special_capsule_0"},
+        { "predicate": {"damaged": 1, "damage": 0.4}, "model": "potioncapsule:item/item_special_capsule_1"},
+        { "predicate": {"damaged": 1, "damage": 0.6}, "model": "potioncapsule:item/item_special_capsule_2"},
+        { "predicate": {"damaged": 1, "damage": 0.8}, "model": "potioncapsule:item/item_special_capsule_3"},
+        { "predicate": {"damaged": 1, "damage": 1.0}, "model": "potioncapsule:item/item_special_capsule_4"}
+    ]
 }

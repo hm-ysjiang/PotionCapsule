@@ -3,12 +3,8 @@
 	"specialtype": "BITEZDUST",
 	"items": [
 		{
-			"tag": "forge:dusts/wither",
+			"item": "minecraft:nether_star",
 			"amount": 1
-		},
-		{
-			"tag": "forge:heads",
-			"amount": 2
 		}
 	]
 }
