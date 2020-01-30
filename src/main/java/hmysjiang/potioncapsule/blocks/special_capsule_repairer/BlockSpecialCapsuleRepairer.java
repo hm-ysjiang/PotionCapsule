@@ -41,7 +41,6 @@ public class BlockSpecialCapsuleRepairer extends HorizontalBaseMachineBlock {
 	
 	public BlockSpecialCapsuleRepairer() {
 		super(null);
-		// AnvilBlock
 	}
 	
 	@Override

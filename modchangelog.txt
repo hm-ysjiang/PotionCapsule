@@ -1,7 +1,14 @@
+1.2.4a
+ - Specials Capsules are no longer fully charged when crafted by default
+ - Tweaked the recipes and recharges of special capsule bite the dust
+ - Add item model overrides for special capsules
+
+
 1.2.4
  - Fix(#10) the bug that causes server crash when trying to load witch's loot table
  - Add Special Capsule Repairer, the special capsules are no longer repaired in an anvil
  - Remove all special_repair tags for anvil repairing, as they now go into the recipe of Special Capsule Repairer
+
 
 1.2.3
  - Change the trigger WATER(in water) to FLUID(in fluids)

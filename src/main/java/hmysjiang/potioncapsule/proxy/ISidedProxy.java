@@ -8,6 +8,7 @@ import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.loot.RandomCapsuleEffect;
 import hmysjiang.potioncapsule.network.PacketHandler;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.functions.LootFunctionManager;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 
@@ -37,6 +38,10 @@ public interface ISidedProxy {
 	}
 	
 	default PlayerEntity getPlayer() {
+		return null;
+	}
+	
+	default World getWorld() {
 		return null;
 	}
 	

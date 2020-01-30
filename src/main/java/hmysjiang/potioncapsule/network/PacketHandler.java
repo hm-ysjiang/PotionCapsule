@@ -22,9 +22,12 @@ public class PacketHandler {
 		
 		INSTANCE.registerMessage(disc++, CPacketKeyBinding.class, CPacketKeyBinding::encode, CPacketKeyBinding::decode, CPacketKeyBinding::handle);
 		INSTANCE.registerMessage(disc++, CPacketUpdatePendantStatus.class, CPacketUpdatePendantStatus::encode, CPacketUpdatePendantStatus::decode, CPacketUpdatePendantStatus::handle);
+		INSTANCE.registerMessage(disc++, CPacketUpdateBrewerMemory.class, CPacketUpdateBrewerMemory::encode, CPacketUpdateBrewerMemory::decode, CPacketUpdateBrewerMemory::handle);
+		INSTANCE.registerMessage(disc++, CPacketClearBrewerOutput.class, CPacketClearBrewerOutput::encode, CPacketClearBrewerOutput::decode, CPacketClearBrewerOutput::handle);
 		
 		INSTANCE.registerMessage(disc++, SPacketVisualExplosion.class, SPacketVisualExplosion::encode, SPacketVisualExplosion::decode, SPacketVisualExplosion::handle);
 		INSTANCE.registerMessage(disc++, SPacketPlayerSound.class, SPacketPlayerSound::encode, SPacketPlayerSound::decode, SPacketPlayerSound::handle);
+		INSTANCE.registerMessage(disc++, SPacketResponseBrewerMemory.class, SPacketResponseBrewerMemory::encode, SPacketResponseBrewerMemory::decode, SPacketResponseBrewerMemory::handle);
 	}
 	
 	public static SimpleChannel getInstacne() {

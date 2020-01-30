@@ -2,6 +2,7 @@ package hmysjiang.potioncapsule.init;
 
 import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.Reference;
+import hmysjiang.potioncapsule.container.ContainerAutoBrewer;
 import hmysjiang.potioncapsule.container.ContainerGelatinExtractor;
 import hmysjiang.potioncapsule.container.ContainerGelatinFormer;
 import hmysjiang.potioncapsule.container.ContainerPendant;
@@ -20,7 +21,8 @@ public class ModContainers {
 		event.getRegistry().registerAll(ContainerPendant.TYPE,
 										ContainerGelatinExtractor.TYPE,
 										ContainerGelatinFormer.TYPE,
-										ContainerSpecialCapsuleRepairer.TYPE);
+										ContainerSpecialCapsuleRepairer.TYPE,
+										ContainerAutoBrewer.TYPE);
 	}
 	
 }

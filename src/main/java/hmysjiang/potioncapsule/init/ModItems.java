@@ -85,8 +85,8 @@ public class ModItems {
 						BLOCK_TINY_CACTUS,
 						BLOCK_FIERY_LILY,
 						BLOCK_SPIKY_OBI,
-//						BLOCK_AUTO_BREWER
-//						,
+						BLOCK_AUTO_BREWER
+						,
 						CAPSULE,
 						CAPSULE_INSTANT
 						,

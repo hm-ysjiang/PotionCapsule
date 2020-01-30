@@ -58,7 +58,17 @@
 	"potioncapsule.gui.pendant.tooltip.specialslot": "Special Slots",
 	"potioncapsule.gui.pendant.tooltip.status": "UsageMessage: ",
 	"potioncapsule.gui.pendant.tooltip.status_on": "On",
-	"potioncapsule.gui.pendant.tooltip.status_off": "Off"
+	"potioncapsule.gui.pendant.tooltip.status_off": "Off",
+	"potioncapsule.gui.auto_brewer.button.set": "Set",
+	"potioncapsule.gui.auto_brewer.button.reset": "Reset",
+	"potioncapsule.gui.auto_brewer.tooltip.fuel": "Fuel: %s",
+	"potioncapsule.gui.auto_brewer.tooltip.gunpowder": "Gunpowder: %s",
+	"potioncapsule.gui.auto_brewer.tooltip.breath": "Dragon Breath: %s",
+	"potioncapsule.gui.auto_brewer.tooltip.catalyst": "Instant Catalyst: %s",
+	"potioncapsule.gui.auto_brewer.tooltip.water": "Water: %s/4000mB",
+	"potioncapsule.gui.auto_brewer.tooltip.output": "Potion Output",
+	"potioncapsule.gui.auto_brewer.tooltip.output.empty": "Empty",
+	"potioncapsule.gui.auto_brewer.tooltip.output.clear": "Shift-click to clear"
 	,
 	"_Effects": "",
 	"effect.potioncapsule.effect_night_vision_nf": "Night Vision NF",

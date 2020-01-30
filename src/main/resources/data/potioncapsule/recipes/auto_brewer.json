@@ -1,0 +1,33 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "potioncapsule_crafting_group",
+	"pattern": 
+	[
+		"RKR",
+		"BBB",
+		"RSR"
+	],
+	"key": 
+	{
+		"R": 
+		{
+			"item": "minecraft:blaze_rod"
+		},
+		"K": 
+		{
+			"item": "minecraft:bucket"
+		},
+		"B": 
+		{
+			"item": "minecraft:brewing_stand"
+		},
+		"S": 
+		{
+			"item": "minecraft:stone"
+		}
+	},
+	"result": 
+	{
+		"item": "potioncapsule:block_auto_brewer"
+	}
+}

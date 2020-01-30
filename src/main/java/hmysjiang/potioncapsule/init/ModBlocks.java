@@ -77,8 +77,8 @@ public class ModBlocks {
 		event.getRegistry().registerAll(GELATIN_EXTRACTOR,
 										GELATIN_FORMER,
 										CAPSULE_REPAIR,
-//										AUTO_BREWER
-//										,
+										AUTO_BREWER
+										,
 										LIGHT
 										,
 										TINY_CACTI,
