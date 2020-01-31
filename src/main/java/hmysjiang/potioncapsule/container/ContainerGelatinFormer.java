@@ -2,6 +2,7 @@ package hmysjiang.potioncapsule.container;
 
 import hmysjiang.potioncapsule.blocks.gelatin_former.TileEntityGelatinFormer;
 import hmysjiang.potioncapsule.utils.Defaults;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
@@ -48,6 +49,15 @@ public class ContainerGelatinFormer extends BaseContainer {
 	
 	public TileEntityGelatinFormer getTile() {
 		return tile;
+	}
+	
+	@Override
+	public boolean canInteractWith(PlayerEntity playerIn) {
+		if (tile == null || tile.isRemoved()) {
+			return false;
+		} else {
+			return !(playerIn.getPosition().distanceSq(tile.getPos()) > 64.0D);
+		}
 	}
 
 }

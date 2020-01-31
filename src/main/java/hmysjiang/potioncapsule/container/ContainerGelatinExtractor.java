@@ -2,6 +2,7 @@ package hmysjiang.potioncapsule.container;
 
 import hmysjiang.potioncapsule.blocks.gelatin_extractor.TileEntityGelatinExtractor;
 import hmysjiang.potioncapsule.utils.Defaults;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
@@ -47,6 +48,15 @@ public class ContainerGelatinExtractor extends BaseContainer {
 	
 	public TileEntityGelatinExtractor getTile() {
 		return tile;
+	}
+	
+	@Override
+	public boolean canInteractWith(PlayerEntity playerIn) {
+		if (tile == null || tile.isRemoved()) {
+			return false;
+		} else {
+			return !(playerIn.getPosition().distanceSq(tile.getPos()) > 64.0D);
+		}
 	}
 
 }

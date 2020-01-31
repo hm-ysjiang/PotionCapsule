@@ -7,6 +7,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraft.util.IItemProvider;
+import net.minecraftforge.common.brewing.BrewingRecipe;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 
 public class PotionHelper {
@@ -63,13 +64,34 @@ public class PotionHelper {
 		registerSplashLinger(NORMAL);
 		registerSplashLinger(LONG);
 		
-		BrewingRecipeRegistry.addRecipe(ipotion(origin),	Ingredient.fromItems(initMaterial), potion(NORMAL));
-		BrewingRecipeRegistry.addRecipe(ipotion(NORMAL),	redstone(),							potion(LONG));
+		if (origin == Potions.AWKWARD) {
+			BrewingRecipeRegistry.addRecipe(new BrewingRecipe(ipotion(origin),		Ingredient.fromItems(initMaterial), potion(NORMAL)) {
+				@Override
+				public boolean isInput(ItemStack stack) {
+					return super.isInput(stack) && PotionUtils.getPotionFromItem(stack) == Potions.AWKWARD;
+				}
+			});
+			BrewingRecipeRegistry.addRecipe(new BrewingRecipe(ipotionLinger(origin),	Ingredient.fromItems(initMaterial), potionLinger(NORMAL)) {
+				@Override
+				public boolean isInput(ItemStack stack) {
+					return super.isInput(stack) && PotionUtils.getPotionFromItem(stack) == Potions.AWKWARD;
+				}
+			});
+			BrewingRecipeRegistry.addRecipe(new BrewingRecipe(ipotionSplash(origin),	Ingredient.fromItems(initMaterial), potionSplash(NORMAL)) {
+				@Override
+				public boolean isInput(ItemStack stack) {
+					return super.isInput(stack) && PotionUtils.getPotionFromItem(stack) == Potions.AWKWARD;
+				}
+			});
+		}
+		else {
+			BrewingRecipeRegistry.addRecipe(ipotion(origin),		Ingredient.fromItems(initMaterial), potion(NORMAL));
+			BrewingRecipeRegistry.addRecipe(ipotionLinger(origin),	Ingredient.fromItems(initMaterial), potionLinger(NORMAL));
+			BrewingRecipeRegistry.addRecipe(ipotionSplash(origin),	Ingredient.fromItems(initMaterial), potionSplash(NORMAL));
+		}
 		
-		BrewingRecipeRegistry.addRecipe(ipotionSplash(origin),	Ingredient.fromItems(initMaterial), potionSplash(NORMAL));
+		BrewingRecipeRegistry.addRecipe(ipotion(NORMAL),		redstone(),							potion(LONG));
 		BrewingRecipeRegistry.addRecipe(ipotionSplash(NORMAL),	redstone(),							potionSplash(LONG));
-		
-		BrewingRecipeRegistry.addRecipe(ipotionLinger(origin),	Ingredient.fromItems(initMaterial), potionLinger(NORMAL));
 		BrewingRecipeRegistry.addRecipe(ipotionLinger(NORMAL),	redstone(),							potionLinger(LONG));
 	}
 	
@@ -82,15 +104,38 @@ public class PotionHelper {
 		registerSplashLinger(LONG);
 		registerSplashLinger(VERY_LONG);
 		
-		BrewingRecipeRegistry.addRecipe(ipotion(origin),	Ingredient.fromItems(initMaterial), potion(NORMAL));
+		if (origin == Potions.AWKWARD) {
+			BrewingRecipeRegistry.addRecipe(new BrewingRecipe(ipotion(origin),		Ingredient.fromItems(initMaterial), potion(NORMAL)) {
+				@Override
+				public boolean isInput(ItemStack stack) {
+					return super.isInput(stack) && PotionUtils.getPotionFromItem(stack) == Potions.AWKWARD;
+				}
+			});
+			BrewingRecipeRegistry.addRecipe(new BrewingRecipe(ipotionLinger(origin),	Ingredient.fromItems(initMaterial), potionLinger(NORMAL)) {
+				@Override
+				public boolean isInput(ItemStack stack) {
+					return super.isInput(stack) && PotionUtils.getPotionFromItem(stack) == Potions.AWKWARD;
+				}
+			});
+			BrewingRecipeRegistry.addRecipe(new BrewingRecipe(ipotionSplash(origin),	Ingredient.fromItems(initMaterial), potionSplash(NORMAL)) {
+				@Override
+				public boolean isInput(ItemStack stack) {
+					return super.isInput(stack) && PotionUtils.getPotionFromItem(stack) == Potions.AWKWARD;
+				}
+			});
+		}
+		else {
+			BrewingRecipeRegistry.addRecipe(ipotion(origin),		Ingredient.fromItems(initMaterial), potion(NORMAL));
+			BrewingRecipeRegistry.addRecipe(ipotionLinger(origin),	Ingredient.fromItems(initMaterial), potionLinger(NORMAL));
+			BrewingRecipeRegistry.addRecipe(ipotionSplash(origin),	Ingredient.fromItems(initMaterial), potionSplash(NORMAL));
+		}
+		
 		BrewingRecipeRegistry.addRecipe(ipotion(NORMAL),	redstone(),							potion(LONG));
 		BrewingRecipeRegistry.addRecipe(ipotion(LONG),		redstone(),							potion(VERY_LONG));
 		
-		BrewingRecipeRegistry.addRecipe(ipotionSplash(origin),	Ingredient.fromItems(initMaterial), potionSplash(NORMAL));
 		BrewingRecipeRegistry.addRecipe(ipotionSplash(NORMAL),	redstone(),							potionSplash(LONG));
 		BrewingRecipeRegistry.addRecipe(ipotionSplash(LONG),	redstone(),							potionSplash(VERY_LONG));
 		
-		BrewingRecipeRegistry.addRecipe(ipotionLinger(origin),	Ingredient.fromItems(initMaterial), potionLinger(NORMAL));
 		BrewingRecipeRegistry.addRecipe(ipotionLinger(NORMAL),	redstone(),							potionLinger(LONG));
 		BrewingRecipeRegistry.addRecipe(ipotionLinger(LONG),	redstone(),							potionLinger(VERY_LONG));
 	}
@@ -106,21 +151,44 @@ public class PotionHelper {
 		registerSplashLinger(LONG);
 		registerSplashLinger(STRONG_LONG);
 		
-		BrewingRecipeRegistry.addRecipe(ipotion(origin),	Ingredient.fromItems(initMaterial), potion(NORMAL));
+		if (origin == Potions.AWKWARD) {
+			BrewingRecipeRegistry.addRecipe(new BrewingRecipe(ipotion(origin),		Ingredient.fromItems(initMaterial), potion(NORMAL)) {
+				@Override
+				public boolean isInput(ItemStack stack) {
+					return super.isInput(stack) && PotionUtils.getPotionFromItem(stack) == Potions.AWKWARD;
+				}
+			});
+			BrewingRecipeRegistry.addRecipe(new BrewingRecipe(ipotionLinger(origin),	Ingredient.fromItems(initMaterial), potionLinger(NORMAL)) {
+				@Override
+				public boolean isInput(ItemStack stack) {
+					return super.isInput(stack) && PotionUtils.getPotionFromItem(stack) == Potions.AWKWARD;
+				}
+			});
+			BrewingRecipeRegistry.addRecipe(new BrewingRecipe(ipotionSplash(origin),	Ingredient.fromItems(initMaterial), potionSplash(NORMAL)) {
+				@Override
+				public boolean isInput(ItemStack stack) {
+					return super.isInput(stack) && PotionUtils.getPotionFromItem(stack) == Potions.AWKWARD;
+				}
+			});
+		}
+		else {
+			BrewingRecipeRegistry.addRecipe(ipotion(origin),		Ingredient.fromItems(initMaterial), potion(NORMAL));
+			BrewingRecipeRegistry.addRecipe(ipotionLinger(origin),	Ingredient.fromItems(initMaterial), potionLinger(NORMAL));
+			BrewingRecipeRegistry.addRecipe(ipotionSplash(origin),	Ingredient.fromItems(initMaterial), potionSplash(NORMAL));
+		}
+		
 		BrewingRecipeRegistry.addRecipe(ipotion(NORMAL),	glowstone(),						potion(STRONG));
 		BrewingRecipeRegistry.addRecipe(ipotion(STRONG),	glowstone(),						potion(VERY_STRONG));
 		BrewingRecipeRegistry.addRecipe(ipotion(NORMAL),	redstone(),							potion(LONG));
 		BrewingRecipeRegistry.addRecipe(ipotion(STRONG),	redstone(),							potion(STRONG_LONG));
 		BrewingRecipeRegistry.addRecipe(ipotion(LONG),		glowstone(),						potion(STRONG_LONG));
 		
-		BrewingRecipeRegistry.addRecipe(ipotionSplash(origin),	Ingredient.fromItems(initMaterial), potionSplash(NORMAL));
 		BrewingRecipeRegistry.addRecipe(ipotionSplash(NORMAL),	glowstone(),						potionSplash(STRONG));
 		BrewingRecipeRegistry.addRecipe(ipotionSplash(STRONG),	glowstone(),						potionSplash(VERY_STRONG));
 		BrewingRecipeRegistry.addRecipe(ipotionSplash(NORMAL),	redstone(),							potionSplash(LONG));
 		BrewingRecipeRegistry.addRecipe(ipotionSplash(STRONG),	redstone(),							potionSplash(STRONG_LONG));
 		BrewingRecipeRegistry.addRecipe(ipotionSplash(LONG),	glowstone(),						potionSplash(STRONG_LONG));
 		
-		BrewingRecipeRegistry.addRecipe(ipotionLinger(origin),	Ingredient.fromItems(initMaterial), potionLinger(NORMAL));
 		BrewingRecipeRegistry.addRecipe(ipotionLinger(NORMAL),	glowstone(),						potionLinger(STRONG));
 		BrewingRecipeRegistry.addRecipe(ipotionLinger(STRONG),	glowstone(),						potionLinger(VERY_STRONG));
 		BrewingRecipeRegistry.addRecipe(ipotionLinger(NORMAL),	redstone(),							potionLinger(LONG));

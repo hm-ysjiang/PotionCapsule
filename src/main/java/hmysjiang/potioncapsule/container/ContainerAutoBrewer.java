@@ -2,6 +2,7 @@ package hmysjiang.potioncapsule.container;
 
 import hmysjiang.potioncapsule.blocks.auto_brewer.TileEntityAutoBrewer;
 import hmysjiang.potioncapsule.utils.Defaults;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
@@ -21,7 +22,7 @@ public class ContainerAutoBrewer extends BaseContainer {
 	public final ItemStackHandler inventory;
 	
 	public ContainerAutoBrewer(int id, PlayerInventory playerInv, BlockPos posIn) {
-		super(TYPE, id, 15);
+		super(TYPE, id, 16);
 		
 		brewer = (TileEntityAutoBrewer) playerInv.player.world.getTileEntity(posIn);
 		inventory = brewer.getInventory();
@@ -50,6 +51,15 @@ public class ContainerAutoBrewer extends BaseContainer {
 		
 		for (int x = 0; x < 9; ++x) {
 			this.addSlot(new Slot(playerInv, x, xPos + x * 18, yPos + 58));
+		}
+	}
+	
+	@Override
+	public boolean canInteractWith(PlayerEntity playerIn) {
+		if (brewer == null || brewer.isRemoved()) {
+			return false;
+		} else {
+			return !(playerIn.getPosition().distanceSq(brewer.getPos()) > 64.0D);
 		}
 	}
 

@@ -25,12 +25,11 @@ public class BlockAutoBrewer extends HorizontalBaseMachineBlock {
 	@Override
 	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
 			BlockRayTraceResult hit) {
-		if (!worldIn.isRemote) {
-			if (handIn == Hand.MAIN_HAND && player.getHeldItemMainhand().getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent()) {
-				FluidUtil.interactWithFluidHandler(player, handIn, worldIn, pos, hit.getFace());
-			}
-			else
-				NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) worldIn.getTileEntity(pos), pos);
+		if (handIn == Hand.MAIN_HAND && player.getHeldItemMainhand().getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent()) {
+			FluidUtil.interactWithFluidHandler(player, handIn, worldIn, pos, hit.getFace());
+		}
+		else if (!worldIn.isRemote) {
+			NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) worldIn.getTileEntity(pos), pos);
 		}
 		return true;
 	}

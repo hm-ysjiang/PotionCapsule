@@ -34,7 +34,7 @@ public class SPacketResponseBrewerMemory {
 	}
 
 	public static void handle(SPacketResponseBrewerMemory message, Supplier<Context> ctx) {
-		if (PotionCapsule.proxy.getPlayer().openContainer instanceof ContainerAutoBrewer) {
+		if (PotionCapsule.proxy.getPlayer() != null && PotionCapsule.proxy.getPlayer().openContainer instanceof ContainerAutoBrewer) {
 			TileEntityAutoBrewer brewer = ((ContainerAutoBrewer) PotionCapsule.proxy.getPlayer().openContainer).brewer;
 			brewer.setMemory(message.mem, message.memory);
 		}

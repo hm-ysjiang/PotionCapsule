@@ -14,9 +14,11 @@ import hmysjiang.potioncapsule.container.ContainerAutoBrewer;
 import hmysjiang.potioncapsule.network.PacketHandler;
 import hmysjiang.potioncapsule.network.packets.CPacketClearBrewerOutput;
 import hmysjiang.potioncapsule.network.packets.CPacketUpdateBrewerMemory;
+import hmysjiang.potioncapsule.network.packets.CPacketUpdateBrewerPartition;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.client.gui.widget.button.ImageButton;
 import net.minecraft.client.renderer.Rectangle2d;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.texture.AtlasTexture;
@@ -65,12 +67,32 @@ public class ScreenAutoBrewer extends ContainerScreen<ContainerAutoBrewer> {
 	@Override
 	protected void init() {
 		super.init();
-		addButton(new Button(this.guiLeft + 8, this.guiTop + 49, 37, 20, new TranslationTextComponent("potioncapsule.gui.auto_brewer.button.set").getFormattedText(), btn -> {
+		addButton(new Button(this.guiLeft + 8, this.guiTop + 50, 37, 20, new TranslationTextComponent("potioncapsule.gui.auto_brewer.button.set").getFormattedText(), btn -> {
 			PacketHandler.toServer(new CPacketUpdateBrewerMemory(true));
 		}));
 		addButton(new Button(this.guiLeft + 8, this.guiTop + 71, 37, 20, new TranslationTextComponent("potioncapsule.gui.auto_brewer.button.reset").getFormattedText(), btn -> {
 			PacketHandler.toServer(new CPacketUpdateBrewerMemory(false));
 		}));
+		addButton(new ImageButton(this.guiLeft + 8, this.guiTop + 19, 37, 10, 209, 32, 10, TEXTURE, 256, 256, btn -> {
+			container.brewer.updatePartition(ContainerScreen.hasShiftDown() ? 30 : 5);
+			PacketHandler.toServer(new CPacketUpdateBrewerPartition(ContainerScreen.hasShiftDown() ? 30 : 5));
+		}) {
+			@Override
+			public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+				super.renderButton(p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);
+				drawCenteredString(minecraft.fontRenderer, "+", this.x + this.width / 2, this.y + (this.height - 8) / 2, getFGColor() | MathHelper.ceil(this.alpha * 255.0F) << 24);
+			}
+		});
+		addButton(new ImageButton(this.guiLeft + 8, this.guiTop + 39, 37, 10, 209, 32, 10, TEXTURE, 256, 256, btn -> {
+			container.brewer.updatePartition(ContainerScreen.hasShiftDown() ? -30 : -5);
+			PacketHandler.toServer(new CPacketUpdateBrewerPartition(ContainerScreen.hasShiftDown() ? -30 : -5));
+		}) {
+			@Override
+			public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+				super.renderButton(p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);
+				drawCenteredString(minecraft.fontRenderer, "-", this.x + this.width / 2, this.y + (this.height - 8) / 2, getFGColor() | MathHelper.ceil(this.alpha * 255.0F) << 24);
+			}
+		});
 	}
 	
 	@Override
@@ -111,6 +133,7 @@ public class ScreenAutoBrewer extends ContainerScreen<ContainerAutoBrewer> {
 				6.0F, 4210752);
 		this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8.0F,
 				(float) (this.ySize - 96 + 2), 4210752);
+		this.font.drawString(container.brewer.getPartition() + " s", 12F, 30.0F, 4210752);
 	}
 
 	@Override
@@ -134,6 +157,12 @@ public class ScreenAutoBrewer extends ContainerScreen<ContainerAutoBrewer> {
 		float f4 = MathHelper.clamp(((float) container.brewer.getCatalyst()) / (float) CommonConfigs.recipe_instantCatalystAllowed.get(), 0F, 1F);
 		int i4 = (int) (f4 * 14F);
 		this.blit(guiLeft + 149, guiTop + 93 + (14 - i4), 204, 33 + (14 - i4), 1, i4);
+		// Brewtime
+		float f6 = MathHelper.clamp(((float) (600 - container.brewer.getBrewtime())) / 600F, 0F, 1F);
+		int i5 = (600 - container.brewer.getBrewtime()) % 30;
+		int i6 = container.brewer.isBrewing() ? (int) (f6 * 85F) : 0;
+		this.blit(guiLeft + 53, guiTop + 91 + (29 - i5), 186, 29 - i5, 11, i5);
+		this.blit(guiLeft + 70, guiTop + 31, 177, 1, 7, i6);
 		// Water tank
 		renderFluid();
 		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -221,8 +250,10 @@ public class ScreenAutoBrewer extends ContainerScreen<ContainerAutoBrewer> {
 				ITextComponent text = new TranslationTextComponent(effect.getEffectName());
 				if (effect.getAmplifier() > 0)
 					text.appendText(" ").appendSibling(new TranslationTextComponent("potion.potency." + effect.getAmplifier()));
-				float s = ((float) effect.getDuration()) / 20F;
-				text.appendText(" (" + s + "s)");
+				if (!effect.getPotion().isInstant()) {
+					float s = ((float) effect.getDuration()) / 20F;
+					text.appendText(" (" + s + "s)");
+				}
 				text.applyTextStyle(effect.getPotion().getEffectType().getColor());
 				return text.getFormattedText();
 			}).collect(Collectors.toList()));
