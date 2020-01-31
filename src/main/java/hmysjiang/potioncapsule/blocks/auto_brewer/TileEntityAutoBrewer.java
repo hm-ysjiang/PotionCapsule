@@ -38,6 +38,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.Tuple;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -126,27 +127,34 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 
 	@Override
 	public void tick() {
+		if (world.isRemote)
+			return;
+		
 		boolean shouldSync = false;
 		// Fuel and Catalysts
 		if (FUEL_MAX - fuel >= 20 && !inventory.getStackInSlot(SLOT_FUEL).isEmpty()) {
 			inventory.getStackInSlot(SLOT_FUEL).shrink(1);
 			fuel += 20;
 			markDirty();
+			shouldSync = true;
 		}
 		if (gunpowder == 0 && !inventory.getStackInSlot(SLOT_CATALYST_GUNPOWDER).isEmpty()) {
 			inventory.getStackInSlot(SLOT_CATALYST_GUNPOWDER).shrink(1);
 			gunpowder += 3;
 			markDirty();
+			shouldSync = true;
 		}
 		if (breath == 0 && !inventory.getStackInSlot(SLOT_CATALYST_BREATH).isEmpty()) {
 			inventory.getStackInSlot(SLOT_CATALYST_BREATH).shrink(1);
 			breath += 3;
 			markDirty();
+			shouldSync = true;
 		}
 		if (catalyst < CommonConfigs.recipe_instantCatalystAllowed.get() && !inventory.getStackInSlot(SLOT_CATALYST_INSTANT).isEmpty()) {
 			inventory.getStackInSlot(SLOT_CATALYST_INSTANT).shrink(1);
 			catalyst++;
 			markDirty();
+			shouldSync = true;
 		}
 		
 		// Try to push the ingredients to the front
@@ -163,8 +171,10 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 					}
 				}
 			}
-			if (dirty)
+			if (dirty) {
 				markDirty();
+				shouldSync = true;
+			}
 		}
 		
 		// Brewing
@@ -194,9 +204,9 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 				}
 			}
 			else {
-//				brewtime--;
-				brewtime -= 15;
+				brewtime--;
 				markDirty();
+				shouldSync = true;
 			}
 			
 			// Check done
@@ -229,8 +239,7 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 						if (inserted > 0) {
 							inventory.getStackInSlot(SLOT_INPUT_CAPSULE).shrink(inserted);
 							catalyst -= (inserted - 1);
-							if (!world.isRemote)
-								potion.remove(toApply);
+							potion.remove(toApply);
 							markDirty();
 							shouldSync = true;
 							shouldWork = false;
@@ -243,11 +252,9 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 						PotionUtils.appendEffects(result, Arrays.asList(app));
 						if (inventory.insertSuper(SLOT_OUTPUT_CAPSULE, result, false).isEmpty()) {
 							inventory.getStackInSlot(SLOT_INPUT_CAPSULE).shrink(1);
-							if (!world.isRemote) {
-								potion.get(toApply).duration -= partition * 20;
-								if (potion.get(toApply).getDuration() <= 0)
-									potion.remove(toApply);
-							}
+							potion.get(toApply).duration -= partition * 20;
+							if (potion.get(toApply).getDuration() <= 0)
+								potion.remove(toApply);
 							markDirty();
 							shouldSync = true;
 							shouldWork = false;
@@ -255,16 +262,81 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 					}
 				}
 			}
+			
+			if (shouldWork && !inventory.getStackInSlot(SLOT_INPUT_BOTTLE).isEmpty()) {
+				if (breath > 0) {
+					ItemStack linger = new ItemStack(Items.LINGERING_POTION);
+					EffectInstance app = new EffectInstance(potion.get(0));
+					if (!app.getPotion().isInstant())
+						app.duration = partition * 20;
+					PotionUtils.appendEffects(linger, Arrays.asList(app));
+					linger.getOrCreateTag().putInt("CustomPotionColor", PotionUtils.getPotionColorFromEffectList(PotionUtils.getEffectsFromStack(linger)));
+					linger.setDisplayName(new TranslationTextComponent("potioncapsule.misc.custom_potion_display_name.linger"));
+					if (inventory.insertSuper(SLOT_OUTPUT_LINGER, linger, false).isEmpty()) {
+						inventory.getStackInSlot(SLOT_INPUT_BOTTLE).shrink(1);
+						breath--;
+						potion.get(0).duration -= partition * 20;
+						if (potion.get(0).getDuration() <= 0)
+							potion.remove(0);
+						markDirty();
+						shouldSync = true;
+						shouldWork = false;
+					}
+				}
+				else if (gunpowder > 0) {
+					ItemStack splash = new ItemStack(Items.SPLASH_POTION);
+					EffectInstance app = new EffectInstance(potion.get(0));
+					if (!app.getPotion().isInstant())
+						app.duration = partition * 20;
+					PotionUtils.appendEffects(splash, Arrays.asList(app));
+					splash.getOrCreateTag().putInt("CustomPotionColor", PotionUtils.getPotionColorFromEffectList(PotionUtils.getEffectsFromStack(splash)));
+					splash.setDisplayName(new TranslationTextComponent("potioncapsule.misc.custom_potion_display_name.splash"));
+					if (inventory.insertSuper(SLOT_OUTPUT_SPLASH, splash, false).isEmpty()) {
+						inventory.getStackInSlot(SLOT_INPUT_BOTTLE).shrink(1);
+						gunpowder--;
+						potion.get(0).duration -= partition * 20;
+						if (potion.get(0).getDuration() <= 0)
+							potion.remove(0);
+						markDirty();
+						shouldSync = true;
+						shouldWork = false;
+					}
+				}
+				else {
+					ItemStack _potion = new ItemStack(Items.POTION);
+					EffectInstance app = new EffectInstance(potion.get(0));
+					if (!app.getPotion().isInstant())
+						app.duration = partition * 20;
+					PotionUtils.appendEffects(_potion, Arrays.asList(app));
+					_potion.getOrCreateTag().putInt("CustomPotionColor", PotionUtils.getPotionColorFromEffectList(PotionUtils.getEffectsFromStack(_potion)));
+					_potion.setDisplayName(new TranslationTextComponent("potioncapsule.misc.custom_potion_display_name"));
+					if (inventory.insertSuper(SLOT_OUTPUT_NORMAL, _potion, false).isEmpty()) {
+						inventory.getStackInSlot(SLOT_INPUT_BOTTLE).shrink(1);
+						potion.get(0).duration -= partition * 20;
+						if (potion.get(0).getDuration() <= 0)
+							potion.remove(0);
+						markDirty();
+						shouldSync = true;
+						shouldWork = false;
+					}
+				}
+			}
 		}
 		
 		// In the end, sync the ITileCustomSync if needed
-		if (!world.isRemote && shouldSync)
-			PacketHandler.sendTile(this);
+		if (shouldSync)
+			sync();
+	}
+	
+	private void sync() {
+		PacketHandler.sendTile(this);
 	}
 	
 	public boolean checkAndSetRecipe(){
 		Tuple<ItemStack, Integer> brew = getBrew();
 		if (!brew.getA().isEmpty()) {
+			if (PotionUtils.getEffectsFromStack(brew.getA()).isEmpty())
+				return false;
 			for (int i = 0 ; i<6 ; i++) {
 				memory.setStackInSlot(i, inventory.getStackInSlot(i + 1).copy());
 			}
@@ -301,6 +373,8 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 		for (int i = 0 ; i<6 ; i++) {
 			memory.setStackInSlot(i, ItemStack.EMPTY);
 		}
+		brewing = false;
+		brewtime = 0;
 		markDirty();
 		return true;
 	}
@@ -310,7 +384,8 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 	}
 	
 	protected List<EffectInstance> mergeOutput(boolean act) {
-		List<EffectInstance> effects = PotionUtils.getEffectsFromStack(output).stream().map(effect -> {
+		List<EffectInstance> effects = new ArrayList<>();
+		for (EffectInstance effect: PotionUtils.getEffectsFromStack(output)) {
 			EffectInstance copy;
 			if (effect.getPotion() == Effects.NIGHT_VISION) {
 				copy = new EffectInstance(EffectNightVisionNF.INSTANCE, effect.getDuration(), effect.getAmplifier(), effect.isAmbient(), effect.isShowIcon());
@@ -318,9 +393,14 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 			else {
 				copy = new EffectInstance(effect);
 			}
-			copy.duration *= 3;
-			return copy;
-		}).collect(Collectors.toList());
+			if (!effect.getPotion().isInstant())
+				copy.duration *= 3;
+			effects.add(copy);
+			if (effect.getPotion().isInstant()) {
+				effects.add(copy);
+				effects.add(copy);
+			}
+		}
 		List<EffectInstance> simulate = potion.stream().map(effect -> { return new EffectInstance(effect); }).collect(Collectors.toList());
 		for (EffectInstance outer: effects) {
 			for (EffectInstance effect: simulate) {
@@ -359,6 +439,9 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 	public void setMemory(boolean memMode, ItemStackHandler newMem) {
 		this.memMode = memMode;
 		memory = newMem;
+		brewing = false;
+		brewtime = 0;
+		markDirty();
 	}
 	
 	public int getFuel() {
@@ -446,6 +529,13 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 		compound.put("Memory", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(memory, null));
 		compound.put("Water", CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.writeNBT(water, null));
 		compound.put("Potion", writePotion(new CompoundNBT()));
+		compound.putInt("Fuel", fuel);
+		compound.putInt("Gunpowder", gunpowder);
+		compound.putInt("Breath", breath);
+		compound.putInt("Catalyst", catalyst);
+		compound.putBoolean("MemMode", memMode);
+		compound.putInt("Time", brewtime);
+		compound.putBoolean("Brewing", brewing);
 		return compound;
 	}
 	
@@ -454,6 +544,13 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 		CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(memory, null, compound.get("Memory"));
 		CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.readNBT(water, null, compound.get("Water"));
 		potion = readPotion((CompoundNBT) compound.get("Potion"));
+		fuel = compound.getInt("Fuel");
+		gunpowder = compound.getInt("Gunpowder");
+		breath = compound.getInt("Breath");
+		catalyst = compound.getInt("Catalyst");
+		memMode = compound.getBoolean("MemMode");
+		brewtime = compound.getInt("Time");
+		brewing = compound.getBoolean("Brewing");
 	}
 	
 	protected CompoundNBT writePotion(CompoundNBT nbt) {

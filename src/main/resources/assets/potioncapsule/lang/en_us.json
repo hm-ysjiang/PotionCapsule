@@ -124,6 +124,9 @@
 	,
 	"_Miscellaneous": "",
 	"potioncapsule.misc.left_potion_display_name": "Partially Used Potion",
+	"potioncapsule.misc.custom_potion_display_name": "Customized Potion",
+	"potioncapsule.misc.custom_potion_display_name.splash": "Customized Splash Potion",
+	"potioncapsule.misc.custom_potion_display_name.linger": "Customized Lingering Potion",
 	"potioncapsule.keybind.category": "Potion Capsule",
 	"potioncapsule.keybind.pendant_keybind.descr": "Use Capsule In Pendant"
 	,
