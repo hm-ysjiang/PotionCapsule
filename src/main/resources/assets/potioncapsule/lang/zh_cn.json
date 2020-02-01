@@ -104,7 +104,7 @@
 	"item.potioncapsule.item_special_capsule.lost_christmas": "再诞：失落的圣诞",
 	"potioncapsule.tooltip.special_capsule.lost_christmas.desc": "啊啊啊……我的手……我的\u00a7o虚空之力啊\u00a7r…………！！！",
 	"potioncapsule.tooltip.special_capsule.lost_christmas.trigger": "当玩家掉到虚空后快要死亡时",
-	"potioncapsule.tooltip.special_capsule.lost_christmas.effect": "传送到你掉到虚空把血损完之前的y轴上方的至少能放置一个玩家实体的空间中，并在脚下垫一个方块。",
+	"potioncapsule.tooltip.special_capsule.lost_christmas.effect": "传送到你掉到虚空把血损完之前的位置的y轴上方的至少能放置一个玩家实体的空间中，并在脚下垫一个方块。",
 	"item.potioncapsule.item_special_capsule.yellow_overdrive": "金黄色波纹疾走！",
 	"potioncapsule.tooltip.special_capsule.yellow_overdrive.desc": "心灵震颤不已！仿佛要燃尽般炽热！铭刻吧，血液的律动！",
 	"potioncapsule.tooltip.special_capsule.yellow_overdrive.trigger": "当玩家所站的位置亮度过低时",
