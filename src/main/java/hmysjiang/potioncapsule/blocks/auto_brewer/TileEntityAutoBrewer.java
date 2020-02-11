@@ -43,6 +43,7 @@ import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
@@ -130,31 +131,27 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 		if (world.isRemote)
 			return;
 		
-		boolean shouldSync = false;
 		// Fuel and Catalysts
 		if (FUEL_MAX - fuel >= 20 && !inventory.getStackInSlot(SLOT_FUEL).isEmpty()) {
 			inventory.getStackInSlot(SLOT_FUEL).shrink(1);
 			fuel += 20;
 			markDirty();
-			shouldSync = true;
 		}
 		if (gunpowder == 0 && !inventory.getStackInSlot(SLOT_CATALYST_GUNPOWDER).isEmpty()) {
 			inventory.getStackInSlot(SLOT_CATALYST_GUNPOWDER).shrink(1);
 			gunpowder += 3;
 			markDirty();
-			shouldSync = true;
 		}
 		if (breath == 0 && !inventory.getStackInSlot(SLOT_CATALYST_BREATH).isEmpty()) {
 			inventory.getStackInSlot(SLOT_CATALYST_BREATH).shrink(1);
 			breath += 3;
 			markDirty();
-			shouldSync = true;
 		}
 		if (catalyst < CommonConfigs.recipe_instantCatalystAllowed.get() && !inventory.getStackInSlot(SLOT_CATALYST_INSTANT).isEmpty()) {
-			inventory.getStackInSlot(SLOT_CATALYST_INSTANT).shrink(1);
-			catalyst++;
+			int toadd = Math.min(CommonConfigs.recipe_instantCatalystAllowed.get() - catalyst, inventory.getStackInSlot(SLOT_CATALYST_INSTANT).getCount());
+			inventory.getStackInSlot(SLOT_CATALYST_INSTANT).shrink(toadd);
+			catalyst += toadd;
 			markDirty();
-			shouldSync = true;
 		}
 		
 		// Try to push the ingredients to the front
@@ -173,7 +170,6 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 			}
 			if (dirty) {
 				markDirty();
-				shouldSync = true;
 			}
 		}
 		
@@ -200,13 +196,11 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 					water.drain(1000, FluidAction.EXECUTE);
 					fuel--;
 					markDirty();
-					shouldSync = true;
 				}
 			}
 			else {
 				brewtime--;
 				markDirty();
-				shouldSync = true;
 			}
 			
 			// Check done
@@ -214,7 +208,6 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 				brewing = false;
 				mergeOutput(true);
 				markDirty();
-				shouldSync = true;
 			}
 		}
 		
@@ -241,7 +234,6 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 							catalyst -= (inserted - 1);
 							potion.remove(toApply);
 							markDirty();
-							shouldSync = true;
 							shouldWork = false;
 						}
 					}
@@ -256,7 +248,6 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 							if (potion.get(toApply).getDuration() <= 0)
 								potion.remove(toApply);
 							markDirty();
-							shouldSync = true;
 							shouldWork = false;
 						}
 					}
@@ -279,7 +270,6 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 						if (potion.get(0).getDuration() <= 0)
 							potion.remove(0);
 						markDirty();
-						shouldSync = true;
 						shouldWork = false;
 					}
 				}
@@ -298,7 +288,6 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 						if (potion.get(0).getDuration() <= 0)
 							potion.remove(0);
 						markDirty();
-						shouldSync = true;
 						shouldWork = false;
 					}
 				}
@@ -316,7 +305,6 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 						if (potion.get(0).getDuration() <= 0)
 							potion.remove(0);
 						markDirty();
-						shouldSync = true;
 						shouldWork = false;
 					}
 				}
@@ -324,8 +312,7 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 		}
 		
 		// In the end, sync the ITileCustomSync if needed
-		if (shouldSync)
-			sync();
+		sync();
 	}
 	
 	private void sync() {
@@ -527,11 +514,11 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 		CompoundNBT compound = ITileCustomSync.super.getCustomUpdate();
 		compound.put("Inventory", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(inventory, null));
 		compound.put("Memory", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(memory, null));
-		compound.put("Water", CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.writeNBT(water, null));
+		compound.putInt("WaterAmount", water.getFluidAmount());
 		compound.put("Potion", writePotion(new CompoundNBT()));
 		compound.putInt("Fuel", fuel);
-		compound.putInt("Gunpowder", gunpowder);
-		compound.putInt("Breath", breath);
+		compound.putByte("Gunpowder", (byte) gunpowder);
+		compound.putByte("Breath", (byte) breath);
 		compound.putInt("Catalyst", catalyst);
 		compound.putBoolean("MemMode", memMode);
 		compound.putInt("Time", brewtime);
@@ -542,11 +529,11 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 	public void readCustomUpdate(CompoundNBT compound) {
 		CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(inventory, null, compound.get("Inventory"));
 		CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(memory, null, compound.get("Memory"));
-		CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.readNBT(water, null, compound.get("Water"));
+		water.setFluid(new FluidStack(Fluids.WATER, compound.getInt("WaterAmount")));
 		potion = readPotion((CompoundNBT) compound.get("Potion"));
 		fuel = compound.getInt("Fuel");
-		gunpowder = compound.getInt("Gunpowder");
-		breath = compound.getInt("Breath");
+		gunpowder = compound.getByte("Gunpowder");
+		breath = compound.getByte("Breath");
 		catalyst = compound.getInt("Catalyst");
 		memMode = compound.getBoolean("MemMode");
 		brewtime = compound.getInt("Time");

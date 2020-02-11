@@ -58,7 +58,8 @@ public class PacketHandler {
 	public static <T extends TileEntity & ITileCustomSync> void sendTile(T tile) {
 		SPacketCustomSyncTile<T> msg = SPacketCustomSyncTile.<T>of(tile);
 		for (PlayerEntity player: tile.getWorld().getPlayers())
-			toPlayer(msg, (ServerPlayerEntity) player);
+			if (player instanceof ServerPlayerEntity)
+				toPlayer(msg, (ServerPlayerEntity) player);
 	}
 	
 }
