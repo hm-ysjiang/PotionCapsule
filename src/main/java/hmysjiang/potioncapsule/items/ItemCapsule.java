@@ -3,11 +3,11 @@ package hmysjiang.potioncapsule.items;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.TreeSet;
 
 import javax.annotation.Nonnull;
 
@@ -15,7 +15,6 @@ import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.configs.ClientConfigs;
 import hmysjiang.potioncapsule.configs.CommonConfigs;
 import hmysjiang.potioncapsule.init.ModItems;
-import hmysjiang.potioncapsule.potions.effects.EffectNightVisionNF;
 import hmysjiang.potioncapsule.utils.Defaults;
 import hmysjiang.potioncapsule.utils.ICapsuleTriggerable;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -32,10 +31,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.EffectType;
 import net.minecraft.potion.EffectUtils;
-import net.minecraft.potion.Effects;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
@@ -44,7 +40,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -95,8 +90,6 @@ public class ItemCapsule extends Item implements ICapsuleTriggerable {
 	}
 
 	private final EnumCapsuleType TYPE;
-	private static Set<EffectInstance> effects;
-	private static List<EffectInstance> effectsPool;
 
 	public ItemCapsule(EnumCapsuleType type) {
 		super(Defaults.itemProp.get().maxStackSize(CommonConfigs.capsule_stackSize.get()));
@@ -351,30 +344,11 @@ public class ItemCapsule extends Item implements ICapsuleTriggerable {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
 		if (this.isInGroup(group)) {
 			items.add(new ItemStack(this));
 			
-			if (effects == null) {
-				PotionCapsule.Logger.info("Start querying effect instances from existing potion");
-				effects = new TreeSet<>(EFFECT_CMP);
-				for (Potion potion: Registry.POTION) {
-					for (EffectInstance effect: potion.getEffects()) {
-						EffectInstance toadd = new EffectInstance(effect);
-						if (!toadd.getPotion().isInstant())
-							toadd.duration = CommonConfigs.capsule_capacity.get();
-						if (toadd.getPotion() == Effects.NIGHT_VISION && CommonConfigs.misc_replaceNvWithNvnf.get())
-							toadd = new EffectInstance(EffectNightVisionNF.INSTANCE, toadd.getDuration(), toadd.getAmplifier(), toadd.isAmbient(), toadd.doesShowParticles(), toadd.isShowIcon());
-						if (effects.add(toadd)) {
-							PotionCapsule.Logger.info(toadd.getAmplifier() > 0 ? new TranslationTextComponent(toadd.getEffectName()).getFormattedText() + " x " + (toadd.getAmplifier() + 1) : new TranslationTextComponent(toadd.getEffectName()).getFormattedText());
-						}
-					}
-				}
-				PotionCapsule.Logger.info("Querying complete");
-			}
-			
-			for (EffectInstance effect: effects) {
+			for (EffectInstance effect: PotionCapsule.getQueryedEffects()) {
 				if (canApplyEffectOnType(TYPE, effect.getPotion()))
 					items.add(PotionUtils.appendEffects(new ItemStack(this), Arrays.asList(effect)));
 			}
@@ -382,53 +356,16 @@ public class ItemCapsule extends Item implements ICapsuleTriggerable {
 	}
 	
 	public static ItemStack applyRandomEffectFromPool(@Nonnull ItemStack capsule, int amount) {
-		if (effectsPool == null)
-			queryEffectsPool();
 		if (amount > 5)
 			amount = 5;
-		Set<EffectInstance> effectList = new TreeSet<EffectInstance>(EFFECT_CMP) {
-			private static final long serialVersionUID = 1L;
-			@Override
-			public boolean contains(Object o) {
-				if (super.contains(o))
-					return true;
-				EffectInstance obj = (EffectInstance) o;
-				for (EffectInstance ins: this)
-					if (ins.getPotion() == obj.getPotion())
-						return true;
-				return false;
-			}
-		};
+		Set<EffectInstance> effectList = new HashSet<>();
+		List<EffectInstance> effects = PotionCapsule.getEffectsPool();
 		for (int i = 0 ; i<amount ; i++) {
-			EffectInstance e;
-			do {
-				e = effectsPool.get(random.nextInt(effectsPool.size()));
-			} while (effectList.contains(e) || !canApplyEffectOnCapsule(capsule, e.getPotion()));
-			effectList.add(e);
+			effectList.add(effects.get(random.nextInt(effects.size())));
 		}
 		return PotionUtils.appendEffects(capsule, effectList);
 	}
-	
-	@SuppressWarnings("deprecation")
-	private static void queryEffectsPool() {
-		PotionCapsule.Logger.info("Querying effects for pool...");
-		effectsPool = new ArrayList<>();
-		Set<EffectInstance> effectSet = new TreeSet<>(EFFECT_CMP);
-		for (Potion potion: Registry.POTION) {
-			for (EffectInstance effect: potion.getEffects()) {
-				EffectInstance toadd = new EffectInstance(effect);
-				if (toadd.getPotion().getEffectType() == EffectType.HARMFUL)
-					continue;
-				if (!toadd.getPotion().isInstant())
-					toadd.duration = CommonConfigs.capsule_capacity.get();
-				if (toadd.getPotion() == Effects.NIGHT_VISION && CommonConfigs.misc_replaceNvWithNvnf.get())
-					toadd = new EffectInstance(EffectNightVisionNF.INSTANCE, toadd.getDuration(), toadd.getAmplifier(), toadd.isAmbient(), toadd.doesShowParticles(), toadd.isShowIcon());
-				if (effectSet.add(toadd))
-					effectsPool.add(toadd);
-			}
-		}
-	}
-	
+
 	@Override
 	public boolean canBeTriggered(ItemStack capsuleStack) {
 		return true;
