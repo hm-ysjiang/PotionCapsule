@@ -30,11 +30,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.stats.Stats;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.FoodStats;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -118,17 +117,24 @@ public class ItemSpecialCapsule extends Item implements ICapsuleTriggerable {
 			return;
 		if (!pendant.isEmpty()) {
 			pendant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-				int drive = -1;
+				int drive = -1, cake = -1;
 				
 				for (int i = 8 ; i<11 ; i++) {
 					ItemStack stack = handler.getStackInSlot(i);
 					if (stack.getItem() == capsules.get(EnumSpecialType.YELLOW_OVERDRIVE)) {
 						drive = i;
 					}
+					if (stack.getItem() == capsules.get(EnumSpecialType.LIE_OF_CAKE)) {
+						cake = i;
+					}
 				}
 				
 				if (drive > 0) {
 					if (overdrive(handler.getStackInSlot(drive), player, (pendant.getOrCreateTag().getInt("StatusMask") & (1 << drive)) > 0))
+						return;
+				}
+				if (cake > 0) {
+					if (companionCube(handler.getStackInSlot(cake), player, (pendant.getOrCreateTag().getInt("StatusMask") & (1 << cake)) > 0))
 						return;
 				}
 			});
@@ -211,6 +217,43 @@ public class ItemSpecialCapsule extends Item implements ICapsuleTriggerable {
 		return true;
 	}
 	
+	public static boolean companionCube(ItemStack stack, PlayerEntity player, boolean renderStatus) {
+		if (stack.getDamage() >= stack.getMaxDamage())
+			return false;
+		FoodStats stats = player.getFoodStats();
+		if (stats.getFoodLevel() < 20) {
+			if (renderStatus)
+				player.sendStatusMessage(new TranslationTextComponent("potioncapsule.tooltip.capsule.used", stack.getDisplayName()), true);
+			
+			if (!player.isCreative() && !stack.getOrCreateTag().getBoolean("CapsuleCreative")) {
+				stack.setDamage(stack.getDamage() + 1);
+			}
+			if (player instanceof ServerPlayerEntity) {
+				CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, stack);
+			}
+			player.addStat(Stats.ITEM_USED.get(capsules.get(EnumSpecialType.LIE_OF_CAKE)));
+			
+			stats.addStats(1, 0F);
+			return true;
+		}
+		if (stats.getSaturationLevel() < 20.0F) {
+			if (renderStatus)
+				player.sendStatusMessage(new TranslationTextComponent("potioncapsule.tooltip.capsule.used", stack.getDisplayName()), true);
+			
+			if (!player.isCreative() && !stack.getOrCreateTag().getBoolean("CapsuleCreative")) {
+				stack.setDamage(stack.getDamage() + 1);
+			}
+			if (player instanceof ServerPlayerEntity) {
+				CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, stack);
+			}
+			player.addStat(Stats.ITEM_USED.get(capsules.get(EnumSpecialType.LIE_OF_CAKE)));
+
+			stats.addStats(1, 0.5F);
+			return true;
+		}
+		return false;
+	}
+	
 	@Override
 	public boolean canBeTriggered(ItemStack capsuleStack) {
 		if (capsuleStack.getItem() instanceof ItemSpecialCapsule) {
@@ -262,7 +305,9 @@ public class ItemSpecialCapsule extends Item implements ICapsuleTriggerable {
 	public static enum EnumSpecialType implements IStringSerializable {
 		BITEZDUST("bite_za_dust", 0xcf4afc, false, TextFormatting.LIGHT_PURPLE),
 		LOST_CHRISTMAS("lost_christmas", 0x2a7bcc, false, TextFormatting.DARK_GRAY),
-		YELLOW_OVERDRIVE("yellow_overdrive", 0xffff17, true, TextFormatting.YELLOW);
+		YELLOW_OVERDRIVE("yellow_overdrive", 0xffff17, true, TextFormatting.YELLOW),
+		LIE_OF_CAKE("lie_of_cake", 0xdee1e6, false, TextFormatting.GRAY)
+		;
 		
 		public String name;
 		public int capcolor;
@@ -308,10 +353,6 @@ public class ItemSpecialCapsule extends Item implements ICapsuleTriggerable {
 			return format;
 		}
 		
-		public ResourceLocation getRepairTag() {
-			return Defaults.modPrefix.apply("special_repair/" + name);
-		}
-		
 		@Override
 		public String getName() {
 			return this.name;
@@ -321,17 +362,6 @@ public class ItemSpecialCapsule extends Item implements ICapsuleTriggerable {
 	@Override
 	public boolean isEnchantable(ItemStack stack) {
 		return false;
-	}
-	
-	@Override
-	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-		if (toRepair.getItem() instanceof ItemSpecialCapsule) {
-			if (toRepair.getOrCreateTag().getBoolean("CapsuleCreative"))
-				return false;
-			ItemSpecialCapsule item = (ItemSpecialCapsule) toRepair.getItem();
-			return ItemTags.getCollection().get(item.type.getRepairTag()).contains(repair.getItem());
-		}
-		return super.getIsRepairable(toRepair, repair);
 	}
 	
 	@Override
@@ -411,6 +441,10 @@ public class ItemSpecialCapsule extends Item implements ICapsuleTriggerable {
 			case YELLOW_OVERDRIVE:
 				enable.put(type, CommonConfigs.special_overdrive_enable.get());
 				durab.put(type, CommonConfigs.special_overdrive_uses.get());
+				break;
+			case LIE_OF_CAKE:
+				enable.put(type, CommonConfigs.special_cakelie_enable.get());
+				durab.put(type, CommonConfigs.special_cakelie_uses.get());
 				break;
 			}
 		}
