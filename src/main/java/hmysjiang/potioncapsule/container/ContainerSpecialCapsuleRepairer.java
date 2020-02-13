@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import hmysjiang.potioncapsule.blocks.special_capsule_repairer.InventorySpecialCapsuleRepairer;
 import hmysjiang.potioncapsule.items.ItemSpecialCapsule;
-import hmysjiang.potioncapsule.recipe.RecipeSpecialCapsuleRepairer;
+import hmysjiang.potioncapsule.recipe.ISpecialRepairerRecipe;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -31,7 +31,7 @@ public class ContainerSpecialCapsuleRepairer extends BaseContainer {
 	private World world;
 	private BlockPos pos;
 	private ItemStackHandler inv, output;
-	private RecipeSpecialCapsuleRepairer buf;
+	private ISpecialRepairerRecipe buf;
 	private boolean match;
 	
 	public ContainerSpecialCapsuleRepairer(int id, PlayerInventory playerInv, BlockPos posIn) {
@@ -97,7 +97,7 @@ public class ContainerSpecialCapsuleRepairer extends BaseContainer {
 	}
 	
 	private void updateRecipe(){
-		Optional<RecipeSpecialCapsuleRepairer> opt = world.getRecipeManager().getRecipe(RecipeSpecialCapsuleRepairer.TYPE, new InventorySpecialCapsuleRepairer(inv), world);
+		Optional<ISpecialRepairerRecipe> opt = world.getRecipeManager().getRecipe(ISpecialRepairerRecipe.TYPE, new InventorySpecialCapsuleRepairer(inv), world);
 		match = opt.isPresent();
 		opt.ifPresent(recipe -> {
 			buf = recipe;

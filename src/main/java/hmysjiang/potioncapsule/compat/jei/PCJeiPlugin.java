@@ -13,6 +13,8 @@ import hmysjiang.potioncapsule.compat.jei.recipe.RecipeSpecialRepairJei;
 import hmysjiang.potioncapsule.container.ContainerGelatinExtractor;
 import hmysjiang.potioncapsule.init.ModBlocks;
 import hmysjiang.potioncapsule.items.ItemSpecialCapsule;
+import hmysjiang.potioncapsule.items.ItemSpecialCapsule.EnumSpecialType;
+import hmysjiang.potioncapsule.recipe.RecipeFoodRestoration;
 import hmysjiang.potioncapsule.recipe.RecipeGelatinExtractor;
 import hmysjiang.potioncapsule.recipe.RecipeGelatinFormer;
 import hmysjiang.potioncapsule.recipe.RecipeSpecialCapsuleRepairer;
@@ -26,6 +28,7 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipe;
@@ -80,6 +83,14 @@ public class PCJeiPlugin implements IModPlugin {
 			RecipeSpecialCapsuleRepairer recipe = (RecipeSpecialCapsuleRepairer) r;
 			for (Entry<Ingredient, Integer> entry: recipe.getMaterials().entrySet()) {
 				splitRecipes.add(new RecipeSpecialRepairJei(ItemSpecialCapsule.getCapsuleInstance(recipe.getCapsuleType()), entry.getKey(), entry.getValue()));
+			}
+		}
+		for (IRecipe<?> r: Minecraft.getInstance().world.getRecipeManager().getRecipes().stream().filter(
+				recipe -> { return recipe != null && recipe instanceof RecipeFoodRestoration; }
+					).collect(Collectors.toList())) {
+			RecipeFoodRestoration recipe = (RecipeFoodRestoration) r;
+			for (Entry<Integer, List<Item>> entry: recipe.getVal2Items().entrySet()) {
+				splitRecipes.add(new RecipeSpecialRepairJei(ItemSpecialCapsule.getCapsuleInstance(EnumSpecialType.LIE_OF_CAKE), Ingredient.fromItems(entry.getValue().toArray(new Item[0])), entry.getKey()));
 			}
 		}
 		registration.addRecipes(splitRecipes, SpecialRepairJei.UID);

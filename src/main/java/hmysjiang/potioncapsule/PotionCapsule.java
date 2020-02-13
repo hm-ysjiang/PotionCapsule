@@ -127,7 +127,7 @@ public class PotionCapsule {
 				}
 			}
 		}
-		PotionCapsule.Logger.info("Querying complete");
+		PotionCapsule.Logger.info("Effect Querying complete");
 	}
 	public static Set<EffectInstance> getQueryedEffects() {
 		if (queryedEffects == null)

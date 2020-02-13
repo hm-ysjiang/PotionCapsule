@@ -5,6 +5,7 @@ import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.recipe.RecipeCapsuleAttachment;
 import hmysjiang.potioncapsule.recipe.RecipeCapsuleCombinationOrClear;
 import hmysjiang.potioncapsule.recipe.RecipeCapsuleCreativeAttach;
+import hmysjiang.potioncapsule.recipe.RecipeFoodRestoration;
 import hmysjiang.potioncapsule.recipe.RecipeGelatinExtractor;
 import hmysjiang.potioncapsule.recipe.RecipeGelatinFormer;
 import hmysjiang.potioncapsule.recipe.RecipeSpecialCapsuleRepairer;
@@ -29,7 +30,8 @@ public class ModRecipes {
 										,
 										RecipeWartDust.SERIALIZER
 										,
-										RecipeSpecialCapsuleRepairer.SERIALIZER);
+										RecipeSpecialCapsuleRepairer.SERIALIZER,
+										RecipeFoodRestoration.SERIALIZER);
 	}
 	
 }

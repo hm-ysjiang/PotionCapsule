@@ -12,7 +12,6 @@ import hmysjiang.potioncapsule.items.ItemSpecialCapsule;
 import hmysjiang.potioncapsule.items.ItemSpecialCapsule.EnumSpecialType;
 import hmysjiang.potioncapsule.utils.Defaults;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
@@ -23,11 +22,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class RecipeSpecialCapsuleRepairer implements IRecipe<InventorySpecialCapsuleRepairer> {
+public class RecipeSpecialCapsuleRepairer implements ISpecialRepairerRecipe {
 	
-	public static final IRecipeType<RecipeSpecialCapsuleRepairer> TYPE = new IRecipeType<RecipeSpecialCapsuleRepairer>() {
-		@Override public String toString() { return Defaults.modPrefix.apply("recipetype_special_repair").toString(); }
-	};
 	public static final IRecipeSerializer<?> SERIALIZER = new Serializer().setRegistryName(Defaults.modPrefix.apply("special_capsule_repair"));
 	
 	private final EnumSpecialType type;
@@ -114,7 +110,7 @@ public class RecipeSpecialCapsuleRepairer implements IRecipe<InventorySpecialCap
 	
 	@Override
 	public IRecipeType<?> getType() {
-		return TYPE;
+		return ISpecialRepairerRecipe.TYPE;
 	}
 	
 	public EnumSpecialType getCapsuleType() {

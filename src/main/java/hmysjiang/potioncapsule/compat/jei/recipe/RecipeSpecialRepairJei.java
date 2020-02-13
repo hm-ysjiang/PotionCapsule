@@ -6,6 +6,7 @@ import net.minecraft.item.crafting.Ingredient;
 
 public class RecipeSpecialRepairJei {
 	
+	public final int amount;
 	private ItemStack capsule, output;
 	private Ingredient ingredient;
 	
@@ -15,6 +16,7 @@ public class RecipeSpecialRepairJei {
 		output = capsule.copy();
 		output.setDamage(capsule.getMaxDamage() - amountIn);
 		ingredient = ingredientIn;
+		amount = amountIn;
 	}
 
 	public ItemStack getCapsule() {

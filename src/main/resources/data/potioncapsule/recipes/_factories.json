@@ -7,6 +7,7 @@
 		"potioncapsule:gelatin_ex": "hmysjiang.potioncapsule.recipe.RecipeGelatinExtractor",
 		"potioncapsule:gelatin_form": "hmysjiang.potioncapsule.recipe.RecipeGelatinFormer",
 		"potioncapsule:wart_dust": "hmysjiang.potioncapsule.recipe.RecipeWartDust",
-		"potioncapsule:special_capsule_repair": "hmysjiang.potioncapsule.recipe.RecipeSpecialCapsuleRepair"
+		"potioncapsule:special_capsule_repair": "hmysjiang.potioncapsule.recipe.RecipeSpecialCapsuleRepair",
+		"potioncapsule:food_restoration": "hmysjiang.potioncapsule.recipe.RecipeFoodRestoration"
 	}
 }
