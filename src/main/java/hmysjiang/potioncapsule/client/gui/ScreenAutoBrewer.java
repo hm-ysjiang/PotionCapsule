@@ -29,6 +29,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Tuple;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
@@ -48,6 +49,7 @@ public class ScreenAutoBrewer extends ContainerScreen<ContainerAutoBrewer> {
 	private final Rectangle2d HOVER_CATALYST;
 	private final Rectangle2d HOVER_WATER;
 	private final Rectangle2d HOVER_POTION;
+	private final Rectangle2d HOVER_STATUS;
 
 	public ScreenAutoBrewer(ContainerAutoBrewer screenContainer, PlayerInventory inv,
 			ITextComponent titleIn) {
@@ -62,6 +64,7 @@ public class ScreenAutoBrewer extends ContainerScreen<ContainerAutoBrewer> {
 		HOVER_CATALYST = new Rectangle2d(148, 91, 3 - 1, 18);
 		HOVER_WATER = new Rectangle2d(50, 19, 18 - 1, 72);
 		HOVER_POTION = new Rectangle2d(105, 46, 16 - 1, 16);
+		HOVER_STATUS = new Rectangle2d(9, 113, 16 - 1, 16);
 	}
 	
 	@Override
@@ -124,6 +127,8 @@ public class ScreenAutoBrewer extends ContainerScreen<ContainerAutoBrewer> {
 			renderTooltip(new TranslationTextComponent("potioncapsule.gui.auto_brewer.tooltip.water", container.brewer.getWater().getFluidAmount()).getFormattedText(), mouseX, mouseY);
 		if (HOVER_POTION.contains(mouseX - guiLeft, mouseY - guiTop))
 			renderPotionTooltip(mouseX, mouseY);
+		if (HOVER_STATUS.contains(mouseX - guiLeft, mouseY - guiTop))
+			renderTooltip(container.brewer.getStatus().getB().getFormattedText(), mouseX, mouseY);
 	}
 
 	@Override
@@ -163,6 +168,19 @@ public class ScreenAutoBrewer extends ContainerScreen<ContainerAutoBrewer> {
 		int i6 = container.brewer.isBrewing() ? (int) (f6 * 85F) : 0;
 		this.blit(guiLeft + 53, guiTop + 91 + (29 - i5), 186, 29 - i5, 11, i5);
 		this.blit(guiLeft + 70, guiTop + 31, 177, 1, 7, i6);
+		// Status
+		Tuple<Integer, TranslationTextComponent> status = container.brewer.getStatus();
+		switch (status.getA()) {
+		case 0:
+			this.blit(guiLeft + 9, guiTop + 113, 225, 0, 14, 14);
+			break;
+		case 1:
+			this.blit(guiLeft + 9, guiTop + 113, 239, 0, 14, 14);
+			break;
+		case 2:
+			this.blit(guiLeft + 9, guiTop + 113, 225, 14, 14, 14);
+			break;
+		}
 		// Water tank
 		renderFluid();
 		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);

@@ -81,6 +81,8 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 	private boolean brewing = false;
 	private ItemStack output = ItemStack.EMPTY;
 	private int partition = 5;
+	private boolean outputHasSpace = false;
+	private boolean inventoryUpdate = false;
 	
 	public TileEntityAutoBrewer() {
 		super(TYPE);
@@ -131,27 +133,32 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 		if (world.isRemote)
 			return;
 		
+		inventoryUpdate = false;
 		// Fuel and Catalysts
 		if (FUEL_MAX - fuel >= 20 && !inventory.getStackInSlot(SLOT_FUEL).isEmpty()) {
 			inventory.getStackInSlot(SLOT_FUEL).shrink(1);
 			fuel += 20;
 			markDirty();
+			inventoryUpdate = true;
 		}
 		if (gunpowder == 0 && !inventory.getStackInSlot(SLOT_CATALYST_GUNPOWDER).isEmpty()) {
 			inventory.getStackInSlot(SLOT_CATALYST_GUNPOWDER).shrink(1);
 			gunpowder += 3;
 			markDirty();
+			inventoryUpdate = true;
 		}
 		if (breath == 0 && !inventory.getStackInSlot(SLOT_CATALYST_BREATH).isEmpty()) {
 			inventory.getStackInSlot(SLOT_CATALYST_BREATH).shrink(1);
 			breath += 3;
 			markDirty();
+			inventoryUpdate = true;
 		}
 		if (catalyst < CommonConfigs.recipe_instantCatalystAllowed.get() && !inventory.getStackInSlot(SLOT_CATALYST_INSTANT).isEmpty()) {
 			int toadd = Math.min(CommonConfigs.recipe_instantCatalystAllowed.get() - catalyst, inventory.getStackInSlot(SLOT_CATALYST_INSTANT).getCount());
 			inventory.getStackInSlot(SLOT_CATALYST_INSTANT).shrink(toadd);
 			catalyst += toadd;
 			markDirty();
+			inventoryUpdate = true;
 		}
 		
 		// Try to push the ingredients to the front
@@ -170,6 +177,7 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 			}
 			if (dirty) {
 				markDirty();
+				inventoryUpdate = true;
 			}
 		}
 		
@@ -196,6 +204,7 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 					water.drain(1000, FluidAction.EXECUTE);
 					fuel--;
 					markDirty();
+					inventoryUpdate = true;
 				}
 			}
 			else {
@@ -235,6 +244,7 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 							potion.remove(toApply);
 							markDirty();
 							shouldWork = false;
+							inventoryUpdate = true;
 						}
 					}
 					else {
@@ -249,6 +259,7 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 								potion.remove(toApply);
 							markDirty();
 							shouldWork = false;
+							inventoryUpdate = true;
 						}
 					}
 				}
@@ -271,6 +282,7 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 							potion.remove(0);
 						markDirty();
 						shouldWork = false;
+						inventoryUpdate = true;
 					}
 				}
 				else if (gunpowder > 0) {
@@ -289,6 +301,7 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 							potion.remove(0);
 						markDirty();
 						shouldWork = false;
+						inventoryUpdate = true;
 					}
 				}
 				else {
@@ -306,6 +319,7 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 							potion.remove(0);
 						markDirty();
 						shouldWork = false;
+						inventoryUpdate = true;
 					}
 				}
 			}
@@ -367,7 +381,8 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 	}
 	
 	protected boolean checkOutputSpace() {
-		return mergeOutput(false).size() <= 5;
+		outputHasSpace = mergeOutput(false).size() <= 5;
+		return outputHasSpace;
 	}
 	
 	protected List<EffectInstance> mergeOutput(boolean act) {
@@ -472,6 +487,20 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 		partition  = MathHelper.clamp(partition + amount, CommonConfigs.capsule_capacity.get() / 20, 3600);
 	}
 	
+	public Tuple<Integer, TranslationTextComponent> getStatus(){
+		if (brewing)
+			return new Tuple<Integer, TranslationTextComponent>(0, new TranslationTextComponent("potioncapsule.gui.auto_brewer.tooltip.status.ok"));
+		if (!memMode)
+			return new Tuple<Integer, TranslationTextComponent>(1, new TranslationTextComponent("potioncapsule.gui.auto_brewer.tooltip.status.notset"));
+		if (fuel == 0)
+			return new Tuple<Integer, TranslationTextComponent>(2, new TranslationTextComponent("potioncapsule.gui.auto_brewer.tooltip.status.missing.fuel"));
+		if (water.getFluidAmount() < 1000)
+			return new Tuple<Integer, TranslationTextComponent>(2, new TranslationTextComponent("potioncapsule.gui.auto_brewer.tooltip.status.missing.water"));
+		if (!outputHasSpace)
+			return new Tuple<Integer, TranslationTextComponent>(2, new TranslationTextComponent("potioncapsule.gui.auto_brewer.tooltip.status.missing.output"));
+		return new Tuple<Integer, TranslationTextComponent>(0, new TranslationTextComponent("potioncapsule.gui.auto_brewer.tooltip.status.ok"));
+	}
+	
 	@Override
 	public CompoundNBT write(CompoundNBT compound) {
 		compound.put("Inventory", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(inventory, null));
@@ -488,6 +517,7 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 		compound.putInt("Step", brewsteps);
 		compound.putBoolean("Brewing", brewing);
 		compound.putInt("Partition", partition);
+		compound.putBoolean("OutputSpace", outputHasSpace);
 		return super.write(compound);
 	}
 	
@@ -508,11 +538,14 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 		brewsteps = compound.getInt("Step");
 		brewing = compound.getBoolean("Brewing");
 		partition = compound.getInt("Partition");
+		outputHasSpace = compound.getBoolean("OutputSpace");
 	}
 	
 	public CompoundNBT getCustomUpdate() {
 		CompoundNBT compound = ITileCustomSync.super.getCustomUpdate();
-		compound.put("Inventory", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(inventory, null));
+		compound.putBoolean("InvUpdate", inventoryUpdate);
+		if (inventoryUpdate)
+			compound.put("Inventory", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(inventory, null));
 		compound.put("Memory", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(memory, null));
 		compound.putInt("WaterAmount", water.getFluidAmount());
 		compound.put("Potion", writePotion(new CompoundNBT()));
@@ -523,11 +556,14 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 		compound.putBoolean("MemMode", memMode);
 		compound.putInt("Time", brewtime);
 		compound.putBoolean("Brewing", brewing);
+		compound.putBoolean("OutputSpace", outputHasSpace);
 		return compound;
 	}
 	
 	public void readCustomUpdate(CompoundNBT compound) {
-		CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(inventory, null, compound.get("Inventory"));
+		inventoryUpdate = compound.getBoolean("InvUpdate");
+		if (inventoryUpdate)
+			CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(inventory, null, compound.get("Inventory"));
 		CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(memory, null, compound.get("Memory"));
 		water.setFluid(new FluidStack(Fluids.WATER, compound.getInt("WaterAmount")));
 		potion = readPotion((CompoundNBT) compound.get("Potion"));
@@ -538,6 +574,7 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 		memMode = compound.getBoolean("MemMode");
 		brewtime = compound.getInt("Time");
 		brewing = compound.getBoolean("Brewing");
+		outputHasSpace = compound.getBoolean("OutputSpace");
 	}
 	
 	protected CompoundNBT writePotion(CompoundNBT nbt) {

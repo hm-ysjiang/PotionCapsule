@@ -124,7 +124,7 @@ public class ItemCapsule extends Item implements ICapsuleTriggerable {
 
 		if (!worldIn.isRemote) {
 			for (EffectInstance effect: PotionUtils.getEffectsFromStack(stack)) {
-				entityLiving.addPotionEffect(new EffectInstance(effect));
+				entityLiving.addPotionEffect(new EffectInstance(effect.getPotion(), effect.getDuration(), effect.getAmplifier(), effect.isAmbient(), !effect.getPotion().isInstant()));
 			}
 		}
 

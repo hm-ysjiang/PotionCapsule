@@ -1,5 +1,9 @@
 package hmysjiang.potioncapsule.compat.jei;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.compat.curio.ICurioProxy;
 import hmysjiang.potioncapsule.configs.CommonConfigs;
 import hmysjiang.potioncapsule.init.ModBlocks;
@@ -9,14 +13,19 @@ import hmysjiang.potioncapsule.items.ItemSpecialCapsule.EnumSpecialType;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionUtils;
 
 public class ItemJeiDescription {
 	
 	public static void registerInfo(IRecipeRegistration registration) {
 		registration.addIngredientInfo(new ItemStack(ModItems.APPLE_JELLY), VanillaTypes.ITEM, "potioncapsule.jei_desc.jelly_apple");
 		registration.addIngredientInfo(new ItemStack(ModItems.CACTUS_JELLY), VanillaTypes.ITEM, "potioncapsule.jei_desc.jelly_cactus");
-		registration.addIngredientInfo(new ItemStack(ModItems.CAPSULE), VanillaTypes.ITEM, "potioncapsule.jei_desc.capsule");
-		registration.addIngredientInfo(new ItemStack(ModItems.CAPSULE_INSTANT), VanillaTypes.ITEM, "potioncapsule.jei_desc.capsule_instant");
+		registration.addIngredientInfo(new ItemStack(ModItems.CAPSULE), VanillaTypes.ITEM, "potioncapsule.jei_desc.capsule",
+				  																		   "potioncapsule.jei_desc.emptyline",
+																						   "potioncapsule.jei_desc.capsule.transfer");
+		registration.addIngredientInfo(new ItemStack(ModItems.CAPSULE_INSTANT), VanillaTypes.ITEM, "potioncapsule.jei_desc.capsule_instant",
+																								   "potioncapsule.jei_desc.emptyline",
+				   																				   "potioncapsule.jei_desc.capsule_instant.transfer");
 		registration.addIngredientInfo(new ItemStack(ModItems.GELATIN_POWDER), VanillaTypes.ITEM, "potioncapsule.jei_desc.gelatin_powder");
 		
 		// Pendant
@@ -76,6 +85,10 @@ public class ItemJeiDescription {
 		
 		// Special Repairer
 		registration.addIngredientInfo(new ItemStack(ModBlocks.CAPSULE_REPAIR), VanillaTypes.ITEM, "potioncapsule.jei_desc.special_repairer");
+		
+		// Capsule Subtypes
+		registration.addIngredientInfo(PotionCapsule.getQueryedEffects().stream().filter(effect -> !effect.getPotion().isInstant()).map(effect -> PotionUtils.appendEffects(new ItemStack(ModItems.CAPSULE), Arrays.asList(effect))).collect(Collectors.toList()), VanillaTypes.ITEM, "potioncapsule.jei_desc.capsule.transfered");
+		registration.addIngredientInfo(PotionCapsule.getQueryedEffects().stream().filter(effect -> effect.getPotion().isInstant()).map(effect -> PotionUtils.appendEffects(new ItemStack(ModItems.CAPSULE_INSTANT), Arrays.asList(effect))).collect(Collectors.toList()), VanillaTypes.ITEM, "potioncapsule.jei_desc.capsule_instant.transfered");
 	}
 	
 }

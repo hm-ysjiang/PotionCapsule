@@ -107,7 +107,7 @@ public class PotionHelper {
 		@Nonnull private final ItemStack sIngredient;
 		
 		protected StrictBrewingRecipe(ItemStack container, Potion input, ItemStack ingredient, Potion output) {
-			this(container, input, ingredient, output, container);
+			this(container.copy(), input, ingredient, output, container.copy());
 		}
 		
 		protected StrictBrewingRecipe(ItemStack container, Potion input, ItemStack ingredient, Potion output, ItemStack containerOut) {
@@ -119,17 +119,7 @@ public class PotionHelper {
 
 		@Override
 		public boolean isInput(ItemStack stack) {
-			return stack.isItemEqual(sContainer) && PotionUtils.getPotionFromItem(stack) == sInput;
-		}
-		
-		@Override
-		public Ingredient getInput() {
-			return Ingredient.fromStacks(PotionUtils.addPotionToItemStack(sContainer, sInput));
-		}
-
-		@Override
-		public ItemStack getOutput(ItemStack input, ItemStack ingredient) {
-			return isInput(input) && isIngredient(ingredient) ? getOutput().copy() : ItemStack.EMPTY;
+			return stack.isItemEqual(sContainer) && PotionUtils.getPotionFromItem(stack).equals(sInput);
 		}
 
 		@Override

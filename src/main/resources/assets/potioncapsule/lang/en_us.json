@@ -68,7 +68,12 @@
 	"potioncapsule.gui.auto_brewer.tooltip.water": "Water: %s/4000mB",
 	"potioncapsule.gui.auto_brewer.tooltip.output": "Potion Output",
 	"potioncapsule.gui.auto_brewer.tooltip.output.empty": "Empty",
-	"potioncapsule.gui.auto_brewer.tooltip.output.clear": "Shift-click to clear"
+	"potioncapsule.gui.auto_brewer.tooltip.output.clear": "Shift-click to clear",
+	"potioncapsule.gui.auto_brewer.tooltip.status.ok": "Everything is fine and working",
+	"potioncapsule.gui.auto_brewer.tooltip.status.notset": "The recipe is not set. Arrange a valid brewing recipe and hit the set button.",
+	"potioncapsule.gui.auto_brewer.tooltip.status.missing.fuel": "Not enough fuel",
+	"potioncapsule.gui.auto_brewer.tooltip.status.missing.water": "Not enough water",
+	"potioncapsule.gui.auto_brewer.tooltip.status.missing.output": "More output space required"
 	,
 	"_Effects": "",
 	"effect.potioncapsule.effect_night_vision_nf": "Night Vision NF",
@@ -151,7 +156,9 @@
 	"potioncapsule.jei_desc.jelly_apple": "Crafted in a Gelatin Former using Apple and Gelatin Powder.",
 	"potioncapsule.jei_desc.jelly_cactus": "Crafted in a Gelatin Former using Tiny Cactus and Gelatin Powder.",
 	"potioncapsule.jei_desc.capsule": "Store a portion of potion, either consume one or put it into a Capsule Pendant to acquire the effect.",
+	"potioncapsule.jei_desc.capsule.transfer": "Craft with a potion to transfer the duration.",
 	"potioncapsule.jei_desc.capsule_instant": "Store a portion of instant potion, either consume one or put it into a Capsule Pendant to acquire the effect.",
+	"potioncapsule.jei_desc.capsule_instant.transfer": "Craft with an instant potion to transfer the duration.",
 	"potioncapsule.jei_desc.capsule_special": "Special capsule that has special effects.",
 	"potioncapsule.jei_desc.gelatin_powder": "Can be extracted from items inside a Gelatin Extractor.",
 	"potioncapsule.jei_desc.pendant": "Store capsules and automatically trigger them under some specific condition.",
@@ -170,7 +177,9 @@
 	"potioncapsule.jei_desc.cactus_frag": "Dropped by breaking Tiny Cactus.",
 	"potioncapsule.jei_desc.fiery_lily": "Randomly spawned on lava lakes in the nether.",
 	"potioncapsule.jei_desc.cat_fur": "Dropped by cats naturally. (DONT KILL THEM)",
-	"potioncapsule.jei_desc.special_repairer": "Recharges Special Capsule using corresponding materials."
+	"potioncapsule.jei_desc.special_repairer": "Recharges Special Capsule using corresponding materials.",
+	"potioncapsule.jei_desc.capsule.transfered": "Obtained by crafting a Potion Capsule with a potion.",
+	"potioncapsule.jei_desc.capsule_instant.transfered": "Obtained by crafting an Instant Potion Capsule with an instant potion."
 	,
 	"potioncapsule.jei_addi.wart_drop": "60%s chance to drop 1-3"
 }

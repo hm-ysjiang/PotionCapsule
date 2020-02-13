@@ -12,6 +12,7 @@ import hmysjiang.potioncapsule.client.gui.ScreenSpecialCapsuleRepairer;
 import hmysjiang.potioncapsule.compat.jei.recipe.RecipeSpecialRepairJei;
 import hmysjiang.potioncapsule.container.ContainerGelatinExtractor;
 import hmysjiang.potioncapsule.init.ModBlocks;
+import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.items.ItemSpecialCapsule;
 import hmysjiang.potioncapsule.items.ItemSpecialCapsule.EnumSpecialType;
 import hmysjiang.potioncapsule.recipe.RecipeFoodRestoration;
@@ -21,18 +22,21 @@ import hmysjiang.potioncapsule.recipe.RecipeSpecialCapsuleRepairer;
 import hmysjiang.potioncapsule.utils.Defaults;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.VanillaRecipeCategoryUid;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
+import mezz.jei.api.registration.ISubtypeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
 
 @JeiPlugin
@@ -58,6 +62,7 @@ public class PCJeiPlugin implements IModPlugin {
 		registration.addRecipeCatalyst(new ItemStack(ModBlocks.GELATIN_FORMER), GelFormerJei.UID);
 		registration.addRecipeCatalyst(new ItemStack(Items.NETHER_WART), WartDropJei.UID);
 		registration.addRecipeCatalyst(new ItemStack(ModBlocks.CAPSULE_REPAIR), SpecialRepairJei.UID);
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.AUTO_BREWER), VanillaRecipeCategoryUid.BREWING);
 	}
 	
 	@Override
@@ -106,6 +111,21 @@ public class PCJeiPlugin implements IModPlugin {
 	@Override
 	public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
 		registration.addRecipeTransferHandler(ContainerGelatinExtractor.class, GelExtractorJei.UID, 0, 2, 2, 36);
+	}
+	
+	@Override
+	public void registerItemSubtypes(ISubtypeRegistration registration) {
+		IModPlugin.super.registerItemSubtypes(registration);
+		registration.registerSubtypeInterpreter(ModItems.CAPSULE, stack -> {
+			List<String> str = PotionUtils.getEffectsFromStack(stack).stream().map(effect -> effect.getEffectName() + " " + effect.getAmplifier()).collect(Collectors.toList());
+			str.sort(null);
+			return str.toString();
+		});
+		registration.registerSubtypeInterpreter(ModItems.CAPSULE_INSTANT, stack -> {
+			List<String> str = PotionUtils.getEffectsFromStack(stack).stream().map(effect -> effect.getEffectName() + " " + effect.getAmplifier()).collect(Collectors.toList());
+			str.sort(null);
+			return str.toString();
+		});
 	}
 	
 }
