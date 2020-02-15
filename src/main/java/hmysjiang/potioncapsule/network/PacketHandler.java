@@ -8,7 +8,7 @@ import hmysjiang.potioncapsule.network.packets.CPacketUpdatePendantStatus;
 import hmysjiang.potioncapsule.network.packets.SPacketCustomSyncTile;
 import hmysjiang.potioncapsule.network.packets.SPacketPlayerSound;
 import hmysjiang.potioncapsule.network.packets.SPacketResponseBrewerMemory;
-import hmysjiang.potioncapsule.network.packets.SPacketVisualExplosion;
+import hmysjiang.potioncapsule.network.packets.SPacketPlayerParticle;
 import hmysjiang.potioncapsule.utils.Defaults;
 import hmysjiang.potioncapsule.utils.ITileCustomSync;
 import net.minecraft.entity.player.PlayerEntity;
@@ -37,7 +37,7 @@ public class PacketHandler {
 		INSTANCE.registerMessage(disc++, CPacketClearBrewerOutput.class, CPacketClearBrewerOutput::encode, CPacketClearBrewerOutput::decode, CPacketClearBrewerOutput::handle);
 		INSTANCE.registerMessage(disc++, CPacketUpdateBrewerPartition.class, CPacketUpdateBrewerPartition::encode, CPacketUpdateBrewerPartition::decode, CPacketUpdateBrewerPartition::handle);
 		
-		INSTANCE.registerMessage(disc++, SPacketVisualExplosion.class, SPacketVisualExplosion::encode, SPacketVisualExplosion::decode, SPacketVisualExplosion::handle);
+		INSTANCE.registerMessage(disc++, SPacketPlayerParticle.class, SPacketPlayerParticle::encode, SPacketPlayerParticle::decode, SPacketPlayerParticle::handle);
 		INSTANCE.registerMessage(disc++, SPacketPlayerSound.class, SPacketPlayerSound::encode, SPacketPlayerSound::decode, SPacketPlayerSound::handle);
 		INSTANCE.registerMessage(disc++, SPacketResponseBrewerMemory.class, SPacketResponseBrewerMemory::encode, SPacketResponseBrewerMemory::decode, SPacketResponseBrewerMemory::handle);
 		INSTANCE.registerMessage(disc++, SPacketCustomSyncTile.class, SPacketCustomSyncTile::encode, SPacketCustomSyncTile::decode, SPacketCustomSyncTile::handle);

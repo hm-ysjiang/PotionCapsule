@@ -20,11 +20,6 @@ public class EffectNekomimiParadise extends Effect {
 		super(EffectType.NEUTRAL, 0xffb3ea);
 	}
 	
-	@Override
-	public boolean isReady(int duration, int amplifier) {
-		return true;
-	}
-	
 	public static class CatNekomimiGoal extends TemptGoal {
 		private final CatEntity cat;
 		private static final EntityPredicate ENTITY_PREDICATE = (new EntityPredicate()).setDistance(10.0D).allowInvulnerable().allowFriendlyFire().setSkipAttackChecks().setLineOfSiteRequired();

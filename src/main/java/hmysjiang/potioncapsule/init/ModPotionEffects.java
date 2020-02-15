@@ -4,10 +4,13 @@ import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.Reference;
 import hmysjiang.potioncapsule.potions.PotionFieryLily;
 import hmysjiang.potioncapsule.potions.PotionLilypad;
+import hmysjiang.potioncapsule.potions.PotionMercy;
 import hmysjiang.potioncapsule.potions.PotionNekomimiParadise;
 import hmysjiang.potioncapsule.potions.PotionSpikyObi;
 import hmysjiang.potioncapsule.potions.PotionThorn;
+import hmysjiang.potioncapsule.potions.PotionWithering;
 import hmysjiang.potioncapsule.potions.effects.EffectLilypad;
+import hmysjiang.potioncapsule.potions.effects.EffectMercy;
 import hmysjiang.potioncapsule.potions.effects.EffectNekomimiParadise;
 import hmysjiang.potioncapsule.potions.effects.EffectNightVisionNF;
 import hmysjiang.potioncapsule.potions.effects.EffectThorn;
@@ -27,7 +30,8 @@ public class ModPotionEffects {
 		event.getRegistry().registerAll(EffectNightVisionNF.INSTANCE,
 										EffectThorn.INSTANCE,
 										EffectLilypad.INSTANCE,
-										EffectNekomimiParadise.INSTANCE);
+										EffectNekomimiParadise.INSTANCE,
+										EffectMercy.INSTANCE);
 	}
 	
 	@SubscribeEvent
@@ -39,12 +43,16 @@ public class ModPotionEffects {
 		PotionLilypad.register(reg);
 		PotionFieryLily.register(reg);
 		PotionNekomimiParadise.register(reg);
+		PotionWithering.register(reg);
+		PotionMercy.register(reg);
 		
 		PotionThorn.registerRecipes();
 		PotionSpikyObi.registerRecipes();
 		PotionLilypad.registerRecipes();
 		PotionFieryLily.registerRecipes();
 		PotionNekomimiParadise.registerRecipes();
+		PotionWithering.registerRecipes();
+		PotionMercy.registerRecipes();
 	}
 	
 }

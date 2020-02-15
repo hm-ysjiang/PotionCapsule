@@ -12,7 +12,7 @@ import hmysjiang.potioncapsule.init.ModBlocks;
 import hmysjiang.potioncapsule.init.ModItems;
 import hmysjiang.potioncapsule.network.PacketHandler;
 import hmysjiang.potioncapsule.network.packets.SPacketPlayerSound;
-import hmysjiang.potioncapsule.network.packets.SPacketVisualExplosion;
+import hmysjiang.potioncapsule.network.packets.SPacketPlayerParticle;
 import hmysjiang.potioncapsule.utils.Defaults;
 import hmysjiang.potioncapsule.utils.ICapsuleTriggerable;
 import hmysjiang.potioncapsule.utils.helper.InventoryHelper;
@@ -27,6 +27,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.stats.Stats;
@@ -148,7 +149,8 @@ public class ItemSpecialCapsule extends Item implements ICapsuleTriggerable {
 		player.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 100, 2, false, false));
 		if (renderStatus)
 			player.sendStatusMessage(new TranslationTextComponent("potioncapsule.tooltip.capsule.used", stack.getDisplayName()), true);
-		PacketHandler.toPlayer(new SPacketVisualExplosion(), (ServerPlayerEntity) player);
+		player.world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 1.0F, (1.0F + (player.world.rand.nextFloat() - player.world.rand.nextFloat()) * 0.2F) * 0.7F);
+		PacketHandler.toPlayer(new SPacketPlayerParticle(ParticleTypes.EXPLOSION_EMITTER, player.posX, player.posY, player.posZ, 0, 0, 0), (ServerPlayerEntity) player);
 		
 		if (!player.isCreative() && !stack.getOrCreateTag().getBoolean("CapsuleCreative")) {
 			stack.setDamage(stack.getDamage() + 1);

@@ -21,11 +21,6 @@ public class EffectThorn extends Effect {
 		super(EffectType.NEUTRAL, 0xf2ee72);
 	}
 	
-	@Override
-	public boolean isReady(int duration, int amplifier) {
-		return true;
-	}
-	
 	@SubscribeEvent
 	public static void onEntityDamaged(LivingDamageEvent event) {
 		LivingEntity living = event.getEntityLiving();

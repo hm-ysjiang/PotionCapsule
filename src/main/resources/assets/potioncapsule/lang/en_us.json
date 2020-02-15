@@ -79,7 +79,8 @@
 	"effect.potioncapsule.effect_night_vision_nf": "Night Vision NF",
 	"effect.potioncapsule.effect_thorn": "Thorn",
 	"effect.potioncapsule.effect_lilypad": "Floating Lilypad",
-	"effect.potioncapsule.effect_nekomimiparadise": "Nekomimi Paradise"
+	"effect.potioncapsule.effect_nekomimiparadise": "Nekomimi Paradise",
+	"effect.potioncapsule.effect_mercy": "Mercy"
 	,
 	"_Potions": "",
 	"item.minecraft.potion.effect.potioncapsule_thorn": "Potion of the Thorns",
@@ -105,7 +106,17 @@
 	"item.minecraft.potion.effect.potioncapsule_nekomimi": "Potion of Nekomimi Paradise",
 	"item.minecraft.splash_potion.effect.potioncapsule_nekomimi": "Splash Potion of Nekomimi Paradise",
 	"item.minecraft.lingering_potion.effect.potioncapsule_nekomimi": "Lingering Potion of Nekomimi Paradise",
-	"item.minecraft.tipped_arrow.effect.potioncapsule_nekomimi": "Arrow of Nekomimi Paradise"
+	"item.minecraft.tipped_arrow.effect.potioncapsule_nekomimi": "Arrow of Nekomimi Paradise",
+	
+	"item.minecraft.potion.effect.potioncapsule_withering": "Potion of Withering",
+	"item.minecraft.splash_potion.effect.potioncapsule_withering": "Splash Potion of Withering",
+	"item.minecraft.lingering_potion.effect.potioncapsule_withering": "Lingering Potion of Withering",
+	"item.minecraft.tipped_arrow.effect.potioncapsule_withering": "Arrow of Withering",
+	
+	"item.minecraft.potion.effect.potioncapsule_mercy": "Potion of Mercy",
+	"item.minecraft.splash_potion.effect.potioncapsule_mercy": "Splash Potion of Mercy",
+	"item.minecraft.lingering_potion.effect.potioncapsule_mercy": "Lingering Potion of Mercy",
+	"item.minecraft.tipped_arrow.effect.potioncapsule_mercy": "Arrow of Mercy"
 	,
 	"_Special Capsules": "",
 	"potioncapsule.tooltip.special_capsule.pre.trigger": "Trigger: ",

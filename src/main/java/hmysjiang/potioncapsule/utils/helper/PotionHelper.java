@@ -22,6 +22,12 @@ public class PotionHelper {
 		return new ItemStack(Items.REDSTONE);
 	}
 	
+	public static void registerRecipe(Potion origin, IItemProvider initMaterial, Potion output) {
+		BrewingRecipeRegistry.addRecipe(new StrictBrewingRecipe(new ItemStack(Items.POTION), origin, new ItemStack(initMaterial), output));
+		BrewingRecipeRegistry.addRecipe(new StrictBrewingRecipe(new ItemStack(Items.SPLASH_POTION), origin, new ItemStack(initMaterial), output));
+		BrewingRecipeRegistry.addRecipe(new StrictBrewingRecipe(new ItemStack(Items.LINGERING_POTION), origin, new ItemStack(initMaterial), output));
+	}
+	
 	public static <T extends Potion> void register2StageRecipe(IItemProvider initMaterial, T NORMAL, T LONG) {
 		register2StageRecipe(Potions.AWKWARD, initMaterial, NORMAL, LONG);
 	}
