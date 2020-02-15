@@ -1,16 +1,21 @@
 package hmysjiang.potioncapsule.blocks.auto_brewer;
 
+import java.util.Random;
+
 import hmysjiang.potioncapsule.blocks.HorizontalBaseMachineBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -48,6 +53,14 @@ public class BlockAutoBrewer extends HorizontalBaseMachineBlock {
 
 			super.onReplaced(state, worldIn, pos, newState, isMoving);
 		}
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+		double d0 = (double) ((float) pos.getX() + 0.4F + rand.nextFloat() * 0.2F);
+		double d1 = (double) ((float) pos.getY() + 0.7F + rand.nextFloat() * 0.3F);
+		double d2 = (double) ((float) pos.getZ() + 0.4F + rand.nextFloat() * 0.2F);
+		worldIn.addParticle(ParticleTypes.SMOKE, d0, d1, d2, 0.0D, 0.0D, 0.0D);
 	}
 	
 }

@@ -60,7 +60,7 @@ public class CommonConfigs {
 		special_overdrive_uses = builder.comment(" This specifies the max usages of Sunlight Yellow Overdrive capsule")
 				.defineInRange("specialcap.overdrive.uses", 256, 1, 1024);
 		special_cakelie_uses = builder.comment(" This specifies the max usages of Lie of The Cake capsule")
-				.defineInRange("specialcap.cakelie.uses", 128, 1, 512);
+				.defineInRange("specialcap.cakelie.uses", 256, 1, 1024);
 		
 		// recipe
 		recipe_allowCapsuleCombine = builder.comment(" Set this to true will allow Potion Capsules to be combined in crafting grids")

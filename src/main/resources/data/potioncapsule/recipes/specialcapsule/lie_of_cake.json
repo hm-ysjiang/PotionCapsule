@@ -1,0 +1,34 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "potioncapsule_crafting_group",
+	"pattern": 
+	[
+		" C ",
+		"TPT",
+		" O "
+	],
+	"key": 
+	{
+		"C": 
+		{
+			"item": "minecraft:cake"
+		},
+		"T": 
+		{
+			"item": "minecraft:torch"
+		},
+		"P": 
+		{
+			"tag": "potioncapsule:capsules"
+		},
+		"O": 
+		{
+			"item": "minecraft:poisonous_potato"
+		}
+	},
+	"result": 
+	{
+		"item": "potioncapsule:item_special_capsule_lie_of_cake",
+		"count": 1
+	}
+}

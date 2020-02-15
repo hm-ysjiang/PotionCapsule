@@ -39,10 +39,6 @@ public class BlockSpecialCapsuleRepairer extends HorizontalBaseMachineBlock {
 		return recipes.get(type);
 	}
 	
-	public BlockSpecialCapsuleRepairer() {
-		super(null);
-	}
-	
 	@Override
 	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
 			BlockRayTraceResult hit) {

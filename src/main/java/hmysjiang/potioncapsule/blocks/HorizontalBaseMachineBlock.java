@@ -10,8 +10,12 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 
-public class HorizontalBaseMachineBlock extends BaseMachineBlock {
+public abstract class HorizontalBaseMachineBlock extends BaseMachineBlock {
 	public static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
+	
+	public HorizontalBaseMachineBlock() {
+		this(null);
+	}
 
 	public HorizontalBaseMachineBlock(ITileCreator<?> tileCreatorIn) {
 		super(tileCreatorIn);

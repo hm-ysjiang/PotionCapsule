@@ -1,3 +1,16 @@
+1.2.5
+ - Add Auto Brewer
+ --- Quick and simple brewing process
+ --- Customizing potion and capsule contents
+ - Add Special Capsule: Lie of The Cake
+ --- Restores player's hunger
+ --- Recharges using any food
+ - Add Filled capsules to the JEI item subtypes
+ - Fix some brewing recipe not working properly
+ - Fix that Gelatin Extractor/Former does not drop their inventory when broken
+ - Add chinese lang files
+
+
 1.2.4a
  - Specials Capsules are no longer fully charged when crafted by default
  - Tweaked the recipes and recharges of special capsule bite the dust

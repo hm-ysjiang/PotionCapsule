@@ -209,12 +209,13 @@ public class ItemSpecialCapsule extends Item implements ICapsuleTriggerable {
 			for (int tries = 0 ; tries<=2 ; tries++) {
 				if (player.world.isAirBlock(pos) && !player.world.isAirBlock(pos.down())) {
 					player.world.setBlockState(pos, ModBlocks.LIGHT.getDefaultState(), 2);
-					break;
+					return true;
 				}
 				pos = pos.down();
 			}
 		}
-		return true;
+		// If no work done, the return should be false to not block other capsule's work
+		return false;
 	}
 	
 	public static boolean companionCube(ItemStack stack, PlayerEntity player, boolean renderStatus) {

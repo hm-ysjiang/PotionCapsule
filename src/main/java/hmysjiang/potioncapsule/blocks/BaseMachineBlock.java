@@ -9,7 +9,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
 
-public class BaseMachineBlock extends Block {
+public abstract class BaseMachineBlock extends Block {
 	
 	private final ITileCreator<?> tileCreator;
 	

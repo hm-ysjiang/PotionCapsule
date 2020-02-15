@@ -54,7 +54,6 @@ public class ScreenAutoBrewer extends ContainerScreen<ContainerAutoBrewer> {
 	public ScreenAutoBrewer(ContainerAutoBrewer screenContainer, PlayerInventory inv,
 			ITextComponent titleIn) {
 		super(screenContainer, inv, titleIn);
-		// BrewingStandScreen
 		ySize = 224;
 		
 		// Minus the width by 1 to match the <= right bound

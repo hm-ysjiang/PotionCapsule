@@ -35,6 +35,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.Tuple;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
@@ -86,7 +88,6 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 	
 	public TileEntityAutoBrewer() {
 		super(TYPE);
-		// BrewingStandTileEntity
 		memMode = false;
 		memory = new ItemStackHandler(6);
 		inventory = new Inventory(16) {
@@ -217,6 +218,7 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 				brewing = false;
 				mergeOutput(true);
 				markDirty();
+				world.playSound(null, pos, SoundEvents.BLOCK_BREWING_STAND_BREW, SoundCategory.BLOCKS, 1.0F, 1.0F);
 			}
 		}
 		
@@ -269,8 +271,11 @@ public class TileEntityAutoBrewer extends TileEntity implements ITickableTileEnt
 				if (breath > 0) {
 					ItemStack linger = new ItemStack(Items.LINGERING_POTION);
 					EffectInstance app = new EffectInstance(potion.get(0));
-					if (!app.getPotion().isInstant())
-						app.duration = partition * 20;
+					if (!app.getPotion().isInstant()) {
+						// The lingering potion has a 0.25x duration factor
+						app.duration = partition * 20  / 4;
+						linger.getOrCreateTag().putBoolean("pc_CustomLingerPotion", true);
+					}
 					PotionUtils.appendEffects(linger, Arrays.asList(app));
 					linger.getOrCreateTag().putInt("CustomPotionColor", PotionUtils.getPotionColorFromEffectList(PotionUtils.getEffectsFromStack(linger)));
 					linger.setDisplayName(new TranslationTextComponent("potioncapsule.misc.custom_potion_display_name.linger"));
