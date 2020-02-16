@@ -17,7 +17,7 @@ public class EffectNekomimiParadise extends Effect {
 	public static final EffectNekomimiParadise INSTANCE = (EffectNekomimiParadise) new EffectNekomimiParadise().setRegistryName(Defaults.modPrefix.apply("effect_nekomimiparadise"));
 
 	protected EffectNekomimiParadise() {
-		super(EffectType.NEUTRAL, 0xffb3ea);
+		super(EffectType.BENEFICIAL, 0xffb3ea);
 	}
 	
 	public static class CatNekomimiGoal extends TemptGoal {

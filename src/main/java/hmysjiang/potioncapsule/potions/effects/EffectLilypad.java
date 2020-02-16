@@ -16,7 +16,7 @@ public class EffectLilypad extends Effect {
 	public static final EffectLilypad INSTANCE = (EffectLilypad) new EffectLilypad().setRegistryName(Defaults.modPrefix.apply("effect_lilypad"));
 
 	protected EffectLilypad() {
-		super(EffectType.NEUTRAL, 0x17b745);
+		super(EffectType.BENEFICIAL, 0x17b745);
 	}
 	
 	@Override

@@ -74,6 +74,7 @@ public class ModItems {
 	}.setRegistryName(Defaults.modPrefix.apply(ItemRegs.WITHER_FRAG));
 	public static final Item CACTUS_FRAG = new Item(Defaults.itemProp.get()).setRegistryName(Defaults.modPrefix.apply(ItemRegs.CATCUS_FRAG));
 	public static final Item CAT_FUR = new Item(Defaults.itemProp.get()).setRegistryName(Defaults.modPrefix.apply(ItemRegs.CAT_FUR));
+	public static final Item FANG = new Item(Defaults.itemProp.get()).setRegistryName(Defaults.modPrefix.apply(ItemRegs.FANG));
 	
 	@SubscribeEvent
 	public static void onItemRegister(RegistryEvent.Register<Item> event) {
@@ -100,7 +101,8 @@ public class ModItems {
 						CREATIVE_CATALYST,
 						WITHER_FRAG,
 						CACTUS_FRAG,
-						CAT_FUR);
+						CAT_FUR,
+						FANG);
 		ItemSpecialCapsule.register(reg);
 	}
 	

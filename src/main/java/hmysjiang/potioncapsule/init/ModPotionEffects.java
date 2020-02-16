@@ -2,6 +2,7 @@ package hmysjiang.potioncapsule.init;
 
 import hmysjiang.potioncapsule.PotionCapsule;
 import hmysjiang.potioncapsule.Reference;
+import hmysjiang.potioncapsule.potions.PotionBloodlust;
 import hmysjiang.potioncapsule.potions.PotionFieryLily;
 import hmysjiang.potioncapsule.potions.PotionLilypad;
 import hmysjiang.potioncapsule.potions.PotionMercy;
@@ -9,6 +10,7 @@ import hmysjiang.potioncapsule.potions.PotionNekomimiParadise;
 import hmysjiang.potioncapsule.potions.PotionSpikyObi;
 import hmysjiang.potioncapsule.potions.PotionThorn;
 import hmysjiang.potioncapsule.potions.PotionWithering;
+import hmysjiang.potioncapsule.potions.effects.EffectBloodlust;
 import hmysjiang.potioncapsule.potions.effects.EffectLilypad;
 import hmysjiang.potioncapsule.potions.effects.EffectMercy;
 import hmysjiang.potioncapsule.potions.effects.EffectNekomimiParadise;
@@ -31,7 +33,8 @@ public class ModPotionEffects {
 										EffectThorn.INSTANCE,
 										EffectLilypad.INSTANCE,
 										EffectNekomimiParadise.INSTANCE,
-										EffectMercy.INSTANCE);
+										EffectMercy.INSTANCE,
+										EffectBloodlust.INSTANCE);
 	}
 	
 	@SubscribeEvent
@@ -45,6 +48,7 @@ public class ModPotionEffects {
 		PotionNekomimiParadise.register(reg);
 		PotionWithering.register(reg);
 		PotionMercy.register(reg);
+		PotionBloodlust.register(reg);
 		
 		PotionThorn.registerRecipes();
 		PotionSpikyObi.registerRecipes();
@@ -53,6 +57,7 @@ public class ModPotionEffects {
 		PotionNekomimiParadise.registerRecipes();
 		PotionWithering.registerRecipes();
 		PotionMercy.registerRecipes();
+		PotionBloodlust.registerRecipes();
 	}
 	
 }

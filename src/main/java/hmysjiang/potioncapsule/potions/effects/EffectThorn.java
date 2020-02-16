@@ -18,7 +18,7 @@ public class EffectThorn extends Effect {
 	public static final EffectThorn INSTANCE = (EffectThorn) new EffectThorn().setRegistryName(Defaults.modPrefix.apply("effect_thorn"));
 
 	protected EffectThorn() {
-		super(EffectType.NEUTRAL, 0xf2ee72);
+		super(EffectType.BENEFICIAL, 0xf2ee72);
 	}
 	
 	@SubscribeEvent

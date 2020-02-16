@@ -21,6 +21,7 @@ public class Reference {
 		public static final String WITHER_FRAG = "item_wither_dust";
 		public static final String CATCUS_FRAG = "item_cactus_frag";
 		public static final String CAT_FUR = "item_cat_fur";
+		public static final String FANG = "item_spider_fang";
 		
 	}
 	
