@@ -20,7 +20,7 @@ public class CPacketClearBrewerOutput {
 	}
 
 	public static void handle(CPacketClearBrewerOutput message, Supplier<Context> ctx) {
-		if (ctx.get().getSender().openContainer instanceof ContainerAutoBrewer) {
+		if (ctx.get().getSender() != null && ctx.get().getSender().openContainer instanceof ContainerAutoBrewer) {
 			TileEntityAutoBrewer brewer = ((ContainerAutoBrewer) ctx.get().getSender().openContainer).brewer;
 			brewer.clearPotion();
 		}

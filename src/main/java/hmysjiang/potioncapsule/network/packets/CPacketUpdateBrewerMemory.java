@@ -25,7 +25,7 @@ public class CPacketUpdateBrewerMemory {
 	}
 
 	public static void handle(CPacketUpdateBrewerMemory message, Supplier<Context> ctx) {
-		if (ctx.get().getSender().openContainer instanceof ContainerAutoBrewer) {
+		if (ctx.get().getSender() != null && ctx.get().getSender().openContainer instanceof ContainerAutoBrewer) {
 			TileEntityAutoBrewer brewer = ((ContainerAutoBrewer) ctx.get().getSender().openContainer).brewer;
 			if (message.set) {
 				if (brewer.checkAndSetRecipe())

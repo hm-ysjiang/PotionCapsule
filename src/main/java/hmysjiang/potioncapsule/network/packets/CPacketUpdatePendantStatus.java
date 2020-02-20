@@ -24,8 +24,10 @@ public class CPacketUpdatePendantStatus {
 	}
 
 	public static void handle(CPacketUpdatePendantStatus message, Supplier<Context> ctx) {
-		CompoundNBT tag = ((ContainerPendant) ctx.get().getSender().openContainer).getStack().getOrCreateTag();
-		tag.putInt("StatusMask", tag.getInt("StatusMask") ^ message.mask);
+		if (ctx.get().getSender() != null && ctx.get().getSender().openContainer instanceof ContainerPendant) {
+			CompoundNBT tag = ((ContainerPendant) ctx.get().getSender().openContainer).getStack().getOrCreateTag();
+			tag.putInt("StatusMask", tag.getInt("StatusMask") ^ message.mask);
+		}
 		ctx.get().setPacketHandled(true);
 	}
 	

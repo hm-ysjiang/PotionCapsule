@@ -39,6 +39,10 @@ public class SPacketCustomSyncTile<T extends ITileCustomSync> {
 		if (PotionCapsule.proxy.getWorld() != null) {
 			World world = PotionCapsule.proxy.getWorld();
 			int[] pos = message.nbt.getIntArray("Pos");
+			if (pos.length != 3) {
+				PotionCapsule.Logger.error("Received an errored packet when try to sync tile");
+				return;
+			}
 			BlockPos blockpos = new BlockPos(pos[0], pos[1], pos[2]);
 			if (world.isBlockLoaded(blockpos)) {
 				TileEntity tile = world.getTileEntity(blockpos);
