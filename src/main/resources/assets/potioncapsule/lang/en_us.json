@@ -1,7 +1,7 @@
 {
 	"_Creative Tab": "",
-	"itemGroup.potioncapsule": "Potion Capsule"
-	,
+	"itemGroup.potioncapsule": "Potion Capsule",
+	
 	"_Items": "",
 	"item.potioncapsule.item_capsule": "Potion Capsule",
 	"item.potioncapsule.item_capsule.with": "Potion Capsule (%s)",
@@ -19,8 +19,8 @@
 	"item.potioncapsule.item_wither_dust": "§8Wither Dust§r",
 	"item.potioncapsule.item_cactus_frag": "A Tiny Piece of Cactus",
 	"item.potioncapsule.item_cat_fur": "Cat Fur",
-	"item.potioncapsule.item_spider_fang": "Spider Fang"
-	,
+	"item.potioncapsule.item_spider_fang": "Spider Fang",
+	
 	"_Blocks": "",
 	"block.potioncapsule.block_gelatin_extractor": "Gelatin Extractor",
 	"block.potioncapsule.block_gelatin_former": "Gelatin Former",
@@ -28,8 +28,8 @@
 	"block.potioncapsule.block_fiery_lily": "Fiery Lilypad",
 	"block.potioncapsule.block_spiky_obsidian": "Spiky Obsidian",
 	"block.potioncapsule.block_special_capsule_repairer": "Special Capsule Recharger",
-	"block.potioncapsule.block_auto_brewer": "Auto Brewer"
-	,
+	"block.potioncapsule.block_auto_brewer": "Auto Brewer",
+	
 	"_Tooltips": "",
 	"potioncapsule.tooltip.capsule.empty": "Empty",
 	"potioncapsule.tooltip.capsule.shiftdown": "<Hold shift for more info>",
@@ -40,8 +40,8 @@
 	"potioncapsule.tooltip.catalyst_2": "Catalysts allowed: %sx",
 	"potioncapsule.tooltip.c_catalyst_1": "CREATIVE ONLY",
 	"potioncapsule.tooltip.c_catalyst_2": "Craft with capsule to apply creative effect on it",
-	"potioncapsule.tooltip.wither_dust.obtain": "Drop by wither skeletons"
-	,
+	"potioncapsule.tooltip.wither_dust.obtain": "Drop by wither skeletons",
+	
 	"_Gui": "",
 	"potioncapsule.gui.gelatin_ex.progress_percentage": "%1$s %2$s",
 	"potioncapsule.gui.gelatin_ex.zero_descr": "Output slot is full or no matching recipe found",
@@ -74,16 +74,16 @@
 	"potioncapsule.gui.auto_brewer.tooltip.status.notset": "The recipe is not set. Arrange a valid brewing recipe and hit the set button.",
 	"potioncapsule.gui.auto_brewer.tooltip.status.missing.fuel": "Not enough fuel",
 	"potioncapsule.gui.auto_brewer.tooltip.status.missing.water": "Not enough water",
-	"potioncapsule.gui.auto_brewer.tooltip.status.missing.output": "More output space required"
-	,
+	"potioncapsule.gui.auto_brewer.tooltip.status.missing.output": "More output space required",
+	
 	"_Effects": "",
 	"effect.potioncapsule.effect_night_vision_nf": "Night Vision NF",
 	"effect.potioncapsule.effect_thorn": "Thorn",
 	"effect.potioncapsule.effect_lilypad": "Floating Lilypad",
 	"effect.potioncapsule.effect_nekomimiparadise": "Nekomimi Paradise",
 	"effect.potioncapsule.effect_mercy": "Mercy",
-	"effect.potioncapsule.effect_bloodlust": "Bloodlust"
-	,
+	"effect.potioncapsule.effect_bloodlust": "Bloodlust",
+	
 	"_Potions": "",
 	"item.minecraft.potion.effect.potioncapsule_thorn": "Potion of the Thorns",
 	"item.minecraft.splash_potion.effect.potioncapsule_thorn": "Splash Potion of the Thorns",
@@ -123,8 +123,8 @@
 	"item.minecraft.potion.effect.potioncapsule_bloodlust": "Potion of Bloodlust",
 	"item.minecraft.splash_potion.effect.potioncapsule_bloodlust": "Splash Potion of Bloodlust",
 	"item.minecraft.lingering_potion.effect.potioncapsule_bloodlust": "Lingering Potion of Bloodlust",
-	"item.minecraft.tipped_arrow.effect.potioncapsule_bloodlust": "Arrow of Bloodlust"
-	,
+	"item.minecraft.tipped_arrow.effect.potioncapsule_bloodlust": "Arrow of Bloodlust",
+	
 	"_Special Capsules": "",
 	"potioncapsule.tooltip.special_capsule.pre.trigger": "Trigger: ",
 	"potioncapsule.tooltip.special_capsule.pre.effect": "Effect: ",
@@ -147,30 +147,26 @@
 	"item.potioncapsule.item_special_capsule.lie_of_cake": "Lie of The Cake",
 	"potioncapsule.tooltip.special_capsule.lie_of_cake.desc": "It was a triumph. I'm making a note here: §oHuge Success§r'",
 	"potioncapsule.tooltip.special_capsule.lie_of_cake.trigger": "When the hunger bar of the player is not full",
-	"potioncapsule.tooltip.special_capsule.lie_of_cake.effect": "Restores the player's hunger"
-	,
+	"potioncapsule.tooltip.special_capsule.lie_of_cake.effect": "Restores the player's hunger",
 	"_Miscellaneous": "",
 	"potioncapsule.misc.left_potion_display_name": "Partially Used Potion",
 	"potioncapsule.misc.custom_potion_display_name": "Customized Potion",
 	"potioncapsule.misc.custom_potion_display_name.splash": "Customized Splash Potion",
 	"potioncapsule.misc.custom_potion_display_name.linger": "Customized Lingering Potion",
 	"potioncapsule.keybind.category": "Potion Capsule",
-	"potioncapsule.keybind.pendant_keybind.descr": "Use Capsule In Pendant"
-	,
+	"potioncapsule.keybind.pendant_keybind.descr": "Use Capsule In Pendant",
 	"_DeathMessage": "",
 	"death.attack.pc_void_lost": "%s lost his Void Power",
 	"death.attack.pc_void_lost.player": "%2$s stole the Void Power from %1$s",
 	"death.attack.potioncapsule_thorn": "%s was counter attacked to death",
-	"death.attack.potioncapsule_thorn.player": "%2$s opened the trap card Mirror Force on %1$s"
-	,
+	"death.attack.potioncapsule_thorn.player": "%2$s opened the trap card Mirror Force on %1$s",
+	
 	"_Jei": "",
-	"potioncapsule.jei_desc.emptyline": ""
-	,
+	"potioncapsule.jei_desc.emptyline": "",
 	"potioncapsule.jei_category.gel_extractor": "Gelatin Extractor",
 	"potioncapsule.jei_category.gel_former": "Gelatin Former",
 	"potioncapsule.jei_category.wart_drop": "Nether Wart Dust",
-	"potioncapsule.jei_category.special_repair": "Special Capsule Recharger"
-	,
+	"potioncapsule.jei_category.special_repair": "Special Capsule Recharger",
 	"potioncapsule.jei_desc.jelly_apple": "Crafted in a Gelatin Former using Apple and Gelatin Powder.",
 	"potioncapsule.jei_desc.jelly_cactus": "Crafted in a Gelatin Former using Tiny Cactus and Gelatin Powder.",
 	"potioncapsule.jei_desc.capsule": "Store a portion of potion, either consume one or put it into a Capsule Pendant to acquire the effect.",
@@ -197,7 +193,6 @@
 	"potioncapsule.jei_desc.cat_fur": "Dropped by cats naturally. (DONT KILL THEM)",
 	"potioncapsule.jei_desc.special_repairer": "Recharges Special Capsule using corresponding materials.",
 	"potioncapsule.jei_desc.capsule.transfered": "Obtained by crafting a Potion Capsule with a potion.",
-	"potioncapsule.jei_desc.capsule_instant.transfered": "Obtained by crafting an Instant Potion Capsule with an instant potion."
-	,
+	"potioncapsule.jei_desc.capsule_instant.transfered": "Obtained by crafting an Instant Potion Capsule with an instant potion.",
 	"potioncapsule.jei_addi.wart_drop": "60%s chance to drop 1-3"
 }
